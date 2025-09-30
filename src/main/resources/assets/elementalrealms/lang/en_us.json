@@ -1,0 +1,13 @@
+{
+  "itemGroup.elementalrealms": "Example Mod Tab",
+  "block.elementalrealms.example_block": "Example Block",
+  "item.elementalrealms.example_item": "Example Item",
+
+  "elementalrealms.configuration.title": "Elemental Realms Configs",
+  "elementalrealms.configuration.section.elementalrealms.common.toml": "Elemental Realms Configs",
+  "elementalrealms.configuration.section.elementalrealms.common.toml.title": "Elemental Realms Configs",
+  "elementalrealms.configuration.items": "Item List",
+  "elementalrealms.configuration.logDirtBlock": "Log Dirt Block",
+  "elementalrealms.configuration.magicNumberIntroduction": "Magic Number Text",
+  "elementalrealms.configuration.magicNumber": "Magic Number"
+}
