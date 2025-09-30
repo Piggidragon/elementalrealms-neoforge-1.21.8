@@ -16,7 +16,6 @@ public class ModAffinitiesRoll {
     private static Affinity randomElementalAffinity(ServerPlayer player, int probabilityPercent) {
         RandomSource random = player.getRandom();
 
-        List<Affinity> current = ModAffinities.getAffinities(player);
         List<Affinity> available = Affinity.getAllElemental().stream()
                 .filter(a -> !ModAffinities.hasAffinity(player, a))
                 .toList();

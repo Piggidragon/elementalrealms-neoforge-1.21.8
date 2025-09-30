@@ -11,10 +11,6 @@ import java.util.List;
 
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class ModAffinities {
-    public static void initializeAffinities() {
-        ElementalRealms.LOGGER.info("Initializing Mod Affinities for " + ElementalRealms.MODID);
-    }
-
     public static void addAffinity(ServerPlayer player, Affinity affinity) {
         List<Affinity> affinities = getAffinities(player);
         if (!affinities.contains(affinity)) {

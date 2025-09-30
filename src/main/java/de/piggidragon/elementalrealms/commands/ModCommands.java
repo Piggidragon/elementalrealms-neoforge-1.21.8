@@ -9,17 +9,16 @@ import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
+@EventBusSubscriber(modid = ElementalRealms.MODID)
 public class ModCommands {
-    public static void initializeCommands() {
-        ElementalRealms.LOGGER.info("Initializing Mod Commands for " + ElementalRealms.MODID);
-    }
 
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
         var dispatcher = event.getDispatcher();
-
+        ElementalRealms.LOGGER.info("COMMANDREGISTER");
         // /affinities list
         dispatcher.register(Commands.literal("affinities")
                 .then(Commands.literal("list")

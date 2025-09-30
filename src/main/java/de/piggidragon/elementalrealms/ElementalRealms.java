@@ -2,6 +2,7 @@ package de.piggidragon.elementalrealms;
 
 import com.mojang.logging.LogUtils;
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
+import de.piggidragon.elementalrealms.commands.ModCommands;
 import de.piggidragon.elementalrealms.magic.affinities.ModAffinities;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -22,6 +23,5 @@ public class ElementalRealms {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         LOGGER.info("Common setup for {}", MODID);
-        ModAffinities.initializeAffinities();
     }
 }
