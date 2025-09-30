@@ -2,8 +2,6 @@ package de.piggidragon.elementalrealms;
 
 import com.mojang.logging.LogUtils;
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
-import de.piggidragon.elementalrealms.commands.ModCommands;
-import de.piggidragon.elementalrealms.magic.affinities.ModAffinities;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
