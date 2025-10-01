@@ -23,8 +23,7 @@ public class ModAffinitiesRoll {
 
         if (chance(random, probabilityPercent)) {
             return available.get(random.nextInt(available.size()));
-        }
-        else {
+        } else {
             return Affinity.NONE;
         }
     }
@@ -39,12 +38,11 @@ public class ModAffinitiesRoll {
             if (newAffinity != Affinity.NONE) {
                 affinitiesToAdd.add(newAffinity);
 
-                if (chance(random, 25)){
-                    Affinity deviant = newAffinity.getDeviant(newAffinity);
+                if (chance(random, 25)) {
+                    Affinity deviant = newAffinity.getDeviant();
                     affinitiesToAdd.add(deviant);
                 }
-            }
-            else  {
+            } else {
                 break;
             }
         }

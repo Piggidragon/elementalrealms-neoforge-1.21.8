@@ -11,11 +11,39 @@ import java.util.List;
 
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class ModAffinities {
-    public static void addAffinity(ServerPlayer player, Affinity affinity) {
+
+    public static boolean addAffinity(ServerPlayer player, Affinity affinity) {
         List<Affinity> affinities = getAffinities(player);
-        if (!affinities.contains(affinity)) {
-            affinities.add(affinity);
+        if (affinities.contains(affinity)) {
+            return false;
         }
+        if (affinity.getType() == AffinityType.ETERNAL) {
+            for (Affinity a : affinities) {
+                if (a.getType() == AffinityType.ETERNAL) {
+                    return false;
+                }
+            }
+        }
+        if (affinity.getType() == AffinityType.DEVIANT) {
+            boolean hasBase = false;
+            for (Affinity a : affinities) {
+                if (a.getDeviant() == affinity) {
+                    hasBase = true;
+                    break;
+                }
+            }
+            if (!hasBase) {
+                return false;
+            }
+        }
+        affinities.remove(Affinity.NONE);
+        affinities.add(affinity);
+        return true;
+    }
+
+    public static void clearAffinities(ServerPlayer player) {
+        List<Affinity> affinities = getAffinities(player);
+        affinities.clear();
     }
 
     public static List<Affinity> getAffinities(ServerPlayer player) {
@@ -26,11 +54,15 @@ public class ModAffinities {
         return getAffinities(player).contains(affinity);
     }
 
+
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
+            if (!ModAffinities.getAffinities(player).isEmpty()) {
+                return;
+            }
             for (Affinity affinity : ModAffinitiesRoll.rollAffinities(player)) {
-                if (affinity != Affinity.NONE){
+                if (affinity != Affinity.NONE) {
                     addAffinity(player, affinity);
                 }
             }
