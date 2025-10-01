@@ -41,9 +41,9 @@ public enum Affinity {
         return type;
     }
 
-    public Affinity getDeviant(Affinity affinity) {
+    public Affinity getDeviant() {
         if (getType() == AffinityType.ELEMENTAL) {
-            return switch (affinity) {
+            return switch (this) {
                 case FIRE -> LIGHTNING;
                 case WATER -> ICE;
                 case WIND -> SOUND;
