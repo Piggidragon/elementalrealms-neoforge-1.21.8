@@ -12,7 +12,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 @EventBusSubscriber(modid = ElementalRealms.MODID)
@@ -80,7 +79,8 @@ public class ModCommands {
                             ServerPlayer player = ctx.getSource().getPlayerOrException();
                             try {
                                 ModAffinities.clearAffinities(player);
-                            } catch (Exception ignored) {}
+                            } catch (Exception ignored) {
+                            }
                             for (Affinity affinity : ModAffinitiesRoll.rollAffinities(player)) {
                                 if (affinity != Affinity.NONE) {
                                     try {

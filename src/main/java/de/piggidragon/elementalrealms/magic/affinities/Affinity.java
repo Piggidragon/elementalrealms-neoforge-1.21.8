@@ -1,7 +1,6 @@
 package de.piggidragon.elementalrealms.magic.affinities;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 
 import java.util.Arrays;
 import java.util.List;

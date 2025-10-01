@@ -33,7 +33,7 @@ public class AffinityStones extends Item {
                         player.sendSystemMessage(Component.literal(e.getMessage()));
                     }
                 }
-                if(!ModAffinities.hasAffinity(player, Affinity.NONE) || stone.affinity != Affinity.NONE) {
+                if (!ModAffinities.hasAffinity(player, Affinity.NONE) || stone.affinity != Affinity.NONE) {
                     try {
                         ModAffinities.addAffinity(player, stone.affinity);
                         itemStack.shrink(1);

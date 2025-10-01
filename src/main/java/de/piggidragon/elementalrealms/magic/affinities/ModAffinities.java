@@ -67,7 +67,8 @@ public class ModAffinities {
                 if (affinity != Affinity.NONE) {
                     try {
                         addAffinity(player, affinity);
-                    } catch (Exception ignored) {}
+                    } catch (Exception ignored) {
+                    }
                 }
             }
         }
