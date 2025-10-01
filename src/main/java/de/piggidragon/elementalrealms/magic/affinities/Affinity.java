@@ -22,8 +22,6 @@ public enum Affinity {
 
     public static final Codec<Affinity> CODEC =
             Codec.STRING.xmap(Affinity::valueOf, Affinity::name);
-    public static final MapCodec<Affinity> MAP_CODEC =
-            CODEC.fieldOf("affinity");
 
     private final AffinityType type;
 
@@ -48,6 +46,20 @@ public enum Affinity {
                 case WATER -> ICE;
                 case WIND -> SOUND;
                 case EARTH -> GRAVITY;
+                default -> NONE;
+            };
+        } else {
+            return NONE;
+        }
+    }
+
+    public Affinity getElemental() {
+        if (getType() == AffinityType.DEVIANT) {
+            return switch (this) {
+                case LIGHTNING -> FIRE;
+                case ICE -> WATER;
+                case SOUND -> WIND;
+                case GRAVITY -> EARTH;
                 default -> NONE;
             };
         } else {

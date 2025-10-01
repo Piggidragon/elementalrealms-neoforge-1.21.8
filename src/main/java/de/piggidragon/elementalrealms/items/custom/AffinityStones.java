@@ -3,6 +3,7 @@ package de.piggidragon.elementalrealms.items.custom;
 import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.magic.affinities.Affinity;
 import de.piggidragon.elementalrealms.magic.affinities.ModAffinities;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
@@ -26,13 +27,20 @@ public class AffinityStones extends Item {
             ItemStack itemStack = event.getItemStack();
             if (itemStack.getItem() instanceof AffinityStones stone) {
                 if (stone.affinity == Affinity.NONE) {
-                    ModAffinities.clearAffinities(player);
+                    try {
+                        ModAffinities.clearAffinities(player);
+                    } catch (Exception e) {
+                        player.sendSystemMessage(Component.literal(e.getMessage()));
+                    }
                 }
-                boolean added = ModAffinities.addAffinity(player, stone.affinity);
-                if (added) {
-                    itemStack.shrink(1);
+                if(!ModAffinities.hasAffinity(player, Affinity.NONE) || stone.affinity != Affinity.NONE) {
+                    try {
+                        ModAffinities.addAffinity(player, stone.affinity);
+                        itemStack.shrink(1);
+                    } catch (Exception e) {
+                        player.sendSystemMessage(Component.literal(e.getMessage()));
+                    }
                 }
-
                 event.setCancellationResult(InteractionResult.SUCCESS);
                 event.setCanceled(true);
             }

@@ -12,15 +12,15 @@ import java.util.List;
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class ModAffinities {
 
-    public static boolean addAffinity(ServerPlayer player, Affinity affinity) {
+    public static void addAffinity(ServerPlayer player, Affinity affinity) throws Exception {
         List<Affinity> affinities = getAffinities(player);
         if (affinities.contains(affinity)) {
-            return false;
+            throw new Exception("Player already has affinity: " + affinity);
         }
         if (affinity.getType() == AffinityType.ETERNAL) {
             for (Affinity a : affinities) {
                 if (a.getType() == AffinityType.ETERNAL) {
-                    return false;
+                    throw new Exception("Player already has an eternal affinity: " + a);
                 }
             }
         }
@@ -33,16 +33,18 @@ public class ModAffinities {
                 }
             }
             if (!hasBase) {
-                return false;
+                throw new Exception("Players is missing base affinity: " + affinity.getElemental());
             }
         }
         affinities.remove(Affinity.NONE);
         affinities.add(affinity);
-        return true;
     }
 
-    public static void clearAffinities(ServerPlayer player) {
+    public static void clearAffinities(ServerPlayer player) throws Exception {
         List<Affinity> affinities = getAffinities(player);
+        if (affinities.contains(Affinity.NONE)) {
+            throw new Exception("Player has no affinities to clear.");
+        }
         affinities.clear();
     }
 
@@ -63,7 +65,9 @@ public class ModAffinities {
             }
             for (Affinity affinity : ModAffinitiesRoll.rollAffinities(player)) {
                 if (affinity != Affinity.NONE) {
-                    addAffinity(player, affinity);
+                    try {
+                        addAffinity(player, affinity);
+                    } catch (Exception ignored) {}
                 }
             }
         }

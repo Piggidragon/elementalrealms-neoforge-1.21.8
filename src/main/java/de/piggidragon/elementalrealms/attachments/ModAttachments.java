@@ -10,6 +10,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ModAttachments {
@@ -20,7 +21,11 @@ public class ModAttachments {
     public static final Supplier<AttachmentType<List<Affinity>>> AFFINITIES = ATTACHMENT_TYPE.register(
             "affinities",
             () -> AttachmentType.<List<Affinity>>builder(() -> new ArrayList<>())
-                    .serialize(Codec.list(Affinity.CODEC).fieldOf("affinities"))
+                    .serialize(
+                            Codec.list(Affinity.CODEC)
+                                    .fieldOf("affinities")
+                                    .xmap(ArrayList::new, list -> list)
+                    )
                     .copyOnDeath()
                     .build()
     );
