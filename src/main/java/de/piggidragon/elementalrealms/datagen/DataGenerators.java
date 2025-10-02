@@ -6,7 +6,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 
-@EventBusSubscriber(modid = "deinmodid")
+@EventBusSubscriber(modid = "elementalrealms")
 public class DataGenerators {
     @SubscribeEvent
     public static void gatherClientData(GatherDataEvent.Client event) {

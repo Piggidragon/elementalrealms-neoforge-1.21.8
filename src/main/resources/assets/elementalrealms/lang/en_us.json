@@ -1,7 +1,19 @@
 {
-  "itemGroup.elementalrealms": "Example Mod Tab",
-  "block.elementalrealms.example_block": "Example Block",
-  "item.elementalrealms.example_item": "Example Item",
+
+  "item.elementalrealms.affinity_stone_fire": "Affinity Stone of Fire",
+  "item.elementalrealms.affinity_stone_water": "Affinity Stone of Water",
+  "item.elementalrealms.affinity_stone_wind": "Affinity Stone of Wind",
+  "item.elementalrealms.affinity_stone_earth": "Affinity Stone of Earth",
+  "item.elementalrealms.affinity_stone_lightning": "Affinity Stone of Lightning",
+  "item.elementalrealms.affinity_stone_ice": "Affinity Stone of Ice",
+  "item.elementalrealms.affinity_stone_sound": "Affinity Stone of Sound",
+  "item.elementalrealms.affinity_stone_gravity": "Affinity Stone of Gravity",
+  "item.elementalrealms.affinity_stone_time": "Affinity Stone of Time",
+  "item.elementalrealms.affinity_stone_space": "Affinity Stone of Space",
+  "item.elementalrealms.affinity_stone_life": "Affinity Stone of Life",
+  "item.elementalrealms.affinity_stone_void": "Affinity Stone of Void",
+
+  "itemGroup.elementalrealms.items_tab": "Magic Items",
 
   "elementalrealms.configuration.title": "Elemental Realms Configs",
   "elementalrealms.configuration.section.elementalrealms.common.toml": "Elemental Realms Configs",
