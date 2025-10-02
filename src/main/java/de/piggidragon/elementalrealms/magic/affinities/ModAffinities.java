@@ -46,6 +46,7 @@ public class ModAffinities {
             throw new Exception("Player has no affinities to clear.");
         }
         affinities.clear();
+        affinities.add(Affinity.NONE);
     }
 
     public static List<Affinity> getAffinities(ServerPlayer player) {
