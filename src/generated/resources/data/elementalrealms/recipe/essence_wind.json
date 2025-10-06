@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:breeze_rod",
+    "D": "minecraft:diamond",
+    "F": "minecraft:feather",
+    "P": "minecraft:phantom_membrane"
+  },
+  "pattern": [
+    "FBF",
+    "BPD",
+    "FBF"
+  ],
+  "result": {
+    "count": 1,
+    "id": "elementalrealms:essence_wind"
+  }
+}

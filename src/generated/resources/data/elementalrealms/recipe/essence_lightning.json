@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": "minecraft:diamond",
+    "G": "minecraft:gold_ingot",
+    "L": "minecraft:lightning_rod",
+    "Q": "minecraft:quartz"
+  },
+  "pattern": [
+    "GQG",
+    "QLD",
+    "GQG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "elementalrealms:essence_lightning"
+  }
+}
