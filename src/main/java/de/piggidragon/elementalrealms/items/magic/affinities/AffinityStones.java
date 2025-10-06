@@ -1,4 +1,4 @@
-package de.piggidragon.elementalrealms.items.custom;
+package de.piggidragon.elementalrealms.items.magic.affinities;
 
 import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.magic.affinities.Affinity;
@@ -14,7 +14,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class AffinityStones extends Item {
-    private Affinity affinity = Affinity.NONE;
+    private final Affinity affinity;
 
     public AffinityStones(Properties properties, Affinity affinity) {
         super(properties);
@@ -33,8 +33,7 @@ public class AffinityStones extends Item {
                     } catch (Exception e) {
                         player.sendSystemMessage(Component.literal(e.getMessage()));
                     }
-                }
-                else {
+                } else {
                     try {
                         ModAffinities.addAffinity(player, stone.affinity);
                         itemStack.shrink(1);
