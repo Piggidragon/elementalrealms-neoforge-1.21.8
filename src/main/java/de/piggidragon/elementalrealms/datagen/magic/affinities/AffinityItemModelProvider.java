@@ -1,4 +1,4 @@
-package de.piggidragon.elementalrealms.datagen;
+package de.piggidragon.elementalrealms.datagen.magic.affinities;
 
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -7,8 +7,8 @@ import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.data.PackOutput;
 
-public class ModModelProvider extends ModelProvider {
-    public ModModelProvider(PackOutput output) {
+public class AffinityItemModelProvider extends ModelProvider {
+    public AffinityItemModelProvider(PackOutput output) {
         super(output, "elementalrealms");
     }
 
