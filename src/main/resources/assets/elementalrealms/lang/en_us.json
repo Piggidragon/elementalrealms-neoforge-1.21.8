@@ -47,7 +47,8 @@
   "item.elementalrealms.affinity_stone_void": "Affinity Stone of Void",
 
 
-  "itemGroup.elementalrealms.items_tab": "Magic Items",
+  "itemGroup.elementalrealms.affinity_tab": "Affinity Items",
+  "itemGroup.elementalrealms.block_tab": "Blocks",
 
   "elementalrealms.configuration.title": "Elemental Realms Configs",
   "elementalrealms.configuration.section.elementalrealms.common.toml": "Elemental Realms Configs",
