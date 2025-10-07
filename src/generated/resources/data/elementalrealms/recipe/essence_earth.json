@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:amethyst_shard",
+    "D": "minecraft:diamond",
+    "O": "minecraft:obsidian",
+    "S": "minecraft:stone"
+  },
+  "pattern": [
+    "OAO",
+    "ASD",
+    "OAO"
+  ],
+  "result": {
+    "count": 1,
+    "id": "elementalrealms:essence_earth"
+  }
+}

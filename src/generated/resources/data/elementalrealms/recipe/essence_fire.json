@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:blaze_powder",
+    "D": "minecraft:diamond",
+    "L": "minecraft:lava_bucket",
+    "M": "minecraft:magma_block"
+  },
+  "pattern": [
+    "MBM",
+    "BLD",
+    "MBM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "elementalrealms:essence_fire"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "minecraft:prismarine_crystals",
+    "D": "minecraft:diamond",
+    "P": "minecraft:pufferfish",
+    "W": "minecraft:water_bucket"
+  },
+  "pattern": [
+    "CPC",
+    "PWD",
+    "CPC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "elementalrealms:essence_water"
+  }
+}

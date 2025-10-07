@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:anvil",
+    "B": "minecraft:lodestone",
+    "D": "minecraft:diamond",
+    "O": "minecraft:obsidian"
+  },
+  "pattern": [
+    "OAO",
+    "ABD",
+    "OAO"
+  ],
+  "result": {
+    "count": 1,
+    "id": "elementalrealms:essence_gravity"
+  }
+}

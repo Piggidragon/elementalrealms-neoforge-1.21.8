@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:blue_ice",
+    "D": "minecraft:diamond",
+    "F": "minecraft:fermented_spider_eye",
+    "S": "minecraft:snowball"
+  },
+  "pattern": [
+    "BFB",
+    "FSD",
+    "BFB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "elementalrealms:essence_ice"
+  }
+}
