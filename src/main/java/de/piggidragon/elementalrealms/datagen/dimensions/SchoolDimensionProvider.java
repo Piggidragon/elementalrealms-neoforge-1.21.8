@@ -8,12 +8,16 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
-public class BeginnerDimensionProvider implements DataProvider {
+public class SchoolDimensionProvider implements DataProvider {
+    public static void saveJson(CachedOutput output, JsonObject json, Path path) throws IOException {
+        DataProvider.saveStable(output, json, path);
+    }
+
     @Override
     public CompletableFuture<?> run(CachedOutput cachedOutput) {
         JsonObject dimensionType = new JsonObject();
         dimensionType.addProperty("ultrawarm", false);
-        dimensionType.addProperty("natural", false);
+        dimensionType.addProperty("natural", true);
         dimensionType.addProperty("coordinate_scale", 1.0);
         dimensionType.addProperty("has_ceiling", false);
         dimensionType.addProperty("has_skylight", true);
@@ -28,11 +32,9 @@ public class BeginnerDimensionProvider implements DataProvider {
         dimensionType.addProperty("piglin_safe", false);
         dimensionType.addProperty("effects", "minecraft:overworld");
         dimensionType.addProperty("has_raids", false);
-        dimensionType.addProperty("monster_spawn_light_level", -1);
-        dimensionType.addProperty("monster_spawn_block_light_limit", -1);
 
         JsonObject dimension = new JsonObject();
-        dimension.addProperty("type", "elementalrealms:beginner");
+        dimension.addProperty("type", "elementalrealms:school");
 
         JsonObject generator = new JsonObject();
         generator.addProperty("type", "minecraft:noise");
@@ -45,8 +47,8 @@ public class BeginnerDimensionProvider implements DataProvider {
         dimension.add("generator", generator);
 
         try {
-            Path typePath = Path.of("data/elementalrealms/dimension_type/beginner.json");
-            Path dimensionPath = Path.of("data/elementalrealms/dimension/beginner.json");
+            Path typePath = Path.of("data/elementalrealms/dimension_type/school.json");
+            Path dimensionPath = Path.of("data/elementalrealms/dimension/school.json");
 
             saveJson(cachedOutput, dimensionType, typePath);
             saveJson(cachedOutput, dimension, dimensionPath);
@@ -59,10 +61,6 @@ public class BeginnerDimensionProvider implements DataProvider {
 
     @Override
     public String getName() {
-        return "";
-    }
-
-    public static void saveJson(CachedOutput output, JsonObject json, Path path) throws  IOException {
-        DataProvider.saveStable(output, json, path);
+        return "School Dimension Provider";
     }
 }
