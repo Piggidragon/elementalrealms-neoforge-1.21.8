@@ -1,4 +1,5 @@
-// 1.21.8	2025-10-06T10:19:47.3878496	Model Definitions - elementalrealms
+// 1.21.8	2025-10-09T11:06:45.2567642	Model Definitions - elementalrealms
+ff038729ed748029d01bd8100f8f1e837e9ea4f1 assets/elementalrealms/blockstates/school_dimension_portal.json
 5bdd6d4a11478f66c9b219a3af42e6d671f52394 assets/elementalrealms/items/affinity_shard_earth.json
 b110495ab0136c02f8aed70f4f9e489e6a34d160 assets/elementalrealms/items/affinity_shard_fire.json
 d64420ddd19bfab449e0ce5f65bbfa1d70652fba assets/elementalrealms/items/affinity_shard_gravity.json
@@ -33,6 +34,8 @@ ae90a88e589d58926afaa371c7af754b2c6d9e96 assets/elementalrealms/items/essence_li
 7bdc5badbac7be60291fc179f5586fcf6af3b5ac assets/elementalrealms/items/essence_time.json
 a56cd9bc2d8dc81aadd44e8346b91ff5430ee949 assets/elementalrealms/items/essence_water.json
 19e38d698271e089ff182ce075c5c465ce9d5240 assets/elementalrealms/items/essence_wind.json
+03083adf1588c7289307cf41e8545c4d4e123e23 assets/elementalrealms/items/school_dimension_portal.json
+db5f1c0af99f6a33e8f094c73af593ab5aef5f80 assets/elementalrealms/models/block/school_dimension_portal.json
 ccfaa9957f510084c9f1eadaeed851c501e76adf assets/elementalrealms/models/item/affinity_shard_earth.json
 c5d99a0fabc65d206a276d20a08a45757f7ba14d assets/elementalrealms/models/item/affinity_shard_fire.json
 32a2677cf93793175f8b4c231758c234cd1141e3 assets/elementalrealms/models/item/affinity_shard_gravity.json

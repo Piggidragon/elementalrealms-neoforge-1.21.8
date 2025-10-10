@@ -1,5 +1,6 @@
-package de.piggidragon.elementalrealms.datagen.magic.affinities;
+package de.piggidragon.elementalrealms.datagen;
 
+import de.piggidragon.elementalrealms.blocks.portals.PortalBlocks;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -7,14 +8,15 @@ import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.data.PackOutput;
 
-public class AffinityItemModelProvider extends ModelProvider {
-    public AffinityItemModelProvider(PackOutput output) {
+public class ModModelProvider extends ModelProvider {
+    public ModModelProvider(PackOutput output) {
         super(output, "elementalrealms");
     }
 
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
 
+        // Items
         itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_FIRE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(AffinityItems.AFFINITY_SHARD_FIRE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(AffinityItems.ESSENCE_FIRE.get(), ModelTemplates.FLAT_ITEM);
@@ -72,5 +74,9 @@ public class AffinityItemModelProvider extends ModelProvider {
         // Für Armor
         // itemModels.generateTrimmableItem(...)
         */
+
+
+        // Blocks
+        blockModels.createTrivialCube(PortalBlocks.SCHOOL_DIMENSION_PORTAL.get());
     }
 }

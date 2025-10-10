@@ -6,6 +6,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -27,7 +28,7 @@ public class ModCreativeTabs {
     );
     public static final Supplier<CreativeModeTab> BLOCK_TAB = CREATIVE_MODE_TABS.register("block_tab",
             () -> CreativeModeTab.builder()
-                    .icon(() -> new ItemStack(PortalBlocks.SCHOOL_DIMENSION_PORTAL.get()))
+                    .icon(() -> new ItemStack(Items.DIRT))
                     .title(Component.translatable("itemGroup.elementalrealms.block_tab"))
                     .displayItems((params, output) -> {
                         // Hier alle Blöcke reinpacken
