@@ -1,8 +1,11 @@
 package de.piggidragon.elementalrealms.attachments;
 
+import com.jcraft.jorbis.Block;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.magic.affinities.Affinity;
+import net.minecraft.core.BlockPos;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -26,6 +29,21 @@ public class ModAttachments {
                                     .xmap(ArrayList::new, list -> list)
                     )
                     .copyOnDeath()
+                    .build()
+    );
+
+    private static final Codec<BlockPos> BLOCK_POS_CODEC = RecordCodecBuilder.create(instance ->
+            instance.group(
+                    Codec.INT.fieldOf("x").forGetter(BlockPos::getX),
+                    Codec.INT.fieldOf("y").forGetter(BlockPos::getY),
+                    Codec.INT.fieldOf("z").forGetter(BlockPos::getZ)
+            ).apply(instance, BlockPos::new)
+    );
+
+    public static final Supplier<AttachmentType<BlockPos>> OVERWORLD_RETURN_POS = ATTACHMENT_TYPE.register(
+            "overworld_return_pos",
+            () -> AttachmentType.<BlockPos>builder(() -> null)
+                    .serialize(BLOCK_POS_CODEC.fieldOf("overworld_return_pos"))
                     .build()
     );
 
