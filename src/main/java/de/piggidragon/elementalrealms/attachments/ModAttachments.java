@@ -1,6 +1,5 @@
 package de.piggidragon.elementalrealms.attachments;
 
-import com.jcraft.jorbis.Block;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.piggidragon.elementalrealms.ElementalRealms;

@@ -31,7 +31,7 @@ public class PortalUtil {
             if (!state.isAir() && !state.getCollisionShape(level, check).isEmpty()) {
                 return false;
             }
-            if (player.getData(ModAttachments.OVERWORLD_RETURN_POS) != null){
+            if (player.getData(ModAttachments.OVERWORLD_RETURN_POS) != null) {
                 BlockPos returnPos = player.getData(ModAttachments.OVERWORLD_RETURN_POS);
                 if (pos.getX() == returnPos.getX() && pos.getZ() == returnPos.getZ()) {
                     return false;
