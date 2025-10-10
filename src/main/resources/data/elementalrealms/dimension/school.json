@@ -1,11 +1,13 @@
 {
   "type": "elementalrealms:school",
   "generator": {
-    "type": "minecraft:noise",
-    "biome_source": {
-      "type": "minecraft:fixed",
+    "type": "minecraft:flat",
+    "biome": "minecraft:the_void",
+    "settings": {
+      "layers": [
+        {"block": "minecraft:air", "height": 1}
+      ],
       "biome": "minecraft:the_void"
-    },
-    "settings": "minecraft:overworld"
+    }
   }
 }
