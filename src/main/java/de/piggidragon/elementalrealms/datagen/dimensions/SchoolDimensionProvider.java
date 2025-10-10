@@ -1,14 +1,25 @@
 package de.piggidragon.elementalrealms.datagen.dimensions;
 
 import com.google.gson.JsonObject;
+import de.piggidragon.elementalrealms.ElementalRealms;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
 public class SchoolDimensionProvider implements DataProvider {
+
+    PackOutput packOutput;
+
+    public SchoolDimensionProvider(PackOutput output) {
+        packOutput = output;
+    }
+
+
     public static void saveJson(CachedOutput output, JsonObject json, Path path) throws IOException {
         DataProvider.saveStable(output, json, path);
     }
@@ -46,9 +57,24 @@ public class SchoolDimensionProvider implements DataProvider {
         generator.addProperty("settings", "minecraft:overworld");
         dimension.add("generator", generator);
 
+        ResourceLocation dimensionLocation = ResourceLocation.fromNamespaceAndPath("elementalrealms", "school");
         try {
-            Path typePath = Path.of("data/elementalrealms/dimension_type/school.json");
-            Path dimensionPath = Path.of("data/elementalrealms/dimension/school.json");
+            Path typePath = packOutput
+                    .getOutputFolder()
+                    .resolve("data")
+                    .resolve(dimensionLocation.getNamespace())
+                    .resolve("dimension_type")
+                    .resolve(dimensionLocation.getPath() + ".json");
+
+            Path dimensionPath = packOutput
+                    .getOutputFolder()
+                    .resolve("data")
+                    .resolve(dimensionLocation.getNamespace())
+                    .resolve("dimension")
+                    .resolve(dimensionLocation.getPath() + ".json");
+
+            ElementalRealms.LOGGER.info("Saving School Dimension Type: " + typePath);
+            ElementalRealms.LOGGER.info("Saving School Dimension: " + dimensionPath);
 
             saveJson(cachedOutput, dimensionType, typePath);
             saveJson(cachedOutput, dimension, dimensionPath);

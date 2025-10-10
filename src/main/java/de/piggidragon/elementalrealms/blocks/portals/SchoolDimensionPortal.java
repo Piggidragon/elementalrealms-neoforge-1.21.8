@@ -1,4 +1,4 @@
-package de.piggidragon.elementalrealms.dimensions.beginner;
+package de.piggidragon.elementalrealms.blocks.portals;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -43,11 +43,10 @@ public class SchoolDimensionPortal extends Block {
                 return;
             }
 
-            // Keine relativen Bewegungen (absolute Position/Yaw/Pitch setzen)
             Set<Relative> relatives = Collections.emptySet();
             float yaw = player.getYRot();
             float pitch = player.getXRot();
-            boolean setCamera = true; // oder false, falls Kamera nicht angepasst werden soll
+            boolean setCamera = true;
 
             if (player.level().dimension() == SCHOOL_DIMENSION) {
                 ServerLevel overworld = player.getServer().getLevel(OVERWORLD);
