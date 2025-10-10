@@ -1,6 +1,7 @@
 package de.piggidragon.elementalrealms.blocks.portals;
 
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
+import de.piggidragon.elementalrealms.util.PortalUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -47,8 +48,15 @@ public class SchoolDimensionPortal extends Block {
 
                 if (overworld != null) {
                     BlockPos returnPos = player.getData(ModAttachments.OVERWORLD_RETURN_POS);
-                    player.setPortalCooldown();
-                    player.teleportTo(overworld, returnPos.getX()+2, returnPos.getY()+1, returnPos.getZ(), relatives, yaw, pitch, setCamera);
+
+                    if (returnPos != null) {
+                        BlockPos returnPosSafe = PortalUtil.safeTargetBlock(overworld, returnPos, 3, player);
+                        double x = returnPosSafe.getX() + 0.5;
+                        double y = returnPosSafe.getY();
+                        double z = returnPosSafe.getZ() + 0.5;
+                        player.teleportTo(overworld, x, y, z, relatives, yaw, pitch, setCamera);
+                        player.setPortalCooldown();
+                    }
                     player.removeData(ModAttachments.OVERWORLD_RETURN_POS);
                 }
             } else {
@@ -57,7 +65,7 @@ public class SchoolDimensionPortal extends Block {
                 if (school != null) {
                     player.setData(ModAttachments.OVERWORLD_RETURN_POS, pos);
 
-                    BlockPos center = new BlockPos(0, 60, 0);
+                    BlockPos center = new BlockPos(0, 61, 0);
                     for (int dx = -2; dx <= 2; dx++) {
                         for (int dz = -2; dz <= 2; dz++) {
                             school.setBlock(center.offset(dx, 0, dz), Blocks.STONE.defaultBlockState(), 3);
@@ -65,8 +73,12 @@ public class SchoolDimensionPortal extends Block {
                     }
                     school.setBlock(center.above(), PortalBlocks.SCHOOL_DIMENSION_PORTAL.get().defaultBlockState(), 3);
 
+                    BlockPos safeCenter = PortalUtil.safeTargetBlock(school, center.above(), 3, player);
+                    double x = safeCenter.getX() + 1.5;
+                    double y = safeCenter.getY() + 1;
+                    double z = safeCenter.getZ() + 0.5;
+                    player.teleportTo(school, x, y, z, relatives, yaw, pitch, setCamera);
                     player.setPortalCooldown();
-                    player.teleportTo(school, center.getX()+2, center.getY()+1, center.getZ(), relatives, yaw, pitch, setCamera);
                 }
             }
         }
