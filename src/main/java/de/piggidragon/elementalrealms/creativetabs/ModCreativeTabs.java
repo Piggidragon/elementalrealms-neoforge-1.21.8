@@ -1,6 +1,7 @@
 package de.piggidragon.elementalrealms.creativetabs;
 
 import de.piggidragon.elementalrealms.blocks.portals.PortalBlocks;
+import de.piggidragon.elementalrealms.items.dimension.DimensionItems;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -23,6 +24,16 @@ public class ModCreativeTabs {
                     .displayItems((params, output) -> {
                         // Hier alle Items reinpacken
                         AffinityItems.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
+                    })
+                    .build()
+    );
+    public static final Supplier<CreativeModeTab> ITEM_TAB = CREATIVE_MODE_TABS.register("item_tab",
+            () -> CreativeModeTab.builder()
+                    .icon(() -> new ItemStack(DimensionItems.PORTAL_STAFF.get()))
+                    .title(Component.translatable("itemGroup.elementalrealms.item_tab"))
+                    .displayItems((params, output) -> {
+                        // Hier alle Items reinpacken
+                        DimensionItems.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
                     })
                     .build()
     );

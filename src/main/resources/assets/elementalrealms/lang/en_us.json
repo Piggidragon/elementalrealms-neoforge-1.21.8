@@ -46,9 +46,12 @@
 
   "item.elementalrealms.affinity_stone_void": "Affinity Stone of Void",
 
+  "item.elementalrealms.portal_staff": "Portal Staff",
+
 
   "itemGroup.elementalrealms.affinity_tab": "Affinity Items",
   "itemGroup.elementalrealms.block_tab": "Blocks",
+  "itemGroup.elementalrealms.item_tab": "Items",
 
   "elementalrealms.configuration.title": "Elemental Realms Configs",
   "elementalrealms.configuration.section.elementalrealms.common.toml": "Elemental Realms Configs",

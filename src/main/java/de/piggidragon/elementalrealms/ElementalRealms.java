@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
 import de.piggidragon.elementalrealms.blocks.portals.PortalBlocks;
 import de.piggidragon.elementalrealms.creativetabs.ModCreativeTabs;
+import de.piggidragon.elementalrealms.entities.EntityTypes;
 import de.piggidragon.elementalrealms.items.dimension.DimensionItems;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import net.neoforged.api.distmarker.Dist;
@@ -26,6 +27,7 @@ public class ElementalRealms {
         ModAttachments.register(modEventBus);
         AffinityItems.register(modEventBus);
         DimensionItems.register(modEventBus);
+        EntityTypes.register(modEventBus);
         PortalBlocks.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
 

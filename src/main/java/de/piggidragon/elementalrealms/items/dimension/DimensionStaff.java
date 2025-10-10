@@ -25,10 +25,11 @@ public class DimensionStaff extends Item {
             double y = player.getY() + lookVec.y * distance;
             double z = player.getZ() + lookVec.z * distance;
 
-            entity.setPos(x,y,z);
+            entity.setPos(x, y, z);
             entity.setYRot(player.getYRot());
             level.addFreshEntity(entity);
+            return InteractionResult.SUCCESS;
         }
-        return super.use(level, player, hand);
+        return InteractionResult.PASS;
     }
 }

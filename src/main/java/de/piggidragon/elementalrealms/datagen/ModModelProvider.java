@@ -1,6 +1,7 @@
 package de.piggidragon.elementalrealms.datagen;
 
 import de.piggidragon.elementalrealms.blocks.portals.PortalBlocks;
+import de.piggidragon.elementalrealms.items.dimension.DimensionItems;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -62,6 +63,8 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(AffinityItems.ESSENCE_LIFE.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_VOID.get(), ModelTemplates.FLAT_ITEM);
+
+        itemModels.generateFlatItem(DimensionItems.PORTAL_STAFF.get(), ModelTemplates.FLAT_ITEM);
 
         /*
         // Für Tools/Handhelds
