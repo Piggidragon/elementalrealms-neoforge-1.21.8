@@ -1,6 +1,5 @@
 package de.piggidragon.elementalrealms.datagen;
 
-import de.piggidragon.elementalrealms.blocks.portals.PortalBlocks;
 import de.piggidragon.elementalrealms.items.dimension.DimensionItems;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -80,6 +79,6 @@ public class ModModelProvider extends ModelProvider {
 
 
         // Blocks
-        blockModels.createTrivialCube(PortalBlocks.SCHOOL_DIMENSION_PORTAL.get());
+        //blockModels.createTrivialCube(PortalBlocks.SCHOOL_DIMENSION_PORTAL.get());
     }
 }

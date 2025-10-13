@@ -1,6 +1,6 @@
 package de.piggidragon.elementalrealms.creativetabs;
 
-import de.piggidragon.elementalrealms.blocks.portals.PortalBlocks;
+import de.piggidragon.elementalrealms.blocks.ModBlocks;
 import de.piggidragon.elementalrealms.items.dimension.DimensionItems;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import net.minecraft.core.registries.Registries;
@@ -43,7 +43,7 @@ public class ModCreativeTabs {
                     .title(Component.translatable("itemGroup.elementalrealms.block_tab"))
                     .displayItems((params, output) -> {
                         // Hier alle Blöcke reinpacken
-                        PortalBlocks.BLOCKS.getEntries().forEach(block -> output.accept(block.get()));
+                        ModBlocks.BLOCKS.getEntries().forEach(block -> output.accept(block.get()));
                     })
                     .build()
     );

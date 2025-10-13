@@ -1,6 +1,8 @@
 package de.piggidragon.elementalrealms.entities;
 
 import de.piggidragon.elementalrealms.ElementalRealms;
+import de.piggidragon.elementalrealms.entities.custom.PortalEntity;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -11,9 +13,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class EntityTypes {
-    public static final DeferredRegister.Entities ENTITY_TYPES =
-            DeferredRegister.createEntities(ElementalRealms.MODID);
+public class ModEntities {
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
+            DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, ElementalRealms.MODID);
 
     public static final Supplier<EntityType<PortalEntity>> PORTAL_ENTITY = ENTITY_TYPES.register(
             "portal_entity",

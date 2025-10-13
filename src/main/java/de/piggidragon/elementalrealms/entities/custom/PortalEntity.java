@@ -1,18 +1,16 @@
-package de.piggidragon.elementalrealms.entities;
+package de.piggidragon.elementalrealms.entities.custom;
 
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
-import de.piggidragon.elementalrealms.blocks.portals.PortalBlocks;
-import de.piggidragon.elementalrealms.util.PortalUtil;
+import de.piggidragon.elementalrealms.entities.ModEntities;
+import de.piggidragon.elementalrealms.level.ModLevel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Relative;
@@ -21,6 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -29,16 +28,17 @@ import java.util.Set;
 
 public class PortalEntity extends Entity {
 
-    private static final ResourceKey<Level> SCHOOL_DIMENSION = ResourceKey.create(
-            Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath("elementalrealms", "school"));
-    private static final ResourceKey<Level> OVERWORLD = Level.OVERWORLD;
+    public final AnimationState idleAnimationState = new AnimationState();
+    public final AnimationState spawnAnimationState = new AnimationState();
+    private int idleAnimationTimeout = 0;
+    private int despawnTimerout = 0;
 
     public PortalEntity(EntityType<? extends PortalEntity> type, Level level) {
         super(type, level);
     }
 
-    @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    public void setDespawnTimer(PortalEntity portalEntity, int time) {
+        portalEntity.despawnTimerout = time;
     }
 
     @Override
@@ -49,16 +49,6 @@ public class PortalEntity extends Entity {
     @Override
     public boolean isPushable() {
         return false;
-    }
-
-    @Override
-    protected void readAdditionalSaveData(ValueInput valueInput) {
-
-    }
-
-    @Override
-    protected void addAdditionalSaveData(ValueOutput valueOutput) {
-
     }
 
     @Override
@@ -85,10 +75,44 @@ public class PortalEntity extends Entity {
         return false;
     }
 
+    public void setupAnimationStates() {
+        if (this.idleAnimationTimeout <= 0) {
+            this.idleAnimationTimeout = 160;
+            this.idleAnimationState.start(this.tickCount);
+        } else {
+            --this.idleAnimationTimeout;
+        }
+    }
+
+    @Override
+    protected void readAdditionalSaveData(ValueInput valueInput) {
+    }
+
+    @Override
+    protected void addAdditionalSaveData(ValueOutput valueOutput) {
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    }
+
     @Override
     public void tick() {
         super.tick();
+
+        if (this.level().isClientSide) {
+            this.setupAnimationStates();
+        }
+
         if (!this.level().isClientSide()) {
+
+            if (despawnTimerout > 0) {
+                despawnTimerout--;
+                if (despawnTimerout <= 0) {
+                    this.discard();
+                }
+            }
+
             List<ServerPlayer> players = this.level().getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox());
 
             for (ServerPlayer player : players) {
@@ -110,40 +134,42 @@ public class PortalEntity extends Entity {
             float pitch = player.getXRot();
             boolean setCamera = true;
 
-            if (player.level().dimension() == SCHOOL_DIMENSION) {
-                ServerLevel overworld = player.getServer().getLevel(OVERWORLD);
+            if (player.level().dimension() != ModLevel.OVERWORLD) {
+                ServerLevel overworld = player.getServer().getLevel(ModLevel.OVERWORLD);
 
                 if (overworld != null) {
-                    BlockPos returnPos = player.getData(ModAttachments.OVERWORLD_RETURN_POS);
-
-                    BlockPos returnPosSafe = PortalUtil.safeTargetBlock(overworld, returnPos, 3, player);
-                    double x = returnPosSafe.getX() + 0.5;
-                    double y = returnPosSafe.getY();
-                    double z = returnPosSafe.getZ() + 0.5;
+                    Vec3 returnPos = player.getData(ModAttachments.OVERWORLD_RETURN_POS);
+                    
+                    double x = returnPos.x();
+                    double y = returnPos.y();
+                    double z = returnPos.z();
                     player.teleportTo(overworld, x, y, z, relatives, yaw, pitch, setCamera);
-                    player.setPortalCooldown();
                     player.removeData(ModAttachments.OVERWORLD_RETURN_POS);
+                    player.setPortalCooldown();
+                    this.discard();
                 }
             } else {
-                ServerLevel school = player.getServer().getLevel(SCHOOL_DIMENSION);
-
+                ServerLevel school = player.getServer().getLevel(ModLevel.SCHOOL_DIMENSION);
+                player.setData(ModAttachments.OVERWORLD_RETURN_POS, player.position());
                 if (school != null) {
-                    player.setData(ModAttachments.OVERWORLD_RETURN_POS, pos);
-
                     BlockPos center = new BlockPos(0, 61, 0);
                     for (int dx = -2; dx <= 2; dx++) {
                         for (int dz = -2; dz <= 2; dz++) {
                             school.setBlock(center.offset(dx, 0, dz), Blocks.STONE.defaultBlockState(), 3);
                         }
                     }
-                    school.setBlock(center.above(), PortalBlocks.SCHOOL_DIMENSION_PORTAL.get().defaultBlockState(), 3);
+                    PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), level);
+                    school.addFreshEntity(portal);
+                    portal.setPos(center.getX()+1.3, center.getY(), center.getZ());
 
-                    BlockPos safeCenter = PortalUtil.safeTargetBlock(school, center.above(), 3, player);
-                    double x = safeCenter.getX() + 1.5;
-                    double y = safeCenter.getY() + 1;
-                    double z = safeCenter.getZ() + 0.5;
-                    player.teleportTo(school, x, y, z, relatives, yaw, pitch, setCamera);
+
+                    double x = center.above().getX();
+                    double y = center.above().getY();
+                    double z = center.above().getZ();
+
+                    player.teleportTo(school, x+2, y, z, relatives, yaw, pitch, setCamera);
                     player.setPortalCooldown();
+                    this.discard();
                 }
             }
         }

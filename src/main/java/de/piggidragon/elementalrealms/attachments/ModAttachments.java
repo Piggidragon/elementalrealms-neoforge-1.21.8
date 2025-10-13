@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.magic.affinities.Affinity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -31,18 +32,18 @@ public class ModAttachments {
                     .build()
     );
 
-    private static final Codec<BlockPos> BLOCK_POS_CODEC = RecordCodecBuilder.create(instance ->
+    private static final Codec<Vec3> VEC3_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    Codec.INT.fieldOf("x").forGetter(BlockPos::getX),
-                    Codec.INT.fieldOf("y").forGetter(BlockPos::getY),
-                    Codec.INT.fieldOf("z").forGetter(BlockPos::getZ)
-            ).apply(instance, BlockPos::new)
+                    Codec.DOUBLE.fieldOf("x").forGetter(Vec3::x),
+                    Codec.DOUBLE.fieldOf("y").forGetter(Vec3::y),
+                    Codec.DOUBLE.fieldOf("z").forGetter(Vec3::z)
+            ).apply(instance, Vec3::new)
     );
 
-    public static final Supplier<AttachmentType<BlockPos>> OVERWORLD_RETURN_POS = ATTACHMENT_TYPE.register(
+    public static final Supplier<AttachmentType<Vec3>> OVERWORLD_RETURN_POS = ATTACHMENT_TYPE.register(
             "overworld_return_pos",
-            () -> AttachmentType.<BlockPos>builder(() -> null)
-                    .serialize(BLOCK_POS_CODEC.fieldOf("overworld_return_pos"))
+            () -> AttachmentType.<Vec3>builder(() -> Vec3.ZERO)
+                    .serialize(VEC3_CODEC.fieldOf("overworld_return_pos"))
                     .build()
     );
 

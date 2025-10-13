@@ -1,7 +1,7 @@
 package de.piggidragon.elementalrealms;
 
-import de.piggidragon.elementalrealms.entities.EntityTypes;
-import de.piggidragon.elementalrealms.entities.renderer.PortalRenderer;
+import de.piggidragon.elementalrealms.entities.ModEntities;
+import de.piggidragon.elementalrealms.entities.client.portal.PortalRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -21,6 +21,6 @@ public final class ElementalRealmsClient {
 
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(EntityTypes.PORTAL_ENTITY.get(), PortalRenderer::new);
+        event.registerEntityRenderer(ModEntities.PORTAL_ENTITY.get(), PortalRenderer::new);
     }
 }
