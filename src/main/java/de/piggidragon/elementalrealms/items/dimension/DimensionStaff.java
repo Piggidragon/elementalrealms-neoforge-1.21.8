@@ -3,8 +3,10 @@ package de.piggidragon.elementalrealms.items.dimension;
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
 import de.piggidragon.elementalrealms.entities.ModEntities;
 import de.piggidragon.elementalrealms.entities.custom.PortalEntity;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -17,7 +19,7 @@ public class DimensionStaff extends Item {
 
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        if (level.dimension() == Level.OVERWORLD){
+        if (level.dimension() != Level.OVERWORLD){
             return InteractionResult.PASS;
         }
         if (!level.isClientSide()) {
@@ -34,6 +36,8 @@ public class DimensionStaff extends Item {
             level.addFreshEntity(entity);
 
             entity.setDespawnTimer(entity,200);
+            player.getMainHandItem().hurtAndBreak(1, ((ServerLevel) level), player,
+                    item -> player.onEquippedItemBroken(item, EquipmentSlot.MAINHAND));
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;

@@ -13,7 +13,9 @@ public class DimensionItems {
     public static final DeferredItem<Item> PORTAL_STAFF = ITEMS.registerItem(
             "portal_staff",
             DimensionStaff::new,
-            new Item.Properties());
+            new Item.Properties()
+                    .durability(16)
+    );
 
 
     public static void register(IEventBus bus) {
