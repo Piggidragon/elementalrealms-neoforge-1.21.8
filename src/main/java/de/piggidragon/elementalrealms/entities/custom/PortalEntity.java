@@ -1,5 +1,6 @@
 package de.piggidragon.elementalrealms.entities.custom;
 
+import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
 import de.piggidragon.elementalrealms.entities.ModEntities;
 import de.piggidragon.elementalrealms.level.ModLevel;
@@ -117,6 +118,7 @@ public class PortalEntity extends Entity {
 
             for (ServerPlayer player : players) {
                 if (player != null && !player.isSpectator()) {
+                    ElementalRealms.LOGGER.info("Teleporting player: " + player.getName().getString());
                     teleportPlayer(player.level(), this.getOnPos(), player);
                 }
             }
@@ -134,6 +136,7 @@ public class PortalEntity extends Entity {
             float pitch = player.getXRot();
             boolean setCamera = true;
 
+            ElementalRealms.LOGGER.info(player.level().dimension().toString());
             if (player.level().dimension() != ModLevel.OVERWORLD) {
                 ServerLevel overworld = player.getServer().getLevel(ModLevel.OVERWORLD);
 

@@ -7,6 +7,7 @@ import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 
 public class ModModelProvider extends ModelProvider {
     public ModModelProvider(PackOutput output) {
@@ -62,8 +63,6 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(AffinityItems.ESSENCE_LIFE.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_VOID.get(), ModelTemplates.FLAT_ITEM);
-
-        itemModels.generateFlatItem(DimensionItems.PORTAL_STAFF.get(), ModelTemplates.FLAT_ITEM);
 
         /*
         // Für Tools/Handhelds

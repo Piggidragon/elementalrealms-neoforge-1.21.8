@@ -11,7 +11,7 @@ public class DimensionItems {
             DeferredRegister.createItems(ElementalRealms.MODID);
 
     public static final DeferredItem<Item> PORTAL_STAFF = ITEMS.registerItem(
-            "portal_staff",
+            "dimension_staff",
             DimensionStaff::new,
             new Item.Properties()
                     .durability(16)
