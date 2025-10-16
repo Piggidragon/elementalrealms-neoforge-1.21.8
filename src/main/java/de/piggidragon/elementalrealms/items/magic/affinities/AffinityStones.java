@@ -31,14 +31,14 @@ public class AffinityStones extends Item {
                         ModAffinities.clearAffinities(player);
                         itemStack.shrink(1);
                     } catch (Exception e) {
-                        player.sendSystemMessage(Component.literal(e.getMessage()));
+                        player.displayClientMessage(Component.literal(e.getMessage()), true);
                     }
                 } else {
                     try {
                         ModAffinities.addAffinity(player, stone.affinity);
                         itemStack.shrink(1);
                     } catch (Exception e) {
-                        player.sendSystemMessage(Component.literal(e.getMessage()));
+                        player.displayClientMessage(Component.literal(e.getMessage()), true);
                     }
                 }
                 event.setCancellationResult(InteractionResult.SUCCESS);

@@ -29,9 +29,9 @@ public class ModCommands {
     public static void onRegisterCommands(RegisterCommandsEvent event) {
         var dispatcher = event.getDispatcher();
         ElementalRealms.LOGGER.info("COMMANDREGISTER");
-        // /affinities list
         dispatcher.register(Commands.literal("affinities")
                 .requires(cs -> cs.hasPermission(2))
+                // /affinities list
                 .then(Commands.literal("list")
                         .executes(ctx -> {
                             ServerPlayer player = ctx.getSource().getPlayerOrException();
