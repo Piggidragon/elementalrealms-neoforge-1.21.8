@@ -4,7 +4,6 @@ import de.piggidragon.elementalrealms.items.dimension.DimensionItems;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
