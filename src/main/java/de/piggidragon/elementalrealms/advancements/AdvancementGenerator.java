@@ -1,10 +1,13 @@
 package de.piggidragon.elementalrealms.advancements;
 
+import de.piggidragon.elementalrealms.items.dimension.DimensionItems;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.KilledTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -21,7 +24,7 @@ public class AdvancementGenerator implements AdvancementSubProvider {
 
     @Override
     public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer) {
-        Advancement.Builder.advancement()
+        AdvancementHolder rootAdvancement = Advancement.Builder.advancement()
                 .display(
                         new ItemStack(AffinityItems.AFFINITY_STONE_SPACE.get()),
                         Component.translatable("advancements.elementalrealms.root.title"),
@@ -42,5 +45,22 @@ public class AdvancementGenerator implements AdvancementSubProvider {
                         )
                 )
                 .save(consumer, ResourceLocation.fromNamespaceAndPath("elementalrealms", "root"));
+
+        Advancement.Builder.advancement()
+                .parent(rootAdvancement)
+                .display(
+                        new ItemStack(DimensionItems.DIMENSION_STAFF.get()),
+                        Component.translatable("advancements.elementalrealms.get_staff.title"),
+                        Component.translatable("advancements.elementalrealms.get_staff.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("has_staff",
+                        InventoryChangeTrigger.TriggerInstance.hasItems(DimensionItems.DIMENSION_STAFF.get())
+                )
+                .save(consumer, ResourceLocation.fromNamespaceAndPath("elementalrealms", "get_staff"));
     }
 }
