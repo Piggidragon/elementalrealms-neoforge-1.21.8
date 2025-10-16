@@ -8,8 +8,8 @@ import java.util.List;
 
 public class ModAffinitiesRoll {
     private static boolean chance(RandomSource random, int probabilityPercent) {
-        if (probabilityPercent <= 0) return false;   // 0% oder weniger => false
-        if (probabilityPercent >= 100) return true;  // 100% oder mehr => true
+        if (probabilityPercent <= 0) return false;
+        if (probabilityPercent >= 100) return true;
         return random.nextInt(100) < probabilityPercent;
     }
 
