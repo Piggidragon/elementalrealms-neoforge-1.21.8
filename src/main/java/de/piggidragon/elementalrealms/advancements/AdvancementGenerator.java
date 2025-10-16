@@ -28,7 +28,7 @@ public class AdvancementGenerator implements AdvancementSubProvider {
                         new ItemStack(AffinityItems.AFFINITY_STONE_SPACE.get()),
                         Component.translatable("advancements.elementalrealms.root.title"),
                         Component.translatable("advancements.elementalrealms.root.description"),
-                        ResourceLocation.fromNamespaceAndPath("elementalrealms", "gui/advancements/backgrounds/elementalrealms"),
+                        ResourceLocation.fromNamespaceAndPath("minecraft", "block/cracked_deepslate_tiles"),
                         AdvancementType.TASK,
                         true,
                         true,
