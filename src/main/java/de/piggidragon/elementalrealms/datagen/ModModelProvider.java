@@ -15,6 +15,7 @@ public class ModModelProvider extends ModelProvider {
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
 
+        // Items
         itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_FIRE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(AffinityItems.AFFINITY_SHARD_FIRE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(AffinityItems.ESSENCE_FIRE.get(), ModelTemplates.FLAT_ITEM);
@@ -72,5 +73,9 @@ public class ModModelProvider extends ModelProvider {
         // Für Armor
         // itemModels.generateTrimmableItem(...)
         */
+
+
+        // Blocks
+        //blockModels.createTrivialCube(PortalBlocks.SCHOOL_DIMENSION_PORTAL.get());
     }
 }

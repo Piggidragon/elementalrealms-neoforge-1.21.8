@@ -8,7 +8,8 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class AffinityItems {
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ElementalRealms.MODID);
+    public static final DeferredRegister.Items ITEMS =
+            DeferredRegister.createItems(ElementalRealms.MODID);
 
     public static final DeferredItem<Item> AFFINITY_STONE_FIRE = ITEMS.registerItem(
             "affinity_stone_fire",
@@ -157,7 +158,6 @@ public class AffinityItems {
             "affinity_stone_void",
             (p) -> new AffinityStones(p, Affinity.NONE),
             new Item.Properties());
-
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);
