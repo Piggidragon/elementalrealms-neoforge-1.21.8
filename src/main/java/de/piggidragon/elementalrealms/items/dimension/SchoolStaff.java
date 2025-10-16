@@ -5,7 +5,6 @@ import de.piggidragon.elementalrealms.entities.custom.PortalEntity;
 import de.piggidragon.elementalrealms.level.ModLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -14,12 +13,41 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-import javax.sound.sampled.Port;
 import java.util.List;
 
 public class SchoolStaff extends Item {
     public SchoolStaff(Properties properties) {
         super(properties);
+    }
+
+    private static void spawnPortal(Level level, Player player) {
+        PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), level);
+        portal.setOwner(player);
+        portal.setTargetLevel(player.getServer().getLevel(ModLevel.SCHOOL_DIMENSION));
+
+        Vec3 lookVec = player.getLookAngle();
+        double distance = 2.0;
+        double x = player.getX() + lookVec.x * distance;
+        double y = player.getY() + 0.5;
+        double z = player.getZ() + lookVec.z * distance;
+
+        portal.setPos(x, y, z);
+        portal.setYRot(player.getYRot());
+        level.addFreshEntity(portal);
+
+        portal.setDespawnTimer(portal, 200);
+    }
+
+    private static void removeOldPortals(Level level, Player player) {
+        List<PortalEntity> portals = level.getEntitiesOfClass(
+                PortalEntity.class,
+                player.getBoundingBox().inflate(1000),
+                portal -> portal.getOwnerUUID() != null && portal.getOwnerUUID().equals(player.getUUID())
+        );
+
+        for (PortalEntity portal : portals) {
+            portal.discard();
+        }
     }
 
     @Override
@@ -40,35 +68,5 @@ public class SchoolStaff extends Item {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
-    }
-
-    private static void spawnPortal(Level level, Player player) {
-            PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), level);
-            portal.setOwner(player);
-            portal.setTargetLevel(player.getServer().getLevel(ModLevel.SCHOOL_DIMENSION));
-
-            Vec3 lookVec = player.getLookAngle();
-            double distance = 2.0;
-            double x = player.getX() + lookVec.x * distance;
-            double y = player.getY() + 0.5;
-            double z = player.getZ() + lookVec.z * distance;
-
-            portal.setPos(x, y, z);
-            portal.setYRot(player.getYRot());
-            level.addFreshEntity(portal);
-
-            portal.setDespawnTimer(portal, 200);
-    }
-
-    private static void removeOldPortals(Level level, Player player) {
-        List<PortalEntity> portals = level.getEntitiesOfClass(
-                PortalEntity.class,
-                player.getBoundingBox().inflate(1000),
-                portal -> portal.getOwnerUUID() != null && portal.getOwnerUUID().equals(player.getUUID())
-        );
-
-        for (PortalEntity portal : portals) {
-            portal.discard();
-        }
     }
 }
