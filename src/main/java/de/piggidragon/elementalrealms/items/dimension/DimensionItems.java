@@ -12,7 +12,7 @@ public class DimensionItems {
 
     public static final DeferredItem<Item> PORTAL_STAFF = ITEMS.registerItem(
             "dimension_staff",
-            DimensionStaff::new,
+            SchoolStaff::new,
             new Item.Properties()
                     .durability(16)
     );

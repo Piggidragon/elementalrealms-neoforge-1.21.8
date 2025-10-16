@@ -3,9 +3,10 @@ package de.piggidragon.elementalrealms.entities.custom;
 import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
 import de.piggidragon.elementalrealms.entities.ModEntities;
-import de.piggidragon.elementalrealms.level.ModLevel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -31,15 +32,23 @@ public class PortalEntity extends Entity {
 
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState spawnAnimationState = new AnimationState();
+    private final ResourceKey<Level> portalLevel;
+    private ServerLevel targetLevel;
     private int idleAnimationTimeout = 0;
     private int despawnTimerout = 0;
 
+
     public PortalEntity(EntityType<? extends PortalEntity> type, Level level) {
         super(type, level);
+        this.portalLevel = level.dimension();
     }
 
     public void setDespawnTimer(PortalEntity portalEntity, int time) {
         portalEntity.despawnTimerout = time;
+    }
+
+    public void setTargetLevel(ServerLevel targetLevel) {
+        this.targetLevel = targetLevel;
     }
 
     @Override
@@ -118,62 +127,63 @@ public class PortalEntity extends Entity {
 
             for (ServerPlayer player : players) {
                 if (player != null && !player.isSpectator()) {
-                    ElementalRealms.LOGGER.info("Teleporting player: " + player.getName().getString());
-                    teleportPlayer(player.level(), this.getOnPos(), player);
+                    teleportPlayer(player.level(), player);
+
                 }
             }
         }
     }
 
-    private void teleportPlayer(Level level, BlockPos pos, ServerPlayer player) {
+    private void teleportPlayer(Level level, ServerPlayer player) {
         if (!level.isClientSide) {
+
             if (player.isOnPortalCooldown()) {
+                player.displayClientMessage(Component.literal("Portal is on cooldown!"), true);
+                return;
+            }
+            if (targetLevel == null) {
                 return;
             }
 
+            ServerLevel overworld = player.getServer().getLevel(Level.OVERWORLD);
             Set<Relative> relatives = Collections.emptySet();
             float yaw = player.getYRot();
             float pitch = player.getXRot();
             boolean setCamera = true;
 
-            ElementalRealms.LOGGER.info(player.level().dimension().toString());
-            if (player.level().dimension() != ModLevel.OVERWORLD) {
-                ServerLevel overworld = player.getServer().getLevel(ModLevel.OVERWORLD);
+            if (portalLevel == Level.OVERWORLD) {
 
-                if (overworld != null) {
-                    Vec3 returnPos = player.getData(ModAttachments.OVERWORLD_RETURN_POS);
-                    
-                    double x = returnPos.x();
-                    double y = returnPos.y();
-                    double z = returnPos.z();
-                    player.teleportTo(overworld, x, y, z, relatives, yaw, pitch, setCamera);
-                    player.removeData(ModAttachments.OVERWORLD_RETURN_POS);
-                    player.setPortalCooldown();
-                    this.discard();
-                }
-            } else {
-                ServerLevel school = player.getServer().getLevel(ModLevel.SCHOOL_DIMENSION);
-                player.setData(ModAttachments.OVERWORLD_RETURN_POS, player.position());
-                if (school != null) {
-                    BlockPos center = new BlockPos(0, 61, 0);
-                    for (int dx = -2; dx <= 2; dx++) {
-                        for (int dz = -2; dz <= 2; dz++) {
-                            school.setBlock(center.offset(dx, 0, dz), Blocks.STONE.defaultBlockState(), 3);
-                        }
+                player.setData(ModAttachments.OVERWORLD_RETURN_POS, new Vec3(player.getX(), player.getY(), player.getZ()));
+                BlockPos center = new BlockPos(0, 61, 0);
+
+                for (int dx = -2; dx <= 2; dx++) {
+                    for (int dz = -2; dz <= 2; dz++) {
+                        targetLevel.setBlock(center.offset(dx, 0, dz), Blocks.STONE.defaultBlockState(), 3);
                     }
-                    PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), level);
-                    school.addFreshEntity(portal);
-                    portal.setPos(center.getX()+1.3, center.getY(), center.getZ());
-
-
-                    double x = center.above().getX();
-                    double y = center.above().getY();
-                    double z = center.above().getZ();
-
-                    player.teleportTo(school, x+2, y, z, relatives, yaw, pitch, setCamera);
-                    player.setPortalCooldown();
-                    this.discard();
                 }
+
+                PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), targetLevel);
+                portal.setTargetLevel(overworld);
+                targetLevel.addFreshEntity(portal);
+                portal.setPos(center.getX() + 0.5, center.getY() + 0.3, center.getZ() + 0.5);
+
+                double x = center.above().getX();
+                double y = center.above().getY();
+                double z = center.above().getZ();
+
+                player.teleportTo(targetLevel, x + 2, y, z, relatives, yaw, pitch, setCamera);
+                player.setPortalCooldown();
+                this.discard();
+            } else {
+                Vec3 returnPos = player.getData(ModAttachments.OVERWORLD_RETURN_POS);
+
+                double x = returnPos.x();
+                double y = returnPos.y();
+                double z = returnPos.z();
+                player.teleportTo(overworld, x, y, z, relatives, yaw, pitch, setCamera);
+                player.removeData(ModAttachments.OVERWORLD_RETURN_POS);
+                player.setPortalCooldown();
+                this.discard();
             }
         }
     }

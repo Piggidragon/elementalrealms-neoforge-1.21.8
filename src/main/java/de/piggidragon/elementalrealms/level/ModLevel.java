@@ -8,5 +8,4 @@ import net.minecraft.world.level.Level;
 public class ModLevel {
     public static final ResourceKey<Level> SCHOOL_DIMENSION = ResourceKey.create(
             Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath("elementalrealms", "school"));
-    public static final ResourceKey<Level> OVERWORLD = Level.OVERWORLD;
 }

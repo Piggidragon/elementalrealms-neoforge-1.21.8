@@ -1,8 +1,8 @@
 package de.piggidragon.elementalrealms.items.dimension;
 
-import de.piggidragon.elementalrealms.attachments.ModAttachments;
 import de.piggidragon.elementalrealms.entities.ModEntities;
 import de.piggidragon.elementalrealms.entities.custom.PortalEntity;
+import de.piggidragon.elementalrealms.level.ModLevel;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -12,8 +12,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-public class DimensionStaff extends Item {
-    public DimensionStaff(Properties properties) {
+public class SchoolStaff extends Item {
+    public SchoolStaff(Properties properties) {
         super(properties);
     }
 
@@ -23,7 +23,8 @@ public class DimensionStaff extends Item {
             return InteractionResult.PASS;
         }
         if (!level.isClientSide()) {
-            PortalEntity entity = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), level);
+            PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), level);
+            portal.setTargetLevel(player.getServer().getLevel(ModLevel.SCHOOL_DIMENSION));
 
             Vec3 lookVec = player.getLookAngle();
             double distance = 2.0;
@@ -31,11 +32,11 @@ public class DimensionStaff extends Item {
             double y = player.getY()+0.3;
             double z = player.getZ() + lookVec.z * distance;
 
-            entity.setPos(x, y, z);
-            entity.setYRot(player.getYRot());
-            level.addFreshEntity(entity);
+            portal.setPos(x, y, z);
+            portal.setYRot(player.getYRot());
+            level.addFreshEntity(portal);
 
-            entity.setDespawnTimer(entity,200);
+            portal.setDespawnTimer(portal,200);
             player.getMainHandItem().hurtAndBreak(1, ((ServerLevel) level), player,
                     item -> player.onEquippedItemBroken(item, EquipmentSlot.MAINHAND));
             return InteractionResult.SUCCESS;
