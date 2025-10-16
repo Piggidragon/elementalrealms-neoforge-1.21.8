@@ -1,58 +1,42 @@
 {
-
   "item.elementalrealms.affinity_stone_fire": "Affinity Stone of Fire",
   "item.elementalrealms.affinity_shard_fire": "Shard of Fire",
   "item.elementalrealms.essence_fire": "Essence of Fire",
-
   "item.elementalrealms.affinity_stone_water": "Affinity Stone of Water",
   "item.elementalrealms.affinity_shard_water": "Shard of Water",
   "item.elementalrealms.essence_water": "Essence of Water",
-
   "item.elementalrealms.affinity_stone_wind": "Affinity Stone of Wind",
   "item.elementalrealms.affinity_shard_wind": "Shard of Wind",
   "item.elementalrealms.essence_wind": "Essence of Wind",
-
   "item.elementalrealms.affinity_stone_earth": "Affinity Stone of Earth",
   "item.elementalrealms.affinity_shard_earth": "Shard of Earth",
   "item.elementalrealms.essence_earth": "Essence of Earth",
-
   "item.elementalrealms.affinity_stone_lightning": "Affinity Stone of Lightning",
   "item.elementalrealms.affinity_shard_lightning": "Shard of Lightning",
   "item.elementalrealms.essence_lightning": "Essence of Lightning",
-
   "item.elementalrealms.affinity_stone_ice": "Affinity Stone of Ice",
   "item.elementalrealms.affinity_shard_ice": "Shard of Ice",
   "item.elementalrealms.essence_ice": "Essence of Ice",
-
   "item.elementalrealms.affinity_stone_sound": "Affinity Stone of Sound",
   "item.elementalrealms.affinity_shard_sound": "Shard of Sound",
   "item.elementalrealms.essence_sound": "Essence of Sound",
-
   "item.elementalrealms.affinity_stone_gravity": "Affinity Stone of Gravity",
   "item.elementalrealms.affinity_shard_gravity": "Shard of Gravity",
   "item.elementalrealms.essence_gravity": "Essence of Gravity",
-
   "item.elementalrealms.affinity_stone_time": "Affinity Stone of Time",
   "item.elementalrealms.affinity_shard_time": "Shard of Time",
   "item.elementalrealms.essence_time": "Essence of Time",
-
   "item.elementalrealms.affinity_stone_space": "Affinity Stone of Space",
   "item.elementalrealms.affinity_shard_space": "Shard of Space",
   "item.elementalrealms.essence_space": "Essence of Space",
-
   "item.elementalrealms.affinity_stone_life": "Affinity Stone of Life",
   "item.elementalrealms.affinity_shard_life": "Shard of Life",
   "item.elementalrealms.essence_life": "Essence of Life",
-
   "item.elementalrealms.affinity_stone_void": "Affinity Stone of Void",
-
   "item.elementalrealms.dimension_staff": "Dimension Staff",
-
-
   "itemGroup.elementalrealms.affinity_tab": "Affinity Items",
   "itemGroup.elementalrealms.block_tab": "Blocks",
   "itemGroup.elementalrealms.item_tab": "Items",
-
   "elementalrealms.configuration.title": "Elemental Realms Configs",
   "elementalrealms.configuration.section.elementalrealms.common.toml": "Elemental Realms Configs",
   "elementalrealms.configuration.section.elementalrealms.common.toml.title": "Elemental Realms Configs",
