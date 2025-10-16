@@ -216,13 +216,13 @@ public class PortalEntity extends Entity {
                 }
                 PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), targetLevel, true, -1, overworld, null);
                 targetLevel.addFreshEntity(portal);
-                portal.setPos(center.getX(), center.getY()+1, center.getZ());
+                portal.setPos(center.getX(), center.getY() + 1, center.getZ());
 
                 double x = center.above().getX();
                 double y = center.above().getY();
                 double z = center.above().getZ();
 
-                player.teleportTo(targetLevel, x, y, z+1, relatives, yaw, pitch, setCamera);
+                player.teleportTo(targetLevel, x, y, z + 1, relatives, yaw, pitch, setCamera);
                 player.setPortalCooldown();
                 if (discard) {
                     this.discard();
@@ -233,7 +233,7 @@ public class PortalEntity extends Entity {
                 double x = returnPos.x();
                 double y = returnPos.y();
                 double z = returnPos.z();
-                player.teleportTo(overworld, x, y, z+1, relatives, yaw, pitch, setCamera);
+                player.teleportTo(overworld, x, y, z + 1, relatives, yaw, pitch, setCamera);
                 player.removeData(ModAttachments.OVERWORLD_RETURN_POS);
                 player.setPortalCooldown();
                 if (discard) {
