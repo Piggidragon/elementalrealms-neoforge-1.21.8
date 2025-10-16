@@ -3,9 +3,11 @@ package de.piggidragon.elementalrealms.entities.custom;
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
 import de.piggidragon.elementalrealms.entities.ModEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -37,7 +39,7 @@ public class PortalEntity extends Entity {
     private int idleAnimationTimeout = 0;
     private boolean spawnAnimationStarted = false;
 
-    private int despawnTimerout = 0;
+    private int despawnTimeout = 0;
 
 
     public PortalEntity(EntityType<? extends PortalEntity> type, Level level) {
@@ -51,7 +53,7 @@ public class PortalEntity extends Entity {
     }
 
     public void setDespawnTimer(PortalEntity portalEntity, int time) {
-        portalEntity.despawnTimerout = time;
+        portalEntity.despawnTimeout = time;
     }
 
     public void setTargetLevel(ServerLevel targetLevel) {
@@ -107,10 +109,27 @@ public class PortalEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(ValueInput valueInput) {
+
+        this.despawnTimeout = valueInput.getIntOr("DespawnTimer", 0);
+        String levelKey = valueInput.getStringOr("TargetLevel", "");
+
+        if (!levelKey.isEmpty() && !this.level().isClientSide()) {
+            ResourceKey<Level> key = ResourceKey.create(
+                    Registries.DIMENSION,
+                    ResourceLocation.parse(levelKey)
+            );
+            this.targetLevel = this.getServer().getLevel(key);
+        }
+
     }
 
     @Override
     protected void addAdditionalSaveData(ValueOutput valueOutput) {
+        valueOutput.putInt("DespawnTimer", this.despawnTimeout);
+
+        if (this.targetLevel != null) {
+            valueOutput.putString("TargetLevel", this.targetLevel.dimension().location().toString());
+        }
     }
 
     @Override
@@ -127,9 +146,9 @@ public class PortalEntity extends Entity {
 
         if (!this.level().isClientSide()) {
 
-            if (despawnTimerout > 0) {
-                despawnTimerout--;
-                if (despawnTimerout <= 0) {
+            if (despawnTimeout > 0) {
+                despawnTimeout--;
+                if (despawnTimeout <= 0) {
                     this.discard();
                 }
             }
