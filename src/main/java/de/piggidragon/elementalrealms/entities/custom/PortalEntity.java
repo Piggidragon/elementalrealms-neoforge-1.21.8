@@ -38,6 +38,7 @@ public class PortalEntity extends Entity {
     private ServerLevel targetLevel;
 
     private UUID ownerUUID;
+    private boolean discard = true;
 
     private int idleAnimationTimeout = 0;
     private boolean spawnAnimationStarted = false;
@@ -55,16 +56,12 @@ public class PortalEntity extends Entity {
         }
     }
 
-    public void setDespawnTimer(PortalEntity portalEntity, int time) {
-        portalEntity.despawnTimeout = time;
-    }
-
-    public void setTargetLevel(ServerLevel targetLevel) {
+    public PortalEntity(EntityType<? extends PortalEntity> type, Level level, boolean discard, int despawnTimeout, ServerLevel targetLevel, UUID ownerUUID) {
+        this(type, level);
+        this.discard = discard;
+        this.despawnTimeout = despawnTimeout;
         this.targetLevel = targetLevel;
-    }
-
-    public void setOwner(@Nullable Player owner) {
-        this.ownerUUID = owner != null ? owner.getUUID() : null;
+        this.ownerUUID = ownerUUID;
     }
 
     public UUID getOwnerUUID() {
@@ -216,8 +213,7 @@ public class PortalEntity extends Entity {
                     }
                 }
 
-                PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), targetLevel);
-                portal.setTargetLevel(overworld);
+                PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), targetLevel, true, -1, overworld, null);
                 targetLevel.addFreshEntity(portal);
                 portal.setPos(center.getX() + 0.5, center.getY() + 1.5, center.getZ() + 0.5);
 
@@ -227,7 +223,9 @@ public class PortalEntity extends Entity {
 
                 player.teleportTo(targetLevel, x + 2, y, z, relatives, yaw, pitch, setCamera);
                 player.setPortalCooldown();
-                this.discard();
+                if (discard) {
+                    this.discard();
+                }
             } else {
                 Vec3 returnPos = player.getData(ModAttachments.OVERWORLD_RETURN_POS);
 
@@ -237,7 +235,9 @@ public class PortalEntity extends Entity {
                 player.teleportTo(overworld, x, y, z, relatives, yaw, pitch, setCamera);
                 player.removeData(ModAttachments.OVERWORLD_RETURN_POS);
                 player.setPortalCooldown();
-                this.discard();
+                if (discard) {
+                    this.discard();
+                }
             }
         }
     }
