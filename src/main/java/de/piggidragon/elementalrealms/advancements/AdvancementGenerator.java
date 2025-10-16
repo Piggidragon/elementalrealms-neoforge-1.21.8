@@ -1,5 +1,6 @@
 package de.piggidragon.elementalrealms.advancements;
 
+import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
@@ -12,7 +13,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -23,10 +23,10 @@ public class AdvancementGenerator implements AdvancementSubProvider {
     public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer) {
         Advancement.Builder.advancement()
                 .display(
-                        new ItemStack(Items.DRAGON_HEAD),
+                        new ItemStack(AffinityItems.AFFINITY_STONE_SPACE.get()),
                         Component.translatable("advancements.elementalrealms.root.title"),
                         Component.translatable("advancements.elementalrealms.root.description"),
-                        ResourceLocation.fromNamespaceAndPath("elementalrealms", "textures/gui/advancements/backgrounds/elementalrealms.png"),
+                        ResourceLocation.fromNamespaceAndPath("elementalrealms", "gui/advancements/backgrounds/elementalrealms"),
                         AdvancementType.TASK,
                         true,
                         true,

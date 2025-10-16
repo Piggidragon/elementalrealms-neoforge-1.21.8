@@ -16,13 +16,13 @@
     }
   },
   "display": {
-    "background": "elementalrealms:textures/gui/advancements/backgrounds/elementalrealms.png",
+    "background": "elementalrealms:gui/advancements/backgrounds/elementalrealms",
     "description": {
       "translate": "advancements.elementalrealms.root.description"
     },
     "icon": {
       "count": 1,
-      "id": "minecraft:dragon_head"
+      "id": "elementalrealms:affinity_stone_space"
     },
     "title": {
       "translate": "advancements.elementalrealms.root.title"
