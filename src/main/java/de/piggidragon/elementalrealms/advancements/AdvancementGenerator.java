@@ -24,9 +24,9 @@ public class AdvancementGenerator implements AdvancementSubProvider {
         Advancement.Builder.advancement()
                 .display(
                         new ItemStack(Items.DRAGON_HEAD),
-                        Component.translatable("advancements.elemntalrealms.root.title"),
-                        Component.translatable("advancements.elemntalrealms.root.description"),
-                        ResourceLocation.fromNamespaceAndPath("minecraft", "textures/gui/advancements/backgrounds/end.png"),
+                        Component.translatable("advancements.elementalrealms.root.title"),
+                        Component.translatable("advancements.elementalrealms.root.description"),
+                        ResourceLocation.fromNamespaceAndPath("elementalrealms", "textures/gui/advancements/backgrounds/elementalrealms.png"),
                         AdvancementType.TASK,
                         true,
                         true,

@@ -16,16 +16,16 @@
     }
   },
   "display": {
-    "background": "minecraft:textures/gui/advancements/backgrounds/end.png",
+    "background": "elementalrealms:textures/gui/advancements/backgrounds/elementalrealms.png",
     "description": {
-      "translate": "advancements.elemntalrealms.root.description"
+      "translate": "advancements.elementalrealms.root.description"
     },
     "icon": {
       "count": 1,
       "id": "minecraft:dragon_head"
     },
     "title": {
-      "translate": "advancements.elemntalrealms.root.title"
+      "translate": "advancements.elementalrealms.root.title"
     }
   },
   "requirements": [
