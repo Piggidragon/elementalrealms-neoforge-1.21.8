@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 public class PortalEntity extends Entity {
 
@@ -35,6 +36,8 @@ public class PortalEntity extends Entity {
     public final AnimationState spawnAnimationState = new AnimationState();
     private final ResourceKey<Level> portalLevel;
     private ServerLevel targetLevel;
+
+    private UUID ownerUUID;
 
     private int idleAnimationTimeout = 0;
     private boolean spawnAnimationStarted = false;
@@ -58,6 +61,14 @@ public class PortalEntity extends Entity {
 
     public void setTargetLevel(ServerLevel targetLevel) {
         this.targetLevel = targetLevel;
+    }
+
+    public void setOwner(@Nullable Player owner) {
+        this.ownerUUID = owner != null ? owner.getUUID() : null;
+    }
+
+    public UUID getOwnerUUID() {
+        return this.ownerUUID;
     }
 
     @Override
@@ -111,14 +122,23 @@ public class PortalEntity extends Entity {
     protected void readAdditionalSaveData(ValueInput valueInput) {
 
         this.despawnTimeout = valueInput.getIntOr("DespawnTimer", 0);
-        String levelKey = valueInput.getStringOr("TargetLevel", "");
 
+        String levelKey = valueInput.getStringOr("TargetLevel", "");
         if (!levelKey.isEmpty() && !this.level().isClientSide()) {
             ResourceKey<Level> key = ResourceKey.create(
                     Registries.DIMENSION,
                     ResourceLocation.parse(levelKey)
             );
             this.targetLevel = this.getServer().getLevel(key);
+        }
+
+        String uuidString = valueInput.getStringOr("OwnerUUID", "");
+        if (!uuidString.isEmpty()) {
+            try {
+                this.ownerUUID = UUID.fromString(uuidString);
+            } catch (IllegalArgumentException e) {
+                this.ownerUUID = null;
+            }
         }
 
     }
@@ -129,6 +149,10 @@ public class PortalEntity extends Entity {
 
         if (this.targetLevel != null) {
             valueOutput.putString("TargetLevel", this.targetLevel.dimension().location().toString());
+        }
+
+        if (this.ownerUUID != null) {
+            valueOutput.putString("OwnerUUID", this.ownerUUID.toString());
         }
     }
 
