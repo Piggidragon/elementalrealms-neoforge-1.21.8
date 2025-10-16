@@ -29,7 +29,7 @@ public class ModCreativeTabs {
     );
     public static final Supplier<CreativeModeTab> ITEM_TAB = CREATIVE_MODE_TABS.register("item_tab",
             () -> CreativeModeTab.builder()
-                    .icon(() -> new ItemStack(DimensionItems.PORTAL_STAFF.get()))
+                    .icon(() -> new ItemStack(DimensionItems.DIMENSION_STAFF.get()))
                     .title(Component.translatable("itemGroup.elementalrealms.item_tab"))
                     .displayItems((params, output) -> {
                         // Hier alle Items reinpacken

@@ -10,7 +10,7 @@ public class DimensionItems {
     public static final DeferredRegister.Items ITEMS =
             DeferredRegister.createItems(ElementalRealms.MODID);
 
-    public static final DeferredItem<Item> PORTAL_STAFF = ITEMS.registerItem(
+    public static final DeferredItem<Item> DIMENSION_STAFF = ITEMS.registerItem(
             "dimension_staff",
             SchoolStaff::new,
             new Item.Properties()

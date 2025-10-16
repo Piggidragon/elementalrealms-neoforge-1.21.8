@@ -1,4 +1,4 @@
-// 1.21.8	2025-10-13T15:52:42.9234873	Model Definitions - elementalrealms
+// 1.21.8	2025-10-16T20:11:18.547157	Model Definitions - elementalrealms
 5bdd6d4a11478f66c9b219a3af42e6d671f52394 assets/elementalrealms/items/affinity_shard_earth.json
 b110495ab0136c02f8aed70f4f9e489e6a34d160 assets/elementalrealms/items/affinity_shard_fire.json
 d64420ddd19bfab449e0ce5f65bbfa1d70652fba assets/elementalrealms/items/affinity_shard_gravity.json
@@ -22,7 +22,6 @@ f00e4b7afe7e22f4fcd75e445c902be89c35760b assets/elementalrealms/items/affinity_s
 a656b1c7db7df186fc4187a15202b3e016ea2dff assets/elementalrealms/items/affinity_stone_void.json
 aa0c1f4866afe547a53188018a8b08cfe88cb114 assets/elementalrealms/items/affinity_stone_water.json
 23791c1bfa0ffc365b0329888f57c8497a959bd1 assets/elementalrealms/items/affinity_stone_wind.json
-5d6379c5755dc8697bd615e68a68c66be6a351d4 assets/elementalrealms/items/dimension_staff.json
 a8bb6ef358618c29a77a55646d9bcb9af22f5034 assets/elementalrealms/items/essence_earth.json
 c893ad99d0e21d77282522108494c0130fdf311d assets/elementalrealms/items/essence_fire.json
 7d2c3f22ab9fc5c22d2617d93a6d6bcc92f9447a assets/elementalrealms/items/essence_gravity.json
@@ -57,7 +56,6 @@ dfc891971b95d08a82760175e4d9be29c1f0a6a0 assets/elementalrealms/models/item/affi
 dc6708da41c121858f587c396a47a24c88291a41 assets/elementalrealms/models/item/affinity_stone_void.json
 938d83c9c7e27f154dbdc83c4a06c3e600c82a42 assets/elementalrealms/models/item/affinity_stone_water.json
 019b87711f85e73a02ac327fc5fe7069521c6109 assets/elementalrealms/models/item/affinity_stone_wind.json
-8752073b22eb3555572747bc166b168d636d69b6 assets/elementalrealms/models/item/dimension_staff.json
 37e6c8d321ca83473b5df7608ab9e9217b668efc assets/elementalrealms/models/item/essence_earth.json
 b3c16956c7821f8cc96e8eff0f3c3b06f50cfd8c assets/elementalrealms/models/item/essence_fire.json
 1cefd531d3e5475e8c53e46ad2dc4f2bc049fb4d assets/elementalrealms/models/item/essence_gravity.json
