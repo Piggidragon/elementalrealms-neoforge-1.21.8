@@ -33,13 +33,21 @@ public class PortalEntity extends Entity {
     public final AnimationState spawnAnimationState = new AnimationState();
     private final ResourceKey<Level> portalLevel;
     private ServerLevel targetLevel;
+
     private int idleAnimationTimeout = 0;
+    private boolean spawnAnimationStarted = false;
+
     private int despawnTimerout = 0;
 
 
     public PortalEntity(EntityType<? extends PortalEntity> type, Level level) {
         super(type, level);
         this.portalLevel = level.dimension();
+
+        if (level.isClientSide()) {
+            this.spawnAnimationState.start(0);
+            this.spawnAnimationStarted = true;
+        }
     }
 
     public void setDespawnTimer(PortalEntity portalEntity, int time) {
@@ -85,6 +93,10 @@ public class PortalEntity extends Entity {
     }
 
     public void setupAnimationStates() {
+        if (!this.spawnAnimationStarted) {
+            this.spawnAnimationState.start(this.tickCount);
+            this.spawnAnimationStarted = true;
+        }
         if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = 160;
             this.idleAnimationState.start(this.tickCount);
@@ -164,7 +176,7 @@ public class PortalEntity extends Entity {
                 PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), targetLevel);
                 portal.setTargetLevel(overworld);
                 targetLevel.addFreshEntity(portal);
-                portal.setPos(center.getX() + 0.5, center.getY() + 0.3, center.getZ() + 0.5);
+                portal.setPos(center.getX() + 0.5, center.getY() + 1.5, center.getZ() + 0.5);
 
                 double x = center.above().getX();
                 double y = center.above().getY();

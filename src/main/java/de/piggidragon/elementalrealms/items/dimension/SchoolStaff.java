@@ -29,7 +29,7 @@ public class SchoolStaff extends Item {
             Vec3 lookVec = player.getLookAngle();
             double distance = 2.0;
             double x = player.getX() + lookVec.x * distance;
-            double y = player.getY() + 0.3;
+            double y = player.getY() + 0.5;
             double z = player.getZ() + lookVec.z * distance;
 
             portal.setPos(x, y, z);
