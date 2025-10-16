@@ -1,15 +1,22 @@
 package de.piggidragon.elementalrealms.datagen;
 
+import de.piggidragon.elementalrealms.ElementalRealms;
+import de.piggidragon.elementalrealms.items.dimension.DimensionItems;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.Item;
+
+import java.util.stream.Stream;
 
 public class ModModelProvider extends ModelProvider {
     public ModModelProvider(PackOutput output) {
-        super(output, "elementalrealms");
+        super(output, ElementalRealms.MODID);
     }
 
     @Override
@@ -62,6 +69,8 @@ public class ModModelProvider extends ModelProvider {
 
         itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_VOID.get(), ModelTemplates.FLAT_ITEM);
 
+
+
         /*
         // Für Tools/Handhelds
         itemModels.generateFlatItem(ModItems.BEISPIEL_SCHWERT.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -77,5 +86,12 @@ public class ModModelProvider extends ModelProvider {
 
         // Blocks
         //blockModels.createTrivialCube(PortalBlocks.SCHOOL_DIMENSION_PORTAL.get());
+    }
+
+    @Override
+    protected Stream<? extends Holder<Item>> getKnownItems() {
+        return BuiltInRegistries.ITEM.listElements()
+                .filter(holder -> holder.getKey().location().getNamespace().equals("elementalrealms"))
+                .filter(holder -> holder.value() != DimensionItems.DIMENSION_STAFF.get());
     }
 }

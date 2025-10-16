@@ -1,0 +1,33 @@
+{
+  "parent": "elementalrealms:root",
+  "criteria": {
+    "has_staff": {
+      "conditions": {
+        "items": [
+          {
+            "items": "elementalrealms:dimension_staff"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.elementalrealms.get_staff.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "elementalrealms:dimension_staff"
+    },
+    "title": {
+      "translate": "advancements.elementalrealms.get_staff.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_staff"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
