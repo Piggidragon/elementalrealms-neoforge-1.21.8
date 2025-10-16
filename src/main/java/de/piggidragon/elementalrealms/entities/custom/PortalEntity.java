@@ -38,7 +38,7 @@ public class PortalEntity extends Entity {
     private ServerLevel targetLevel;
 
     private UUID ownerUUID;
-    private boolean discard = true;
+    private boolean discard = false;
 
     private int idleAnimationTimeout = 0;
     private boolean spawnAnimationStarted = false;
@@ -120,6 +120,8 @@ public class PortalEntity extends Entity {
 
         this.despawnTimeout = valueInput.getIntOr("DespawnTimer", 0);
 
+        this.discard = valueInput.getBooleanOr("Discard", false);
+
         String levelKey = valueInput.getStringOr("TargetLevel", "");
         if (!levelKey.isEmpty() && !this.level().isClientSide()) {
             ResourceKey<Level> key = ResourceKey.create(
@@ -143,6 +145,7 @@ public class PortalEntity extends Entity {
     @Override
     protected void addAdditionalSaveData(ValueOutput valueOutput) {
         valueOutput.putInt("DespawnTimer", this.despawnTimeout);
+        valueOutput.putBoolean("Discard", this.discard);
 
         if (this.targetLevel != null) {
             valueOutput.putString("TargetLevel", this.targetLevel.dimension().location().toString());
@@ -179,7 +182,6 @@ public class PortalEntity extends Entity {
             for (ServerPlayer player : players) {
                 if (player != null && !player.isSpectator()) {
                     teleportPlayer(player.level(), player);
-
                 }
             }
         }
@@ -212,16 +214,15 @@ public class PortalEntity extends Entity {
                         targetLevel.setBlock(center.offset(dx, 0, dz), Blocks.STONE.defaultBlockState(), 3);
                     }
                 }
-
                 PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), targetLevel, true, -1, overworld, null);
                 targetLevel.addFreshEntity(portal);
-                portal.setPos(center.getX() + 0.5, center.getY() + 1.5, center.getZ() + 0.5);
+                portal.setPos(center.getX(), center.getY()+1, center.getZ());
 
                 double x = center.above().getX();
                 double y = center.above().getY();
                 double z = center.above().getZ();
 
-                player.teleportTo(targetLevel, x + 2, y, z, relatives, yaw, pitch, setCamera);
+                player.teleportTo(targetLevel, x, y, z+1, relatives, yaw, pitch, setCamera);
                 player.setPortalCooldown();
                 if (discard) {
                     this.discard();
@@ -232,7 +233,7 @@ public class PortalEntity extends Entity {
                 double x = returnPos.x();
                 double y = returnPos.y();
                 double z = returnPos.z();
-                player.teleportTo(overworld, x, y, z, relatives, yaw, pitch, setCamera);
+                player.teleportTo(overworld, x, y, z+1, relatives, yaw, pitch, setCamera);
                 player.removeData(ModAttachments.OVERWORLD_RETURN_POS);
                 player.setPortalCooldown();
                 if (discard) {

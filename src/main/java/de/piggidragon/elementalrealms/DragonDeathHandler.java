@@ -54,7 +54,7 @@ public class DragonDeathHandler {
 
         ElementalRealms.LOGGER.info(safePos.toString());
 
-        portal.setPos(safePos.getX() + 0.5, safePos.getY() + 0.5, safePos.getZ() + 0.5);
+        portal.setPos(safePos.getX(), safePos.getY() + 0.5, safePos.getZ() + 2);
 
         List<ServerPlayer> players = server.getPlayerList().getPlayers();
 

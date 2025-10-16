@@ -60,7 +60,7 @@ public class SchoolStaff extends Item {
             player.getMainHandItem().hurtAndBreak(1, ((ServerLevel) level), player,
                     item -> player.onEquippedItemBroken(item, EquipmentSlot.MAINHAND));
 
-            player.getCooldowns().addCooldown(player.getMainHandItem(), 6000);
+            player.getCooldowns().addCooldown(player.getMainHandItem(), 0);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
