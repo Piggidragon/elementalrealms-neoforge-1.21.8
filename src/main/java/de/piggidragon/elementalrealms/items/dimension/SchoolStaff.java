@@ -21,9 +21,7 @@ public class SchoolStaff extends Item {
     }
 
     private static void spawnPortal(Level level, Player player) {
-        PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), level);
-        portal.setOwner(player);
-        portal.setTargetLevel(player.getServer().getLevel(ModLevel.SCHOOL_DIMENSION));
+        PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), level, true, 200, player.getServer().getLevel(ModLevel.SCHOOL_DIMENSION), player.getUUID());
 
         Vec3 lookVec = player.getLookAngle();
         double distance = 2.0;
@@ -34,8 +32,6 @@ public class SchoolStaff extends Item {
         portal.setPos(x, y, z);
         portal.setYRot(player.getYRot());
         level.addFreshEntity(portal);
-
-        portal.setDespawnTimer(portal, 200);
     }
 
     private static void removeOldPortals(Level level, Player player) {
@@ -64,7 +60,7 @@ public class SchoolStaff extends Item {
             player.getMainHandItem().hurtAndBreak(1, ((ServerLevel) level), player,
                     item -> player.onEquippedItemBroken(item, EquipmentSlot.MAINHAND));
 
-            player.getCooldowns().addCooldown(player.getMainHandItem(), 6000);
+            player.getCooldowns().addCooldown(player.getMainHandItem(), 0);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;

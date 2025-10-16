@@ -4,7 +4,6 @@ import de.piggidragon.elementalrealms.items.dimension.DimensionItems;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
@@ -29,7 +28,7 @@ public class AdvancementGenerator implements AdvancementSubProvider {
                         new ItemStack(AffinityItems.AFFINITY_STONE_SPACE.get()),
                         Component.translatable("advancements.elementalrealms.root.title"),
                         Component.translatable("advancements.elementalrealms.root.description"),
-                        ResourceLocation.fromNamespaceAndPath("elementalrealms", "gui/advancements/backgrounds/elementalrealms"),
+                        ResourceLocation.fromNamespaceAndPath("minecraft", "block/cracked_deepslate_tiles"),
                         AdvancementType.TASK,
                         true,
                         true,

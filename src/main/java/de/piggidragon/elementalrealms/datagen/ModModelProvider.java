@@ -44,7 +44,7 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(AffinityItems.ESSENCE_LIGHTNING.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_ICE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_SHARDE_ICE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(AffinityItems.AFFINITY_SHARD_ICE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(AffinityItems.ESSENCE_ICE.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_SOUND.get(), ModelTemplates.FLAT_ITEM);

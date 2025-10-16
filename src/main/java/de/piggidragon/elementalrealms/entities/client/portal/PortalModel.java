@@ -32,7 +32,7 @@ public class PortalModel<T extends PortalEntity> extends EntityModel<PortalRende
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition Portal = partdefinition.addOrReplaceChild("Portal", CubeListBuilder.create(), PartPose.offset(-1.9167F, 17.5F, 0.0F));
+        PartDefinition Portal = partdefinition.addOrReplaceChild("Portal", CubeListBuilder.create(), PartPose.offset(2F, 20F, 0F));
 
         PartDefinition base2 = Portal.addOrReplaceChild("base2", CubeListBuilder.create().texOffs(0, 36).addBox(16.6915F, -15.0F, -2.0F, 3.0F, 26.0F, 4.0F, new CubeDeformation(0.0F))
                 .texOffs(36, 0).addBox(-1.5F, -15.0F, -2.0F, 3.0F, 26.0F, 4.0F, new CubeDeformation(0.0F))

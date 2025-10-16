@@ -80,7 +80,7 @@ public class AffinityItems {
             "affinity_stone_ice",
             (p) -> new AffinityStones(p, Affinity.ICE),
             new Item.Properties());
-    public static final DeferredItem<Item> AFFINITY_SHARDE_ICE = ITEMS.registerItem(
+    public static final DeferredItem<Item> AFFINITY_SHARD_ICE = ITEMS.registerItem(
             "affinity_shard_ice",
             Item::new,
             new Item.Properties());

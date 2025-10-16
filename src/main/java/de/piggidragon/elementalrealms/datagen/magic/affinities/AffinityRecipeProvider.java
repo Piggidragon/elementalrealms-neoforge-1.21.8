@@ -71,9 +71,9 @@ public class AffinityRecipeProvider extends RecipeProvider {
                 .pattern("SSS")
                 .pattern("SES")
                 .pattern("SSS")
-                .define('S', AffinityItems.AFFINITY_SHARDE_ICE.get())
+                .define('S', AffinityItems.AFFINITY_SHARD_ICE.get())
                 .define('E', AffinityItems.ESSENCE_ICE.get())
-                .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARDE_ICE))
+                .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARD_ICE))
                 .save(output);
 
         shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_SOUND.get())
