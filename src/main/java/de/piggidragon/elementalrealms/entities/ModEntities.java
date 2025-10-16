@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -19,7 +20,10 @@ public class ModEntities {
 
     public static final Supplier<EntityType<PortalEntity>> PORTAL_ENTITY = ENTITY_TYPES.register(
             "portal_entity",
-            () -> EntityType.Builder.of(PortalEntity::new, MobCategory.MISC)
+            () -> EntityType.Builder.of(
+                            (EntityType<PortalEntity> type, Level level) -> new PortalEntity(type, level),
+                            MobCategory.MISC
+                    )
                     .sized(1.0f, 2.0f)
                     .fireImmune()
                     .clientTrackingRange(8)

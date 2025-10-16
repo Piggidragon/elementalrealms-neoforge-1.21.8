@@ -21,7 +21,7 @@ public class SchoolStaff extends Item {
     }
 
     private static void spawnPortal(Level level, Player player) {
-        PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), level, true, 200, (ServerLevel) player.getServer().getLevel(ModLevel.SCHOOL_DIMENSION), player.getUUID());
+        PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), level, true, 200, player.getServer().getLevel(ModLevel.SCHOOL_DIMENSION), player.getUUID());
 
         Vec3 lookVec = player.getLookAngle();
         double distance = 2.0;

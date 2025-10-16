@@ -55,6 +55,7 @@ public class PortalEntity extends Entity {
             this.spawnAnimationStarted = true;
         }
     }
+
     public PortalEntity(EntityType<? extends PortalEntity> type, Level level, boolean discard, int despawnTimeout, ServerLevel targetLevel, UUID ownerUUID) {
         this(type, level);
         this.discard = discard;
@@ -222,7 +223,7 @@ public class PortalEntity extends Entity {
 
                 player.teleportTo(targetLevel, x + 2, y, z, relatives, yaw, pitch, setCamera);
                 player.setPortalCooldown();
-                if (discard){
+                if (discard) {
                     this.discard();
                 }
             } else {
@@ -234,7 +235,7 @@ public class PortalEntity extends Entity {
                 player.teleportTo(overworld, x, y, z, relatives, yaw, pitch, setCamera);
                 player.removeData(ModAttachments.OVERWORLD_RETURN_POS);
                 player.setPortalCooldown();
-                if (discard){
+                if (discard) {
                     this.discard();
                 }
             }
