@@ -1,5 +1,7 @@
 package de.piggidragon.elementalrealms.datagen;
 
+import de.piggidragon.elementalrealms.ElementalRealms;
+import de.piggidragon.elementalrealms.advancements.AdvancementGenerator;
 import de.piggidragon.elementalrealms.datagen.magic.affinities.AffinityRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -8,10 +10,12 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = "elementalrealms")
+@EventBusSubscriber(modid = ElementalRealms.MODID)
 public class DataGenerators {
+
     @SubscribeEvent
     public static void gatherClientData(GatherDataEvent.Client event) {
         DataGenerator generator = event.getGenerator();
@@ -20,5 +24,12 @@ public class DataGenerators {
 
         generator.addProvider(true, new ModModelProvider(packOutput));
         generator.addProvider(true, new AffinityRecipeProvider.Runner(packOutput, lookupProvider));
+
+        generator.addProvider(true, new ModAdvancementProvider(
+                packOutput,
+                lookupProvider,
+                List.of(new AdvancementGenerator())
+        ));
+
     }
 }
