@@ -19,6 +19,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import org.slf4j.Logger;
 
@@ -48,13 +49,5 @@ public class ElementalRealms {
         LOGGER.info("Common setup for {}", MODID);
     }
 
-    @SubscribeEvent
-    public static void onLivingDeath(LivingDeathEvent event) {
-        if (event.getEntity() instanceof EnderDragon dragon) {
-            ServerLevel level = (ServerLevel) dragon.level();
-            MinecraftServer server = level.getServer();
 
-            DragonDeathHandler.spawnPortalOrigin(server);
-        }
-    }
 }
