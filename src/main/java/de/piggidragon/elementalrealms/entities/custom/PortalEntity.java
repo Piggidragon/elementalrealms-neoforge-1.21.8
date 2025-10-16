@@ -1,6 +1,5 @@
 package de.piggidragon.elementalrealms.entities.custom;
 
-import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
 import de.piggidragon.elementalrealms.entities.ModEntities;
 import net.minecraft.core.BlockPos;

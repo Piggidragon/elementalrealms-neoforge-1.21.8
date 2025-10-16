@@ -19,7 +19,7 @@ public class SchoolStaff extends Item {
 
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        if (level.dimension() != Level.OVERWORLD){
+        if (level.dimension() != Level.OVERWORLD) {
             return InteractionResult.PASS;
         }
         if (!level.isClientSide()) {
@@ -29,14 +29,14 @@ public class SchoolStaff extends Item {
             Vec3 lookVec = player.getLookAngle();
             double distance = 2.0;
             double x = player.getX() + lookVec.x * distance;
-            double y = player.getY()+0.3;
+            double y = player.getY() + 0.3;
             double z = player.getZ() + lookVec.z * distance;
 
             portal.setPos(x, y, z);
             portal.setYRot(player.getYRot());
             level.addFreshEntity(portal);
 
-            portal.setDespawnTimer(portal,200);
+            portal.setDespawnTimer(portal, 200);
             player.getMainHandItem().hurtAndBreak(1, ((ServerLevel) level), player,
                     item -> player.onEquippedItemBroken(item, EquipmentSlot.MAINHAND));
             return InteractionResult.SUCCESS;

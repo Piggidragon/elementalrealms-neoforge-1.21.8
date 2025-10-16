@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.magic.affinities.Affinity;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -42,7 +41,7 @@ public class ModAttachments {
 
     public static final Supplier<AttachmentType<Vec3>> OVERWORLD_RETURN_POS = ATTACHMENT_TYPE.register(
             "overworld_return_pos",
-            () -> AttachmentType.<Vec3>builder(() -> Vec3.ZERO)
+            () -> AttachmentType.builder(() -> Vec3.ZERO)
                     .serialize(VEC3_CODEC.fieldOf("overworld_return_pos"))
                     .build()
     );
