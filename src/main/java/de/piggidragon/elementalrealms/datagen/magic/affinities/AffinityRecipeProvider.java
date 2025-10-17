@@ -94,33 +94,6 @@ public class AffinityRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARD_GRAVITY))
                 .save(output);
 
-        shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_TIME.get())
-                .pattern("SSS")
-                .pattern("SES")
-                .pattern("SSS")
-                .define('S', AffinityItems.AFFINITY_SHARD_TIME.get())
-                .define('E', AffinityItems.ESSENCE_TIME.get())
-                .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARD_TIME))
-                .save(output);
-
-        shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_SPACE.get())
-                .pattern("SSS")
-                .pattern("SES")
-                .pattern("SSS")
-                .define('S', AffinityItems.AFFINITY_SHARD_SPACE.get())
-                .define('E', AffinityItems.ESSENCE_SPACE.get())
-                .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARD_SPACE))
-                .save(output);
-
-        shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_LIFE.get())
-                .pattern("SSS")
-                .pattern("SES")
-                .pattern("SSS")
-                .define('S', AffinityItems.AFFINITY_SHARD_LIFE.get())
-                .define('E', AffinityItems.ESSENCE_LIFE.get())
-                .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARD_LIFE))
-                .save(output);
-
         shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_VOID.get())
                 .pattern("CDC")
                 .pattern("ESE")
@@ -244,50 +217,6 @@ public class AffinityRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .unlockedBy("has_lodestone", has(Items.LODESTONE))
                 .save(output);
-
-        shaped(RecipeCategory.MISC, AffinityItems.ESSENCE_TIME.get())
-                .pattern("ADA")
-                .pattern("DCS")
-                .pattern("ADA")
-                .define('C', Items.CLOCK)
-                .define('A', Items.AMETHYST_SHARD)
-                .define('D', Items.DAYLIGHT_DETECTOR)
-                .define('S', Items.NETHER_STAR)
-                .unlockedBy("has_clock", has(Items.CLOCK))
-                .unlockedBy("has_amethyst", has(Items.AMETHYST_SHARD))
-                .unlockedBy("has_daylightdetector", has(Items.DAYLIGHT_DETECTOR))
-                .unlockedBy("has_netherstar", has(Items.NETHER_STAR))
-                .save(output);
-
-        shaped(RecipeCategory.MISC, AffinityItems.ESSENCE_SPACE.get())
-                .pattern("PSP")
-                .pattern("SEN")
-                .pattern("PSP")
-                .define('P', Items.ENDER_PEARL)
-                .define('E', Items.ENDER_EYE)
-                .define('S', Items.SHULKER_SHELL)
-                .define('N', Items.NETHER_STAR)
-                .unlockedBy("has_pearl", has(Items.ENDER_PEARL))
-                .unlockedBy("has_eye", has(Items.ENDER_EYE))
-                .unlockedBy("has_shulker", has(Items.SHULKER_SHELL))
-                .unlockedBy("has_netherstar", has(Items.NETHER_STAR))
-                .save(output);
-
-        shaped(RecipeCategory.MISC, AffinityItems.ESSENCE_LIFE.get())
-                .pattern("GSG")
-                .pattern("SAN")
-                .pattern("GSG")
-                .define('A', Items.ENCHANTED_GOLDEN_APPLE)
-                .define('S', Items.HONEYCOMB)
-                .define('G', Items.GOLDEN_CARROT)
-                .define('N', Items.NETHER_STAR)
-                .unlockedBy("has_apple", has(Items.ENCHANTED_GOLDEN_APPLE))
-                .unlockedBy("has_netherstar", has(Items.NETHER_STAR))
-                .unlockedBy("has_golden_carrot", has(Items.GOLDEN_CARROT))
-                .unlockedBy("has_honeycomb", has(Items.HONEYCOMB))
-                .save(output);
-
-
 
         /*
         List<ItemLike> BISMUTH_SMELTABLES = List.of(ModItems.RAW_BISMUTH,
