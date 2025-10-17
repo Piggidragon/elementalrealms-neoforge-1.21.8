@@ -119,39 +119,15 @@ public class AffinityItems {
             "affinity_stone_time",
             (p) -> new AffinityStones(p, Affinity.TIME),
             new Item.Properties());
-    public static final DeferredItem<Item> AFFINITY_SHARD_TIME = ITEMS.registerItem(
-            "affinity_shard_time",
-            Item::new,
-            new Item.Properties());
-    public static final DeferredItem<Item> ESSENCE_TIME = ITEMS.registerItem(
-            "essence_time",
-            Item::new,
-            new Item.Properties());
 
     public static final DeferredItem<Item> AFFINITY_STONE_SPACE = ITEMS.registerItem(
             "affinity_stone_space",
             (p) -> new AffinityStones(p, Affinity.SPACE),
             new Item.Properties());
-    public static final DeferredItem<Item> AFFINITY_SHARD_SPACE = ITEMS.registerItem(
-            "affinity_shard_space",
-            Item::new,
-            new Item.Properties());
-    public static final DeferredItem<Item> ESSENCE_SPACE = ITEMS.registerItem(
-            "essence_space",
-            Item::new,
-            new Item.Properties());
 
     public static final DeferredItem<Item> AFFINITY_STONE_LIFE = ITEMS.registerItem(
             "affinity_stone_life",
             (p) -> new AffinityStones(p, Affinity.LIFE),
-            new Item.Properties());
-    public static final DeferredItem<Item> AFFINITY_SHARD_LIFE = ITEMS.registerItem(
-            "affinity_shard_life",
-            Item::new,
-            new Item.Properties());
-    public static final DeferredItem<Item> ESSENCE_LIFE = ITEMS.registerItem(
-            "essence_life",
-            Item::new,
             new Item.Properties());
 
     public static final DeferredItem<Item> AFFINITY_STONE_VOID = ITEMS.registerItem(
