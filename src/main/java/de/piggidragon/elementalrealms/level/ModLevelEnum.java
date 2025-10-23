@@ -8,10 +8,14 @@ package de.piggidragon.elementalrealms.level;
  * such as dimension lists, teleportation menus, or configuration systems.</p>
  */
 public enum ModLevelEnum {
-    /** School dimension path identifier */
+    /**
+     * School dimension path identifier
+     */
     SCHOOL_DIMENSION("school");
 
-    /** The dimension's path component in its ResourceLocation */
+    /**
+     * The dimension's path component in its ResourceLocation
+     */
     private final String path;
 
     /**

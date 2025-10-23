@@ -34,17 +34,21 @@ import org.slf4j.Logger;
  */
 @Mod(ElementalRealms.MODID)
 public class ElementalRealms {
-    /** Mod identifier used throughout the codebase and in resource locations */
+    /**
+     * Mod identifier used throughout the codebase and in resource locations
+     */
     public static final String MODID = "elementalrealms";
 
-    /** Logger for debugging and error reporting */
+    /**
+     * Logger for debugging and error reporting
+     */
     public static final Logger LOGGER = LogUtils.getLogger();
 
     /**
      * Main mod constructor called during mod loading.
      * Registers all deferred registries with the mod event bus.
      *
-     * @param modEventBus The mod-specific event bus for registration events
+     * @param modEventBus  The mod-specific event bus for registration events
      * @param modContainer Container holding mod metadata and configuration
      */
     public ElementalRealms(IEventBus modEventBus, ModContainer modContainer) {

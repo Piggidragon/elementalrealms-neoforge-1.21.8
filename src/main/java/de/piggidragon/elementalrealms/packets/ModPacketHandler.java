@@ -59,7 +59,7 @@ public class ModPacketHandler {
      * <p>Thread safety:</p>
      * All Minecraft code is enqueued on the main game thread to prevent concurrent modification.
      *
-     * @param packet The received packet containing item and affinity data
+     * @param packet  The received packet containing item and affinity data
      * @param context Network context for thread-safe execution
      */
     private static void handleAffinitySuccess(AffinitySuccessPacket packet, IPayloadContext context) {
@@ -91,8 +91,8 @@ public class ModPacketHandler {
      *   <li>Others - Enchantment glitter particles with varied motion</li>
      * </ul>
      *
-     * @param level The client-side level for particle spawning
-     * @param player The player at the center of the effect
+     * @param level    The client-side level for particle spawning
+     * @param player   The player at the center of the effect
      * @param affinity The affinity type determining particle appearance
      */
     private static void showClientParticles(Level level, Player player, Affinity affinity) {
@@ -109,27 +109,27 @@ public class ModPacketHandler {
             switch (affinity) {
                 case FIRE ->
                     // Flame particles rising slowly upward
-                    level.addParticle(ParticleTypes.FLAME,
-                            player.getX() + offsetX,
-                            player.getY() + 0.8 + offsetY,
-                            player.getZ() + offsetZ,
-                            0.0, 0.05, 0.0); // Slight upward velocity
+                        level.addParticle(ParticleTypes.FLAME,
+                                player.getX() + offsetX,
+                                player.getY() + 0.8 + offsetY,
+                                player.getZ() + offsetZ,
+                                0.0, 0.05, 0.0); // Slight upward velocity
 
                 case ICE ->
                     // Snowflake particles falling and spreading outward
-                    level.addParticle(ParticleTypes.SNOWFLAKE,
-                            player.getX() + offsetX,
-                            player.getY() + 0.8 + offsetY,
-                            player.getZ() + offsetZ,
-                            offsetX * 0.02, -0.02, offsetZ * 0.02); // Outward + downward motion
+                        level.addParticle(ParticleTypes.SNOWFLAKE,
+                                player.getX() + offsetX,
+                                player.getY() + 0.8 + offsetY,
+                                player.getZ() + offsetZ,
+                                offsetX * 0.02, -0.02, offsetZ * 0.02); // Outward + downward motion
 
                 default ->
                     // Generic enchantment glitter for other affinities
-                    level.addParticle(ParticleTypes.ENCHANT,
-                            player.getX() + offsetX,
-                            player.getY() + 0.8 + offsetY,
-                            player.getZ() + offsetZ,
-                            offsetX * 0.05, offsetY * 0.02, offsetZ * 0.05); // Varied motion
+                        level.addParticle(ParticleTypes.ENCHANT,
+                                player.getX() + offsetX,
+                                player.getY() + 0.8 + offsetY,
+                                player.getZ() + offsetZ,
+                                offsetX * 0.05, offsetY * 0.02, offsetZ * 0.05); // Varied motion
             }
         }
     }

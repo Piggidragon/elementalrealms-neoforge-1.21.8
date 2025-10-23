@@ -81,8 +81,8 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
      * Creates a loot table for ore blocks that drop variable amounts of items.
      * Supports fortune enchantment to increase drop count and silk touch to drop the block itself.
      *
-     * @param pBlock The ore block being mined
-     * @param item The item to drop (e.g., raw ore)
+     * @param pBlock   The ore block being mined
+     * @param item     The item to drop (e.g., raw ore)
      * @param minDrops Minimum number of items to drop
      * @param maxDrops Maximum number of items to drop
      * @return Loot table builder with configured drop behavior

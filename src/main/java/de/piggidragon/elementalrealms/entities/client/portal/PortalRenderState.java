@@ -15,12 +15,18 @@ import net.minecraft.world.entity.AnimationState;
  * </ul>
  */
 public class PortalRenderState extends EntityRenderState {
-    /** Animation state for the portal's idle/floating animation */
+    /**
+     * Animation state for the portal's idle/floating animation
+     */
     public final AnimationState idleAnimationState = new AnimationState();
 
-    /** Animation state for the portal's spawn/appearance animation */
+    /**
+     * Animation state for the portal's spawn/appearance animation
+     */
     public final AnimationState spawnAnimationState = new AnimationState();
 
-    /** Y-axis rotation in degrees for orienting the portal model */
+    /**
+     * Y-axis rotation in degrees for orienting the portal model
+     */
     public float yRot;
 }

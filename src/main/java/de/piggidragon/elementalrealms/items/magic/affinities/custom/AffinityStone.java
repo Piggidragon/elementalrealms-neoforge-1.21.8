@@ -37,14 +37,16 @@ import java.util.function.Consumer;
  */
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class AffinityStone extends Item {
-    /** The magical affinity type this stone represents (or NONE for void stone) */
+    /**
+     * The magical affinity type this stone represents (or NONE for void stone)
+     */
     private final Affinity affinity;
 
     /**
      * Constructs an affinity stone with specified properties and affinity type.
      *
      * @param properties Item properties (max stack size, rarity, etc.)
-     * @param affinity The affinity this stone grants when consumed
+     * @param affinity   The affinity this stone grants when consumed
      */
     public AffinityStone(Properties properties, Affinity affinity) {
         super(properties);
@@ -120,11 +122,11 @@ public class AffinityStone extends Item {
      * Adds tooltip text to the item when hovered in inventory.
      * Displays localized description of what affinity the stone grants.
      *
-     * @param stack The itemstack being hovered
-     * @param context Tooltip rendering context
+     * @param stack          The itemstack being hovered
+     * @param context        Tooltip rendering context
      * @param tooltipDisplay Display configuration
-     * @param tooltipAdder Consumer to add tooltip lines
-     * @param flag Advanced tooltip flag (F3+H debug mode)
+     * @param tooltipAdder   Consumer to add tooltip lines
+     * @param flag           Advanced tooltip flag (F3+H debug mode)
      */
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {

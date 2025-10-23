@@ -27,7 +27,9 @@ import java.util.List;
  * </ul>
  */
 public enum Affinity {
-    /** No affinity - used to represent the absence of magical connection */
+    /**
+     * No affinity - used to represent the absence of magical connection
+     */
     NONE(AffinityType.NONE),
 
     // Elemental Tier - Basic magical affinities
@@ -47,11 +49,15 @@ public enum Affinity {
     SPACE(AffinityType.ETERNAL),
     TIME(AffinityType.ETERNAL);
 
-    /** Codec for serializing affinity values to/from NBT and network packets */
+    /**
+     * Codec for serializing affinity values to/from NBT and network packets
+     */
     public static final Codec<Affinity> CODEC =
             Codec.STRING.xmap(Affinity::valueOf, Affinity::name);
 
-    /** The tier/category this affinity belongs to */
+    /**
+     * The tier/category this affinity belongs to
+     */
     private final AffinityType type;
 
     /**

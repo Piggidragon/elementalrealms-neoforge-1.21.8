@@ -29,7 +29,9 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class ModCommands {
 
-    /** Provides auto-completion suggestions for valid affinity names */
+    /**
+     * Provides auto-completion suggestions for valid affinity names
+     */
     public static final SuggestionProvider<CommandSourceStack> AFFINITY_SUGGESTIONS = (context, builder) -> {
         for (Affinity a : Affinity.values()) {
             builder.suggest(a.toString());

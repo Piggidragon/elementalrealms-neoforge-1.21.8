@@ -9,7 +9,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -92,7 +91,6 @@ public class SchoolStaff extends Item {
         );
 
 
-
         // Create disappear effect for each portal before removing it
         for (PortalEntity portal : portals) {
             PortalParticles.createPortalDisappearEffect((ServerLevel) level, portal.position());
@@ -101,7 +99,6 @@ public class SchoolStaff extends Item {
             portal.discard();
         }
     }
-
 
 
     /**

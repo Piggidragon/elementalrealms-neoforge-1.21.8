@@ -26,7 +26,9 @@ import java.util.function.Supplier;
  * </ul>
  */
 public class ModAttachments {
-    /** Registry for attachment types */
+    /**
+     * Registry for attachment types
+     */
     private static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPE = DeferredRegister.create(
             NeoForgeRegistries.ATTACHMENT_TYPES,
             ElementalRealms.MODID);
@@ -48,7 +50,9 @@ public class ModAttachments {
                     .build()
     );
 
-    /** Codec for serializing Vec3 positions to NBT */
+    /**
+     * Codec for serializing Vec3 positions to NBT
+     */
     private static final Codec<Vec3> VEC3_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     Codec.DOUBLE.fieldOf("x").forGetter(Vec3::x),

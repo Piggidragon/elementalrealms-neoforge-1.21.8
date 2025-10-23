@@ -25,14 +25,16 @@ import net.minecraft.world.item.ItemStack;
  * </ol>
  *
  * @param itemStack The affinity stone item that was consumed
- * @param affinity The affinity type that was granted/removed
+ * @param affinity  The affinity type that was granted/removed
  */
 public record AffinitySuccessPacket(
         ItemStack itemStack,
         Affinity affinity
 ) implements CustomPacketPayload {
 
-    /** Unique identifier for this packet type in the network system */
+    /**
+     * Unique identifier for this packet type in the network system
+     */
     public static final CustomPacketPayload.Type<AffinitySuccessPacket> TYPE =
             new CustomPacketPayload.Type<>(
                     ResourceLocation.fromNamespaceAndPath("elementalrealms", "affinity_success")

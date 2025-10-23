@@ -22,7 +22,7 @@ public class PortalParticles {
      *   <li>Reverse portal particles flow inward toward portal center</li>
      * </ul>
      *
-     * @param level The server level where the effect should be displayed
+     * @param level    The server level where the effect should be displayed
      * @param position The exact position where the portal is spawning
      */
     public static void createPortalArrivalEffect(ServerLevel level, Vec3 position) {
@@ -60,7 +60,7 @@ public class PortalParticles {
      *   <li>Witch particles for mystical dissolution</li>
      * </ul>
      *
-     * @param level The server level where the effect should be displayed
+     * @param level    The server level where the effect should be displayed
      * @param position The position where the portal is disappearing
      */
     public static void createPortalDisappearEffect(ServerLevel level, Vec3 position) {

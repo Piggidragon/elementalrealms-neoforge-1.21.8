@@ -24,7 +24,9 @@ import java.util.function.Supplier;
  * </ul>
  */
 public class ModEntities {
-    /** Deferred register for entity types */
+    /**
+     * Deferred register for entity types
+     */
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, ElementalRealms.MODID);
 

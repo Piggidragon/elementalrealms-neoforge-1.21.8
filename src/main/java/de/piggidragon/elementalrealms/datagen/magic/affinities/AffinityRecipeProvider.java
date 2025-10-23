@@ -24,7 +24,7 @@ public class AffinityRecipeProvider extends RecipeProvider {
     /**
      * Constructor for the recipe provider.
      *
-     * @param provider Registry lookup provider
+     * @param provider     Registry lookup provider
      * @param recipeOutput Output handler for generated recipes
      */
     public AffinityRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
@@ -290,11 +290,11 @@ public class AffinityRecipeProvider extends RecipeProvider {
      *
      * @param recipeOutput Output for generated recipes
      * @param pIngredients List of items that can be smelted
-     * @param pCategory Recipe category
-     * @param pResult Result item after smelting
-     * @param pExperience XP awarded per smelted item
+     * @param pCategory    Recipe category
+     * @param pResult      Result item after smelting
+     * @param pExperience  XP awarded per smelted item
      * @param pCookingTIme Smelting duration in ticks
-     * @param pGroup Recipe group name
+     * @param pGroup       Recipe group name
      */
     protected void oreSmelting(RecipeOutput recipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult,
                                float pExperience, int pCookingTIme, String pGroup) {
@@ -307,11 +307,11 @@ public class AffinityRecipeProvider extends RecipeProvider {
      *
      * @param recipeOutput Output for generated recipes
      * @param pIngredients List of items that can be blasted
-     * @param pCategory Recipe category
-     * @param pResult Result item after blasting
-     * @param pExperience XP awarded per blasted item
+     * @param pCategory    Recipe category
+     * @param pResult      Result item after blasting
+     * @param pExperience  XP awarded per blasted item
      * @param pCookingTime Blasting duration in ticks (usually half of smelting)
-     * @param pGroup Recipe group name
+     * @param pGroup       Recipe group name
      */
     protected void oreBlasting(RecipeOutput recipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult,
                                float pExperience, int pCookingTime, String pGroup) {
@@ -322,17 +322,17 @@ public class AffinityRecipeProvider extends RecipeProvider {
     /**
      * Generic helper for creating cooking recipes (smelting, blasting, smoking, etc.).
      *
-     * @param <T> Recipe type extending AbstractCookingRecipe
-     * @param recipeOutput Output for generated recipes
+     * @param <T>                Recipe type extending AbstractCookingRecipe
+     * @param recipeOutput       Output for generated recipes
      * @param pCookingSerializer Serializer for this cooking recipe type
-     * @param factory Factory method to create recipe instances
-     * @param pIngredients List of valid input items
-     * @param pCategory Recipe category
-     * @param pResult Output item
-     * @param pExperience XP reward
-     * @param pCookingTime Cooking duration in ticks
-     * @param pGroup Recipe group
-     * @param pRecipeName Suffix for recipe ID
+     * @param factory            Factory method to create recipe instances
+     * @param pIngredients       List of valid input items
+     * @param pCategory          Recipe category
+     * @param pResult            Output item
+     * @param pExperience        XP reward
+     * @param pCookingTime       Cooking duration in ticks
+     * @param pGroup             Recipe group
+     * @param pRecipeName        Suffix for recipe ID
      */
     protected <T extends AbstractCookingRecipe> void oreCooking(RecipeOutput recipeOutput, RecipeSerializer<T> pCookingSerializer, AbstractCookingRecipe.Factory<T> factory,
                                                                 List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup, String pRecipeName) {
@@ -341,6 +341,7 @@ public class AffinityRecipeProvider extends RecipeProvider {
                     .save(recipeOutput, ElementalRealms.MODID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
         }
     }
+
     /**
      * Runner class to integrate the recipe provider into the data generation system.
      */

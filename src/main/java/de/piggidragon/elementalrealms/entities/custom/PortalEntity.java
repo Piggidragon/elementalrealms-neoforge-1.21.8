@@ -49,38 +49,56 @@ import java.util.UUID;
  */
 public class PortalEntity extends Entity {
 
-    /** Animation state for idle/floating animation */
+    /**
+     * Animation state for idle/floating animation
+     */
     public final AnimationState idleAnimationState = new AnimationState();
 
-    /** Animation state for spawn/appearance animation */
+    /**
+     * Animation state for spawn/appearance animation
+     */
     public final AnimationState spawnAnimationState = new AnimationState();
 
-    /** The dimension this portal currently exists in */
+    /**
+     * The dimension this portal currently exists in
+     */
     private final ResourceKey<Level> portalLevel;
 
-    /** The target dimension to teleport players to */
+    /**
+     * The target dimension to teleport players to
+     */
     private ServerLevel targetLevel;
 
-    /** UUID of the player who created this portal (if applicable) */
+    /**
+     * UUID of the player who created this portal (if applicable)
+     */
     private UUID ownerUUID;
 
-    /** Whether this portal should be removed after first use */
+    /**
+     * Whether this portal should be removed after first use
+     */
     private boolean discard = false;
 
-    /** Timeout counter for idle animation triggering */
+    /**
+     * Timeout counter for idle animation triggering
+     */
     private int idleAnimationTimeout = 0;
 
-    /** Flag to ensure spawn animation only plays once */
+    /**
+     * Flag to ensure spawn animation only plays once
+     */
     private boolean spawnAnimationStarted = false;
 
-    /** Countdown timer in ticks until portal despawns (-1 = never despawn) */
+    /**
+     * Countdown timer in ticks until portal despawns (-1 = never despawn)
+     */
     private int despawnTimeout = 0;
 
     /**
      * Basic constructor for entity registration.
      * Called by Minecraft's entity system when loading from world save.
      *
-     * @param type The entity type of this portal
+     * @param type  The entity type of this portal
      * @param level The level/dimension this entity exists in
      */
     public PortalEntity(EntityType<? extends PortalEntity> type, Level level) {
@@ -98,12 +116,12 @@ public class PortalEntity extends Entity {
      * Full constructor for programmatic portal creation.
      * Used when spawning portals through code (e.g., after dragon death).
      *
-     * @param type The entity type of this portal
-     * @param level The level/dimension this entity exists in
-     * @param discard Whether to remove portal after first use
+     * @param type           The entity type of this portal
+     * @param level          The level/dimension this entity exists in
+     * @param discard        Whether to remove portal after first use
      * @param despawnTimeout Ticks until portal despawns (-1 = never)
-     * @param targetLevel The dimension to teleport players to
-     * @param ownerUUID UUID of the player who created this portal (can be null)
+     * @param targetLevel    The dimension to teleport players to
+     * @param ownerUUID      UUID of the player who created this portal (can be null)
      */
     public PortalEntity(EntityType<? extends PortalEntity> type, Level level, boolean discard, int despawnTimeout, ServerLevel targetLevel, UUID ownerUUID) {
         this(type, level);
@@ -158,9 +176,9 @@ public class PortalEntity extends Entity {
      * Handles damage attempts on the portal (server-side).
      * Currently portals take no damage to remain permanent.
      *
-     * @param serverLevel The server level where damage occurred
+     * @param serverLevel  The server level where damage occurred
      * @param damageSource Source of the damage
-     * @param v Damage amount
+     * @param v            Damage amount
      * @return false - damage is not applied
      */
     @Override
@@ -183,7 +201,7 @@ public class PortalEntity extends Entity {
      * Currently does nothing as teleportation is handled by collision.
      *
      * @param player The player interacting
-     * @param hand The hand used for interaction
+     * @param hand   The hand used for interaction
      * @return PASS - allow other interactions to process
      */
     @Override
@@ -360,7 +378,7 @@ public class PortalEntity extends Entity {
      *   <li>Applies portal cooldown after teleportation</li>
      * </ul>
      *
-     * @param level The current level the player is in
+     * @param level  The current level the player is in
      * @param player The player to teleport
      */
     private void teleportPlayer(Level level, ServerPlayer player) {

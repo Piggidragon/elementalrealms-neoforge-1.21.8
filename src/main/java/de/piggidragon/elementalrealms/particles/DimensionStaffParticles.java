@@ -24,9 +24,9 @@ public class DimensionStaffParticles {
      *   <li>Nearly broken (0%) - 3 particles (minimum)</li>
      * </ul>
      *
-     * @param level The server level where particles should be spawned
+     * @param level  The server level where particles should be spawned
      * @param player The player using the staff (center of particle effect)
-     * @param staff The staff itemstack to check durability of
+     * @param staff  The staff itemstack to check durability of
      */
     public static void addDurabilityEffects(ServerLevel level, Player player, ItemStack staff) {
         int maxDamage = staff.getMaxDamage();

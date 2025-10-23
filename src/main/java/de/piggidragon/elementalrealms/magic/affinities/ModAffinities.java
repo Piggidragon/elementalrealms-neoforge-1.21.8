@@ -41,7 +41,7 @@ public class ModAffinities {
      *   <li>If DEVIANT, player has the required ELEMENTAL base affinity</li>
      * </ul>
      *
-     * @param player The player to add affinity to
+     * @param player   The player to add affinity to
      * @param affinity The affinity to add
      * @throws Exception If validation fails with descriptive error message
      */
@@ -115,7 +115,7 @@ public class ModAffinities {
     /**
      * Checks if a player has a specific affinity.
      *
-     * @param player The player to check
+     * @param player   The player to check
      * @param affinity The affinity to check for
      * @return true if player has this affinity, false otherwise
      */

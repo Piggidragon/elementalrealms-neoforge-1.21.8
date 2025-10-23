@@ -16,14 +16,20 @@ import java.util.Comparator;
  * </ul>
  */
 public enum PortalVariant {
-    /** Portal variant for the School dimension */
+    /**
+     * Portal variant for the School dimension
+     */
     SCHOOL(0);
 
-    /** Array of variants sorted by ID for quick lookup */
+    /**
+     * Array of variants sorted by ID for quick lookup
+     */
     private static final PortalVariant[] BY_ID = Arrays.stream(values()).sorted(
             Comparator.comparingInt(PortalVariant::getId)).toArray(PortalVariant[]::new);
 
-    /** Numeric ID of this variant for serialization */
+    /**
+     * Numeric ID of this variant for serialization
+     */
     private final int id;
 
     /**

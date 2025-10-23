@@ -18,7 +18,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
  * </ul>
  */
 public class DimensionItems {
-    /** Deferred register for dimension-related items */
+    /**
+     * Deferred register for dimension-related items
+     */
     public static final DeferredRegister.Items ITEMS =
             DeferredRegister.createItems(ElementalRealms.MODID);
 

@@ -1,4 +1,3 @@
-
 package de.piggidragon.elementalrealms.advancements;
 
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
@@ -16,9 +15,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
-import java.util.function.Consumer;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class AdvancementGenerator implements AdvancementSubProvider {
 

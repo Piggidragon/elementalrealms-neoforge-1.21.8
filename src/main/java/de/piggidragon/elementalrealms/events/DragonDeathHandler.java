@@ -36,7 +36,9 @@ import java.util.List;
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class DragonDeathHandler {
 
-    /** Resource location of the advancement that triggers portal spawning */
+    /**
+     * Resource location of the advancement that triggers portal spawning
+     */
     private static final ResourceLocation DRAGON_ADVANCEMENT_ID =
             ResourceLocation.fromNamespaceAndPath("elementalrealms", "root");
 

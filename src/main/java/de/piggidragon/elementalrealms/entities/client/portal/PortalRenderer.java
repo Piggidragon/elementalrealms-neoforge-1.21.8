@@ -39,7 +39,9 @@ public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderSta
                         ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "textures/entity/portal/portal_entity_school.png"));
             });
 
-    /** The 3D model used to render the portal entity */
+    /**
+     * The 3D model used to render the portal entity
+     */
     private final PortalModel<PortalEntity> model;
 
     /**
@@ -68,7 +70,7 @@ public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderSta
      * Extracts rendering information from the portal entity into the render state.
      * Called every frame to update the render state with current entity data.
      *
-     * @param entity The portal entity being rendered
+     * @param entity      The portal entity being rendered
      * @param reusedState The render state to populate with current data
      * @param partialTick Fraction of a tick for smooth interpolation (0.0 to 1.0)
      */
@@ -87,8 +89,8 @@ public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderSta
      * Applies transformations, selects texture, and renders the model with transparency.
      *
      * @param renderState Current render state containing animation and position data
-     * @param poseStack Matrix stack for applying transformations (translation, rotation, scale)
-     * @param buffer Multi-buffer source for obtaining render buffers
+     * @param poseStack   Matrix stack for applying transformations (translation, rotation, scale)
+     * @param buffer      Multi-buffer source for obtaining render buffers
      * @param packedLight Light level at the entity's position (block + sky light)
      */
     @Override

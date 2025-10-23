@@ -30,8 +30,8 @@ public class AffinityParticles {
      *   <li>NONE/VOID - Dark, ominous particles for affinity removal</li>
      * </ul>
      *
-     * @param level The server level where particles should be spawned
-     * @param player The player at the center of the particle effect
+     * @param level    The server level where particles should be spawned
+     * @param player   The player at the center of the particle effect
      * @param affinity The affinity type determining the visual effect
      */
     public static void createCustomAffinityParticles(ServerLevel level, ServerPlayer player, Affinity affinity) {

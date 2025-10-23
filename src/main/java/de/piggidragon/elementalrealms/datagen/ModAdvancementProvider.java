@@ -19,8 +19,8 @@ public class ModAdvancementProvider extends AdvancementProvider {
     /**
      * Constructs the advancement provider with necessary dependencies.
      *
-     * @param output Pack output for writing generated files
-     * @param registries Registry lookup provider for accessing game registries
+     * @param output       Pack output for writing generated files
+     * @param registries   Registry lookup provider for accessing game registries
      * @param subProviders List of sub-providers that define individual advancements
      */
     public ModAdvancementProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, List<AdvancementSubProvider> subProviders) {

@@ -20,15 +20,23 @@ package de.piggidragon.elementalrealms.magic.affinities;
  * </ul>
  */
 public enum AffinityType {
-    /** No affinity - placeholder value */
+    /**
+     * No affinity - placeholder value
+     */
     NONE,
 
-    /** Basic elemental affinities - Fire, Water, Wind, Earth */
+    /**
+     * Basic elemental affinities - Fire, Water, Wind, Earth
+     */
     ELEMENTAL,
 
-    /** Advanced elemental variants - Lightning, Ice, Sound, Gravity */
+    /**
+     * Advanced elemental variants - Lightning, Ice, Sound, Gravity
+     */
     DEVIANT,
 
-    /** Ultimate cosmic affinities - Time, Space, Life */
+    /**
+     * Ultimate cosmic affinities - Time, Space, Life
+     */
     ETERNAL
 }

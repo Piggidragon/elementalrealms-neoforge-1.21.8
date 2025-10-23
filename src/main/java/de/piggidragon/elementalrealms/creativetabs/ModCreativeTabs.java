@@ -18,11 +18,15 @@ import java.util.function.Supplier;
  * Creates separate tabs for affinities, general items, and blocks.
  */
 public class ModCreativeTabs {
-    /** Registry for creative mode tabs */
+    /**
+     * Registry for creative mode tabs
+     */
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "elementalrealms");
 
-    /** Tab containing all affinity-related items (stones, shards, essences) */
+    /**
+     * Tab containing all affinity-related items (stones, shards, essences)
+     */
     public static final Supplier<CreativeModeTab> AFFINITY_TAB = CREATIVE_MODE_TABS.register("affinity_tab",
             () -> CreativeModeTab.builder()
                     .icon(() -> new ItemStack(AffinityItems.AFFINITY_STONE_FIRE.get()))
@@ -34,7 +38,9 @@ public class ModCreativeTabs {
                     .build()
     );
 
-    /** Tab containing general mod items (staffs, tools, etc.) */
+    /**
+     * Tab containing general mod items (staffs, tools, etc.)
+     */
     public static final Supplier<CreativeModeTab> ITEM_TAB = CREATIVE_MODE_TABS.register("item_tab",
             () -> CreativeModeTab.builder()
                     .icon(() -> new ItemStack(DimensionItems.DIMENSION_STAFF.get()))
@@ -46,7 +52,9 @@ public class ModCreativeTabs {
                     .build()
     );
 
-    /** Tab containing all mod blocks */
+    /**
+     * Tab containing all mod blocks
+     */
     public static final Supplier<CreativeModeTab> BLOCK_TAB = CREATIVE_MODE_TABS.register("block_tab",
             () -> CreativeModeTab.builder()
                     .icon(() -> new ItemStack(Items.DIRT))
