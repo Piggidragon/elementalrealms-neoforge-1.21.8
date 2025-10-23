@@ -8,6 +8,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -87,9 +89,13 @@ public class SchoolStaff extends Item {
                 portal -> portal.getOwnerUUID() != null && portal.getOwnerUUID().equals(player.getUUID())
         );
 
+
+
         // Create disappear effect for each portal before removing it
         for (PortalEntity portal : portals) {
             PortalParticles.createPortalDisappearEffect((ServerLevel) level, portal.position());
+            level.playSound(null, portal,
+                    SoundEvents.ENDER_EYE_DEATH, SoundSource.PLAYERS, 1, 0.7f);
             portal.discard();
         }
     }
@@ -132,6 +138,10 @@ public class SchoolStaff extends Item {
 
             // Remove any existing portals before starting new animation
             removeOldPortals(level, player);
+
+            serverLevel.playSound(null, player.blockPosition(),
+                    SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS,
+                    0.7F, 1.5F);
 
             // Register new beam animation for this player (prevents multiple simultaneous casts)
             ACTIVE_ANIMATIONS.put(player.getUUID(), new BeamAnimation(serverLevel, player, staffTip, targetPos));
@@ -245,6 +255,9 @@ public class SchoolStaff extends Item {
             // Spawn portal when beam reaches target position
             if (currentTick == totalTicks) {
                 PortalParticles.createPortalArrivalEffect(level, targetPos);
+                level.playSound(null, targetPos.x, targetPos.y, targetPos.z,
+                        SoundEvents.CONDUIT_ACTIVATE, SoundSource.PLAYERS,
+                        0.4F, 0.6F);
                 spawnPortal(level, player, targetPos);
                 return false; // Animation finished
             }
