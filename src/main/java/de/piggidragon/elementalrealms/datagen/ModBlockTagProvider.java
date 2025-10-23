@@ -7,44 +7,28 @@ import net.neoforged.neoforge.common.data.BlockTagsProvider;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Generates block tags for the mod during data generation.
+ * Block tags are used for tool requirements, mineable blocks, and other block groupings.
+ * Currently empty as no custom blocks require tags yet.
+ */
 public class ModBlockTagProvider extends BlockTagsProvider {
     public ModBlockTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider, ElementalRealms.MODID);
     }
 
+    /**
+     * Adds blocks to various tags for categorization and behavior.
+     * Examples: mineable_with_pickaxe, needs_iron_tool, fences, walls, etc.
+     *
+     * @param provider Registry lookup provider
+     */
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        /*
-        tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(ModBlocks.BISMUTH_BLOCK.get())
-                .add(ModBlocks.BISMUTH_ORE.get())
-                .add(ModBlocks.BISMUTH_LAMP.get())
-                .add(ModBlocks.BISMUTH_DEEPSLATE_ORE.get());
-
-        tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(ModBlocks.BISMUTH_DEEPSLATE_ORE.get());
-
-        tag(BlockTags.NEEDS_DIAMOND_TOOL)
-                .add(ModBlocks.BISMUTH_LAMP.get());
-
-        tag(BlockTags.FENCES).add(ModBlocks.BISMUTH_FENCE.get());
-        tag(BlockTags.FENCE_GATES).add(ModBlocks.BISMUTH_FENCE_GATE.get());
-        tag(BlockTags.WALLS).add(ModBlocks.BISMUTH_WALL.get());
-
-        tag(ModTags.Blocks.NEEDS_BISMUTH_TOOL)
-                .add(ModBlocks.BISMUTH_LAMP.get())
-                .addTag(BlockTags.NEEDS_IRON_TOOL);
-
-        tag(ModTags.Blocks.INCORRECT_FOR_BISMUTH_TOOL)
-                .addTag(BlockTags.INCORRECT_FOR_IRON_TOOL)
-                .remove(ModTags.Blocks.NEEDS_BISMUTH_TOOL);
-
-        this.tag(BlockTags.LOGS_THAT_BURN)
-                .add(ModBlocks.BLOODWOOD_LOG.get())
-                .add(ModBlocks.BLOODWOOD_WOOD.get())
-                .add(ModBlocks.STRIPPED_BLOODWOOD_LOG.get())
-                .add(ModBlocks.STRIPPED_BLOODWOOD_WOOD.get());
-
-         */
+        // Currently no block tags defined
+        // Future examples:
+        // - Tool requirements (pickaxe, axe, etc.)
+        // - Material tier requirements (iron, diamond, etc.)
+        // - Block groupings (fences, walls, logs, etc.)
     }
 }

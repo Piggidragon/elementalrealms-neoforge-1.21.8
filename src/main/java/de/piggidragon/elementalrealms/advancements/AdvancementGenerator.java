@@ -21,8 +21,15 @@ import java.util.function.Consumer;
 
 public class AdvancementGenerator implements AdvancementSubProvider {
 
+    /**
+     * Generates all advancements for the mod's progression tree.
+     *
+     * @param provider Registry lookup provider for entity types and other registries
+     * @param consumer Consumer to register created advancements with the data generator
+     */
     @Override
     public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer) {
+        // Root advancement: unlocked by killing the Ender Dragon
         AdvancementHolder rootAdvancement = Advancement.Builder.advancement()
                 .display(
                         new ItemStack(AffinityItems.AFFINITY_STONE_SPACE.get()),
