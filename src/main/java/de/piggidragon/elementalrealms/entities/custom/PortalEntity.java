@@ -4,6 +4,7 @@ import de.piggidragon.elementalrealms.attachments.ModAttachments;
 import de.piggidragon.elementalrealms.entities.ModEntities;
 import de.piggidragon.elementalrealms.particles.PortalParticles;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -171,11 +172,29 @@ public class PortalEntity extends Entity {
 
         if (!this.level().isClientSide()) {
 
+
             if (despawnTimeout > 0) {
                 despawnTimeout--;
                 if (despawnTimeout <= 0) {
                     PortalParticles.createPortalDisappearEffect((ServerLevel) this.level(), this.position());
                     this.discard();
+                }
+            }
+
+            if (tickCount % 5 == 0) {
+                ServerLevel serverLevel = (ServerLevel) level();
+
+                // Sanfte Portal-Partikel um das Portal
+                for (int i = 0; i < 3; i++) {
+                    double angle = (tickCount * 0.1 + i * Math.PI * 2 / 3);
+                    double radius = 0.8;
+
+                    double x = getX() + Math.cos(angle) * radius;
+                    double y = getY() + 0.5;
+                    double z = getZ() + Math.sin(angle) * radius;
+
+                    serverLevel.sendParticles(ParticleTypes.PORTAL,
+                            x, y, z, 1, 0.0, 0.0, 0.0, 0.02);
                 }
             }
 
