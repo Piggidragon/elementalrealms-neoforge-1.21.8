@@ -1,7 +1,8 @@
-package de.piggidragon.elementalrealms.items.dimension;
+package de.piggidragon.elementalrealms.items.magic.dimension;
 
 import de.piggidragon.elementalrealms.ElementalRealms;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -15,8 +16,8 @@ public class DimensionItems {
             SchoolStaff::new,
             new Item.Properties()
                     .durability(16)
+                    .rarity(Rarity.UNCOMMON)
     );
-
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);

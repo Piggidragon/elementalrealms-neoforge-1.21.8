@@ -28,19 +28,34 @@
   "item.elementalrealms.affinity_stone_life": "Affinity Stone of Life",
   "item.elementalrealms.affinity_stone_void": "Affinity Stone of Void",
   "item.elementalrealms.dimension_staff": "Dimension Staff",
+  "itemtooltip.elementalrealms.shift": "§7Hold §e[Shift]§7 for details",
+
+  "itemtooltip.elementalrealms.dimension_staff.line1": "§7Opens portals to the §bSchool Dimension",
+  "itemtooltip.elementalrealms.dimension_staff.line2": "§7Right-click to create a dimensional gateway",
+
+  "itemtooltip.elementalrealms.affinity_stone.fire": "§6Grants mastery over fire and heat",
+  "itemtooltip.elementalrealms.affinity_stone.water": "§9Grants mastery over water and liquids",
+  "itemtooltip.elementalrealms.affinity_stone.earth": "§2Grants mastery over earth and minerals",
+  "itemtooltip.elementalrealms.affinity_stone.wind": "§fGrants mastery over wind and air",
+  "itemtooltip.elementalrealms.affinity_stone.lightning": "§eGrants mastery over electricity and storms",
+  "itemtooltip.elementalrealms.affinity_stone.ice": "§bGrants mastery over ice and cold",
+  "itemtooltip.elementalrealms.affinity_stone.gravity": "§5Grants mastery over gravitational forces",
+  "itemtooltip.elementalrealms.affinity_stone.sound": "§dGrants mastery over sound waves",
+  "itemtooltip.elementalrealms.affinity_stone.time": "§6Grants mastery over temporal manipulation",
+  "itemtooltip.elementalrealms.affinity_stone.space": "§3Grants mastery over spatial distortion",
+  "itemtooltip.elementalrealms.affinity_stone.life": "§aGrants mastery over life energy",
+  "itemtooltip.elementalrealms.affinity_stone.void": "§8Grants mastery over void energy",
+
   "itemGroup.elementalrealms.affinity_tab": "Affinity Items",
   "itemGroup.elementalrealms.block_tab": "Blocks",
   "itemGroup.elementalrealms.item_tab": "Items",
-  "advancements.elementalrealms.root.title": "The Journey Begins...",
-  "advancements.elementalrealms.root.description": "Defeat the Ender Dragon to break the barrier between dimensions",
 
+  "advancements.elementalrealms.root.title": "The Journey Begins...",
+  "advancements.elementalrealms.root.description": "Defeat the Ender Dragon to unlock dimensional travel",
   "advancements.elementalrealms.get_staff.title": "Dimentional Traveler",
   "advancements.elementalrealms.get_staff.description": "Obtain a Dimension Staff",
+
   "elementalrealms.configuration.title": "Elemental Realms Configs",
   "elementalrealms.configuration.section.elementalrealms.common.toml": "Elemental Realms Configs",
-  "elementalrealms.configuration.section.elementalrealms.common.toml.title": "Elemental Realms Configs",
-  "elementalrealms.configuration.items": "Item List",
-  "elementalrealms.configuration.logDirtBlock": "Log Dirt Block",
-  "elementalrealms.configuration.magicNumberIntroduction": "Magic Number Text",
-  "elementalrealms.configuration.magicNumber": "Magic Number"
+  "elementalrealms.configuration.section.elementalrealms.common.toml.title": "Elemental Realms Configs"
 }

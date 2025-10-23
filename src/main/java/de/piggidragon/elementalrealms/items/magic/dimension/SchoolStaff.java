@@ -1,8 +1,9 @@
-package de.piggidragon.elementalrealms.items.dimension;
+package de.piggidragon.elementalrealms.items.magic.dimension;
 
 import de.piggidragon.elementalrealms.entities.ModEntities;
 import de.piggidragon.elementalrealms.entities.custom.PortalEntity;
 import de.piggidragon.elementalrealms.level.ModLevel;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -10,10 +11,14 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class SchoolStaff extends Item {
     public SchoolStaff(Properties properties) {
@@ -64,5 +69,16 @@ public class SchoolStaff extends Item {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
+        if (Screen.hasShiftDown()) {
+            tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.dimension_staff.line1"));
+            tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.dimension_staff.line2"));
+        } else {
+            tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.shift"));
+        }
+        super.appendHoverText(stack, context, tooltipDisplay, tooltipAdder, flag);
     }
 }

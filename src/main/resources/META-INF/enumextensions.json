@@ -1,0 +1,22 @@
+{
+  "entries": [
+    {
+      "enum": "net/minecraft/world/item/Rarity",
+      "name": "ELEMENTALREALMS_LEGENDARY",
+      "constructor": "(ILjava/lang/String;Ljava/util/function/UnaryOperator;)V",
+      "parameters": {
+        "class": "de/piggidragon/elementalrealms/util/ModRarities",
+        "field": "LEGENDARY"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/item/Rarity",
+      "name": "ELEMENTALREALMS_MYTHIC",
+      "constructor": "(ILjava/lang/String;Ljava/util/function/UnaryOperator;)V",
+      "parameters": {
+        "class": "de/piggidragon/elementalrealms/util/ModRarities",
+        "field": "MYTHIC"
+      }
+    }
+  ]
+}
