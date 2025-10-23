@@ -2,6 +2,7 @@ package de.piggidragon.elementalrealms.entities.custom;
 
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
 import de.piggidragon.elementalrealms.entities.ModEntities;
+import de.piggidragon.elementalrealms.particles.PortalParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -173,6 +174,7 @@ public class PortalEntity extends Entity {
             if (despawnTimeout > 0) {
                 despawnTimeout--;
                 if (despawnTimeout <= 0) {
+                    PortalParticles.createPortalDisappearEffect((ServerLevel) this.level(), this.position());
                     this.discard();
                 }
             }
