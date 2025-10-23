@@ -5,6 +5,35 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec3;
 
 public class PortalParticles {
+
+    /**
+     * Creates an expanding ring effect when portal arrives at destination.
+     * Spawns three concentric rings of reverse portal particles for dramatic effect.
+     *
+     * @param level    The server level where effect should be displayed
+     * @param position The position where portal is spawning
+     */
+    public static void createPortalArrivalEffect(ServerLevel level, Vec3 position) {
+        // Create 3 expanding rings with increasing radius
+        for (int ring = 0; ring < 3; ring++) {
+            double radius = (ring + 1) * 0.8;
+
+            // Spawn particles in circular pattern around spawn point
+            for (int i = 0; i < 16; i++) {
+                double angle = i * Math.PI * 2 / 16;
+                double x = position.x + Math.cos(angle) * radius;
+                double y = position.y;
+                double z = position.z + Math.sin(angle) * radius;
+
+                level.sendParticles(
+                        ParticleTypes.REVERSE_PORTAL,
+                        x, y, z,
+                        2, 0.0, 0.0, 0.0, 0.05
+                );
+            }
+        }
+    }
+
     /**
      * Creates particle effect when a portal disappears or is removed.
      * Spawns an inward collapsing effect with portal and smoke particles.
