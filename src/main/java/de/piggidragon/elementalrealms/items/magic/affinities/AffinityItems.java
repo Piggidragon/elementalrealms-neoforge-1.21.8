@@ -1,11 +1,9 @@
 package de.piggidragon.elementalrealms.items.magic.affinities;
 
 import de.piggidragon.elementalrealms.ElementalRealms;
-import de.piggidragon.elementalrealms.items.magic.affinities.custom.AffinityEssence;
-import de.piggidragon.elementalrealms.items.magic.affinities.custom.AffinityShard;
 import de.piggidragon.elementalrealms.items.magic.affinities.custom.AffinityStone;
 import de.piggidragon.elementalrealms.magic.affinities.Affinity;
-import de.piggidragon.elementalrealms.rarities.ModRarities;
+import de.piggidragon.elementalrealms.util.ModRarities;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;
@@ -23,12 +21,12 @@ public class AffinityItems {
                     .rarity(Rarity.EPIC));
     public static final DeferredItem<Item> AFFINITY_SHARD_FIRE = ITEMS.registerItem(
             "affinity_shard_fire",
-            (p) -> new AffinityShard(p, Affinity.FIRE),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.RARE));
     public static final DeferredItem<Item> ESSENCE_FIRE = ITEMS.registerItem(
             "essence_fire",
-            (p) -> new AffinityEssence(p, Affinity.FIRE),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.UNCOMMON));
 
@@ -39,12 +37,12 @@ public class AffinityItems {
                     .rarity(Rarity.EPIC));
     public static final DeferredItem<Item> AFFINITY_SHARD_WATER = ITEMS.registerItem(
             "affinity_shard_water",
-            (p) -> new AffinityShard(p, Affinity.WATER),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.RARE));
     public static final DeferredItem<Item> ESSENCE_WATER = ITEMS.registerItem(
             "essence_water",
-            (p) -> new AffinityEssence(p, Affinity.WATER),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.UNCOMMON));
 
@@ -55,12 +53,12 @@ public class AffinityItems {
                     .rarity(Rarity.EPIC));
     public static final DeferredItem<Item> AFFINITY_SHARD_WIND = ITEMS.registerItem(
             "affinity_shard_wind",
-            (p) -> new AffinityShard(p, Affinity.WIND),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.RARE));
     public static final DeferredItem<Item> ESSENCE_WIND = ITEMS.registerItem(
             "essence_wind",
-            (p) -> new AffinityEssence(p, Affinity.WIND),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.UNCOMMON));
 
@@ -71,12 +69,12 @@ public class AffinityItems {
                     .rarity(Rarity.EPIC));
     public static final DeferredItem<Item> AFFINITY_SHARD_EARTH = ITEMS.registerItem(
             "affinity_shard_earth",
-            (p) -> new AffinityShard(p, Affinity.EARTH),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.RARE));
     public static final DeferredItem<Item> ESSENCE_EARTH = ITEMS.registerItem(
             "essence_earth",
-            (p) -> new AffinityEssence(p, Affinity.EARTH),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.UNCOMMON));
 
@@ -87,12 +85,12 @@ public class AffinityItems {
                     .rarity(ModRarities.LEGENDARY.getValue()));
     public static final DeferredItem<Item> AFFINITY_SHARD_LIGHTNING = ITEMS.registerItem(
             "affinity_shard_lightning",
-            (p) -> new AffinityShard(p, Affinity.LIGHTNING),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.EPIC));
     public static final DeferredItem<Item> ESSENCE_LIGHTNING = ITEMS.registerItem(
             "essence_lightning",
-            (p) -> new AffinityEssence(p, Affinity.LIGHTNING),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.UNCOMMON));
 
@@ -103,12 +101,12 @@ public class AffinityItems {
                     .rarity(ModRarities.LEGENDARY.getValue()));
     public static final DeferredItem<Item> AFFINITY_SHARD_ICE = ITEMS.registerItem(
             "affinity_shard_ice",
-            (p) -> new AffinityShard(p, Affinity.ICE),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.EPIC));
     public static final DeferredItem<Item> ESSENCE_ICE = ITEMS.registerItem(
             "essence_ice",
-            (p) -> new AffinityEssence(p, Affinity.ICE),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.UNCOMMON));
 
@@ -119,12 +117,12 @@ public class AffinityItems {
                     .rarity(ModRarities.LEGENDARY.getValue()));
     public static final DeferredItem<Item> AFFINITY_SHARD_SOUND = ITEMS.registerItem(
             "affinity_shard_sound",
-            (p) -> new AffinityShard(p, Affinity.SOUND),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.EPIC));
     public static final DeferredItem<Item> ESSENCE_SOUND = ITEMS.registerItem(
             "essence_sound",
-            (p) -> new AffinityEssence(p, Affinity.SOUND),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.UNCOMMON));
 
@@ -135,12 +133,12 @@ public class AffinityItems {
                     .rarity(ModRarities.LEGENDARY.getValue()));
     public static final DeferredItem<Item> AFFINITY_SHARD_GRAVITY = ITEMS.registerItem(
             "affinity_shard_gravity",
-            (p) -> new AffinityShard(p, Affinity.GRAVITY),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.EPIC));
     public static final DeferredItem<Item> ESSENCE_GRAVITY = ITEMS.registerItem(
             "essence_gravity",
-            (p) -> new AffinityEssence(p, Affinity.GRAVITY),
+            Item::new,
             new Item.Properties()
                     .rarity(Rarity.UNCOMMON));
 
