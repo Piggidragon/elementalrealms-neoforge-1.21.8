@@ -14,26 +14,49 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
+/**
+ * Registry for all custom entity types in the mod.
+ * Entity types define the properties and behavior of entities (mobs, projectiles, special entities).
+ *
+ * <p>Current entities:</p>
+ * <ul>
+ *   <li>PortalEntity - Dimensional portal for teleportation</li>
+ * </ul>
+ */
 public class ModEntities {
+    /** Deferred register for entity types */
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, ElementalRealms.MODID);
 
+    /**
+     * Portal entity type for dimensional teleportation.
+     * Configured with:
+     * - Size: 1.0 x 2.0 blocks (width x height)
+     * - Fire immunity: portals cannot burn
+     * - Client tracking range: 8 chunks
+     * - Can spawn far from players: allows spawning in unloaded chunks
+     */
     public static final Supplier<EntityType<PortalEntity>> PORTAL_ENTITY = ENTITY_TYPES.register(
             "portal_entity",
             () -> EntityType.Builder.of(
                             (EntityType<PortalEntity> type, Level level) -> new PortalEntity(type, level),
-                            MobCategory.MISC
+                            MobCategory.MISC // Not a living creature
                     )
-                    .sized(1.0f, 2.0f)
-                    .fireImmune()
-                    .clientTrackingRange(8)
-                    .canSpawnFarFromPlayer()
+                    .sized(1.0f, 2.0f) // Hitbox dimensions
+                    .fireImmune() // Cannot be destroyed by fire/lava
+                    .clientTrackingRange(8) // How far away clients can see this entity
+                    .canSpawnFarFromPlayer() // Allows spawning in unloaded areas
                     .build(ResourceKey.create(
                             Registries.ENTITY_TYPE,
                             ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "portal_entity")
                     ))
     );
 
+    /**
+     * Registers all entity types with the mod event bus.
+     *
+     * @param bus The mod's event bus for registration
+     */
     public static void register(IEventBus bus) {
         ENTITY_TYPES.register(bus);
     }

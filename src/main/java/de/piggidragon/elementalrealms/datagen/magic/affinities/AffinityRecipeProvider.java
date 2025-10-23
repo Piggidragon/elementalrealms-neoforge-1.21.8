@@ -15,13 +15,32 @@ import net.minecraft.world.level.ItemLike;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Generates crafting recipes for all affinity-related items.
+ * Defines how players can craft affinity stones from shards and essences,
+ * and how to craft essences from vanilla Minecraft materials.
+ */
 public class AffinityRecipeProvider extends RecipeProvider {
+    /**
+     * Constructor for the recipe provider.
+     *
+     * @param provider Registry lookup provider
+     * @param recipeOutput Output handler for generated recipes
+     */
     public AffinityRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
         super(provider, recipeOutput);
     }
 
+    /**
+     * Builds all affinity-related crafting recipes.
+     * Creates recipes for:
+     * - Affinity stones (from shards + essence)
+     * - Essences (from vanilla materials)
+     * - Void stone (special recipe with rare materials)
+     */
     @Override
     protected void buildRecipes() {
+
         shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_FIRE.get())
                 .pattern("SSS")
                 .pattern("SES")
@@ -266,18 +285,55 @@ public class AffinityRecipeProvider extends RecipeProvider {
         */
     }
 
+    /**
+     * Helper method to generate smelting recipes for ore-type items.
+     *
+     * @param recipeOutput Output for generated recipes
+     * @param pIngredients List of items that can be smelted
+     * @param pCategory Recipe category
+     * @param pResult Result item after smelting
+     * @param pExperience XP awarded per smelted item
+     * @param pCookingTIme Smelting duration in ticks
+     * @param pGroup Recipe group name
+     */
     protected void oreSmelting(RecipeOutput recipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult,
                                float pExperience, int pCookingTIme, String pGroup) {
         oreCooking(recipeOutput, RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, pIngredients, pCategory, pResult,
                 pExperience, pCookingTIme, pGroup, "_from_smelting");
     }
 
+    /**
+     * Helper method to generate blast furnace recipes for ore-type items.
+     *
+     * @param recipeOutput Output for generated recipes
+     * @param pIngredients List of items that can be blasted
+     * @param pCategory Recipe category
+     * @param pResult Result item after blasting
+     * @param pExperience XP awarded per blasted item
+     * @param pCookingTime Blasting duration in ticks (usually half of smelting)
+     * @param pGroup Recipe group name
+     */
     protected void oreBlasting(RecipeOutput recipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult,
                                float pExperience, int pCookingTime, String pGroup) {
         oreCooking(recipeOutput, RecipeSerializer.BLASTING_RECIPE, BlastingRecipe::new, pIngredients, pCategory, pResult,
                 pExperience, pCookingTime, pGroup, "_from_blasting");
     }
 
+    /**
+     * Generic helper for creating cooking recipes (smelting, blasting, smoking, etc.).
+     *
+     * @param <T> Recipe type extending AbstractCookingRecipe
+     * @param recipeOutput Output for generated recipes
+     * @param pCookingSerializer Serializer for this cooking recipe type
+     * @param factory Factory method to create recipe instances
+     * @param pIngredients List of valid input items
+     * @param pCategory Recipe category
+     * @param pResult Output item
+     * @param pExperience XP reward
+     * @param pCookingTime Cooking duration in ticks
+     * @param pGroup Recipe group
+     * @param pRecipeName Suffix for recipe ID
+     */
     protected <T extends AbstractCookingRecipe> void oreCooking(RecipeOutput recipeOutput, RecipeSerializer<T> pCookingSerializer, AbstractCookingRecipe.Factory<T> factory,
                                                                 List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup, String pRecipeName) {
         for (ItemLike itemlike : pIngredients) {
@@ -285,7 +341,9 @@ public class AffinityRecipeProvider extends RecipeProvider {
                     .save(recipeOutput, ElementalRealms.MODID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
         }
     }
-
+    /**
+     * Runner class to integrate the recipe provider into the data generation system.
+     */
     public static class Runner extends RecipeProvider.Runner {
         public Runner(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> provider) {
             super(packOutput, provider);

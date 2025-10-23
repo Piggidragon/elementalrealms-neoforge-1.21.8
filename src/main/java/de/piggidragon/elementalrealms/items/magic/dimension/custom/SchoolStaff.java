@@ -3,11 +3,13 @@ package de.piggidragon.elementalrealms.items.magic.dimension.custom;
 import de.piggidragon.elementalrealms.entities.ModEntities;
 import de.piggidragon.elementalrealms.entities.custom.PortalEntity;
 import de.piggidragon.elementalrealms.level.ModLevel;
+import de.piggidragon.elementalrealms.particles.DimensionStaffParticles;
 import de.piggidragon.elementalrealms.particles.PortalParticles;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -142,6 +144,8 @@ public class SchoolStaff extends Item {
             serverLevel.playSound(null, player.blockPosition(),
                     SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS,
                     0.7F, 1.5F);
+
+            DimensionStaffParticles.addDurabilityEffects(serverLevel, player, player.getMainHandItem());
 
             // Register new beam animation for this player (prevents multiple simultaneous casts)
             ACTIVE_ANIMATIONS.put(player.getUUID(), new BeamAnimation(serverLevel, player, staffTip, targetPos));

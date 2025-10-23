@@ -14,10 +14,22 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
+/**
+ * Registers custom commands for managing player affinities.
+ * Provides administrative tools for testing and debugging affinity mechanics.
+ *
+ * <p>Available commands:</p>
+ * <ul>
+ *   <li>/affinities list - Display player's current affinities</li>
+ *   <li>/affinities set &lt;affinity&gt; - Manually assign an affinity</li>
+ *   <li>/affinities clear - Remove all affinities</li>
+ *   <li>/affinities reroll - Clear and randomly reassign affinities</li>
+ * </ul>
+ */
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class ModCommands {
 
-
+    /** Provides auto-completion suggestions for valid affinity names */
     public static final SuggestionProvider<CommandSourceStack> AFFINITY_SUGGESTIONS = (context, builder) -> {
         for (Affinity a : Affinity.values()) {
             builder.suggest(a.toString());
@@ -25,13 +37,20 @@ public class ModCommands {
         return builder.buildFuture();
     };
 
+    /**
+     * Registers all mod commands when the server starts.
+     * Requires operator permission level 2 to execute.
+     *
+     * @param event The command registration event
+     */
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
         var dispatcher = event.getDispatcher();
-        ElementalRealms.LOGGER.info("COMMANDREGISTER");
+        ElementalRealms.LOGGER.info("Registering Elemental Realms commands");
         dispatcher.register(Commands.literal("affinities")
-                .requires(cs -> cs.hasPermission(2))
-                // /affinities list
+                .requires(cs -> cs.hasPermission(2)) // Requires OP level 2
+
+                // List current affinities
                 .then(Commands.literal("list")
                         .executes(ctx -> {
                             ServerPlayer player = ctx.getSource().getPlayerOrException();
@@ -40,7 +59,8 @@ public class ModCommands {
                             return 1;
                         })
                 )
-                // /affinities set <affinity>
+
+                // Manually set a specific affinity
                 .then(Commands.literal("set")
                         .then(Commands.argument("affinity", StringArgumentType.word())
                                 .suggests(AFFINITY_SUGGESTIONS)
@@ -60,7 +80,8 @@ public class ModCommands {
                                 })
                         )
                 )
-                // /affinities clear
+
+                // Clear all player affinities
                 .then(Commands.literal("clear")
                         .executes(ctx -> {
                             ServerPlayer player = ctx.getSource().getPlayerOrException();
@@ -74,21 +95,25 @@ public class ModCommands {
                             return 1;
                         })
                 )
-                // /affinities random <chance>
+
+                // Re-roll affinities randomly
                 .then(Commands.literal("reroll")
                         .executes(ctx -> {
                             ServerPlayer player = ctx.getSource().getPlayerOrException();
+                            // Clear existing affinities
                             try {
                                 ModAffinities.clearAffinities(player);
                             } catch (Exception ignored) {
+                                // Ignore if no affinities to clear
                             }
+                            // Roll and apply new random affinities
                             for (Affinity affinity : ModAffinitiesRoll.rollAffinities(player)) {
                                 if (affinity != Affinity.NONE) {
                                     try {
                                         ModAffinities.addAffinity(player, affinity);
                                     } catch (Exception e) {
-                                        // Should not happen, as we roll only affinities the player does not have yet
-                                        ElementalRealms.LOGGER.error("Error while re-rolling affinities for player " + player.getName().getString() + ": " + e.getMessage());
+                                        // Should not occur since we're rolling unique affinities
+                                        ElementalRealms.LOGGER.error("Error re-rolling affinities for player " + player.getName().getString() + ": " + e.getMessage());
                                     }
                                 }
                             }

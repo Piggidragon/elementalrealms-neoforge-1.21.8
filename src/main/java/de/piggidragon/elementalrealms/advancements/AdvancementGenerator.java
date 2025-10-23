@@ -1,3 +1,4 @@
+
 package de.piggidragon.elementalrealms.advancements;
 
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
@@ -15,14 +16,21 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
+import java.util.function.Consumer;
 
 import java.util.Optional;
-import java.util.function.Consumer;
 
 public class AdvancementGenerator implements AdvancementSubProvider {
 
+    /**
+     * Generates all advancements for the mod's progression tree.
+     *
+     * @param provider Registry lookup provider for entity types and other registries
+     * @param consumer Consumer to register created advancements with the data generator
+     */
     @Override
     public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer) {
+        // Root advancement: unlocked by killing the Ender Dragon
         AdvancementHolder rootAdvancement = Advancement.Builder.advancement()
                 .display(
                         new ItemStack(AffinityItems.AFFINITY_STONE_SPACE.get()),
