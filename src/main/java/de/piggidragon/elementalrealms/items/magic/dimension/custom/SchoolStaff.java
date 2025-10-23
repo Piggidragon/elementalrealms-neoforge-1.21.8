@@ -1,4 +1,4 @@
-package de.piggidragon.elementalrealms.items.magic.dimension;
+package de.piggidragon.elementalrealms.items.magic.dimension.custom;
 
 import de.piggidragon.elementalrealms.entities.ModEntities;
 import de.piggidragon.elementalrealms.entities.custom.PortalEntity;

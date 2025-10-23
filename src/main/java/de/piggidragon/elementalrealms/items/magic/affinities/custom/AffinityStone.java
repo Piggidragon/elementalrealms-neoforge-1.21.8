@@ -69,7 +69,7 @@ public class AffinityStone extends Item {
                     AffinityParticles.createCustomAffinityParticles(serverLevel, player, stone.affinity);
 
                     // Play sound with pitch variation based on affinity type
-                    float pitch = 1.2F + (stone.affinity.ordinal() * 0.1F);
+                    float pitch = 0.25F + (stone.affinity.ordinal() * 0.1F);
                     serverLevel.playSound(null, player.blockPosition(),
                             SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 0.8F, pitch);
 

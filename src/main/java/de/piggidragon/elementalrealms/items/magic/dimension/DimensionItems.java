@@ -1,6 +1,7 @@
 package de.piggidragon.elementalrealms.items.magic.dimension;
 
 import de.piggidragon.elementalrealms.ElementalRealms;
+import de.piggidragon.elementalrealms.items.magic.dimension.custom.SchoolStaff;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;
