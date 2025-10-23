@@ -76,8 +76,7 @@ public class SchoolStaff extends Item {
         if (Screen.hasShiftDown()) {
             tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.dimension_staff.line1"));
             tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.dimension_staff.line2"));
-        }
-        else {
+        } else {
             tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.shift"));
         }
         super.appendHoverText(stack, context, tooltipDisplay, tooltipAdder, flag);
