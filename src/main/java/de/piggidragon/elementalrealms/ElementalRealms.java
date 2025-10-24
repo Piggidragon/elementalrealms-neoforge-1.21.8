@@ -7,6 +7,7 @@ import de.piggidragon.elementalrealms.creativetabs.ModCreativeTabs;
 import de.piggidragon.elementalrealms.entities.ModEntities;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import de.piggidragon.elementalrealms.items.magic.dimension.DimensionItems;
+import de.piggidragon.elementalrealms.structures.ModStructures;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -59,7 +60,7 @@ public class ElementalRealms {
         ModEntities.register(modEventBus);      // Custom entities (portal entity)
         ModBlocks.register(modEventBus);        // Custom blocks
         ModCreativeTabs.register(modEventBus);  // Creative mode inventory tabs
-        //ModStructures.register(modEventBus);
+        ModStructures.register(modEventBus);
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
