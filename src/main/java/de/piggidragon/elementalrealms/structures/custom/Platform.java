@@ -67,23 +67,23 @@ public class Platform extends Structure {
         this.liquidSettings = liquidSettings;
     }
 
-    /**
-     * Only spawn at world spawn coordinates (0,0) - elegant solution
-     */
+    /*
     private static boolean extraSpawningChecks(Structure.GenerationContext context) {
         ChunkPos chunkpos = context.chunkPos();
 
         // Only spawn in spawn chunk (0,0)
         return chunkpos.x == 0 && chunkpos.z == 0;
     }
+    */
 
     @Override
     public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
 
-        // spawn-only-at-spawn logic
+        /*
         if (!Platform.extraSpawningChecks(context)) {
             return Optional.empty();
         }
+         */
 
         int startY = this.startHeight.sample(context.random(), new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor()));
 
