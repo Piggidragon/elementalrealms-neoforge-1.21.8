@@ -94,6 +94,7 @@ public class PortalEntity extends Entity {
     /**
      * Basic constructor for entity registration.
      * Called by Minecraft's entity system when loading from world save.
+     * Sets the default target level to Overworld if on server side.
      *
      * @param type  The entity type of this portal
      * @param level The level/dimension this entity exists in
@@ -101,6 +102,11 @@ public class PortalEntity extends Entity {
     public PortalEntity(EntityType<? extends PortalEntity> type, Level level) {
         super(type, level);
         this.portalLevel = level.dimension();
+
+        // Set default target level to Overworld on server side
+        if (!level.isClientSide() && level.getServer() != null) {
+            this.targetLevel = level.getServer().getLevel(Level.OVERWORLD);
+        }
 
         // Start spawn animation immediately on client side
         if (level.isClientSide()) {
@@ -260,6 +266,9 @@ public class PortalEntity extends Entity {
                     ResourceLocation.parse(levelKey)
             );
             this.targetLevel = this.getServer().getLevel(key);
+        } else if (levelKey.isEmpty() && !this.level().isClientSide() && this.getServer() != null) {
+            // If no target level was saved, default to Overworld
+            this.targetLevel = this.getServer().getLevel(Level.OVERWORLD);
         }
 
         // Load owner UUID if present
