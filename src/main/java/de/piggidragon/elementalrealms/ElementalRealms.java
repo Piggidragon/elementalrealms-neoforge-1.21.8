@@ -59,11 +59,12 @@ public class ElementalRealms {
         ModEntities.register(modEventBus);      // Custom entities (portal entity)
         ModBlocks.register(modEventBus);        // Custom blocks
         ModCreativeTabs.register(modEventBus);  // Creative mode inventory tabs
+        //ModStructures.register(modEventBus);
 
-        // Client-only: Register configuration screen extension
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
         }
+
 
         // Subscribe to common setup event for post-registration initialization
         modEventBus.addListener(this::commonSetup);
