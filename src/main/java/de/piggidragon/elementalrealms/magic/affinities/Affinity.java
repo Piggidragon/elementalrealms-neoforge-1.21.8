@@ -30,7 +30,7 @@ public enum Affinity {
     /**
      * No affinity - used to represent the absence of magical connection
      */
-    NONE(AffinityType.NONE),
+    VOID(AffinityType.NONE),
 
     // Elemental Tier - Basic magical affinities
     FIRE(AffinityType.ELEMENTAL),
@@ -89,6 +89,10 @@ public enum Affinity {
         return type;
     }
 
+    public String getName(){
+        return this.toString().toLowerCase();
+    }
+
     /**
      * Gets the deviant (advanced) affinity associated with this elemental affinity.
      * Only works for ELEMENTAL type affinities.
@@ -110,10 +114,10 @@ public enum Affinity {
                 case WATER -> ICE;
                 case WIND -> SOUND;
                 case EARTH -> GRAVITY;
-                default -> NONE;
+                default -> VOID;
             };
         } else {
-            return NONE;
+            return VOID;
         }
     }
 
@@ -138,10 +142,10 @@ public enum Affinity {
                 case ICE -> WATER;
                 case SOUND -> WIND;
                 case GRAVITY -> EARTH;
-                default -> NONE;
+                default -> VOID;
             };
         } else {
-            return NONE;
+            return VOID;
         }
     }
 }
