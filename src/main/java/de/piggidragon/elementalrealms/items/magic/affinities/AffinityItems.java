@@ -15,23 +15,8 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /**
- * Registry for all affinity-related items including stones, shards, and essences.
- * Organizes items by affinity type with consistent naming and rarity patterns.
- *
- * <p>Item hierarchy by affinity:</p>
- * <ul>
- *   <li>Affinity Stone - Consumable that grants the affinity (EPIC or higher rarity)</li>
- *   <li>Affinity Shard - Crafting ingredient for stones (RARE or EPIC rarity)</li>
- *   <li>Essence - Base crafting material made from vanilla items (UNCOMMON rarity)</li>
- * </ul>
- *
- * <p>Affinity tiers:</p>
- * <ul>
- *   <li>Elemental (Fire, Water, Wind, Earth) - EPIC rarity</li>
- *   <li>Deviant (Lightning, Ice, Sound, Gravity) - LEGENDARY rarity</li>
- *   <li>Eternal (Time, Space, Life) - MYTHIC rarity</li>
- *   <li>Void (clears affinities) - RARE rarity</li>
- * </ul>
+ * Registry for affinity items: stones, shards, and essences.
+ * Organized by affinity type with appropriate rarities.
  */
 public class AffinityItems {
     /**

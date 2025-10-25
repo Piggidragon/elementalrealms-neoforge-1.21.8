@@ -15,15 +15,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 /**
- * Defines data attachments for persistent player data storage.
- * Attachments are NeoForge's system for storing custom data on entities/levels/items
- * that persists across sessions and can be synced between client/server.
- *
- * <p>Current attachments:</p>
- * <ul>
- *   <li>AFFINITIES - Player's magical affinity list (persists through death)</li>
- *   <li>OVERWORLD_RETURN_POS - Position to return to when leaving School Dimension</li>
- * </ul>
+ * Defines persistent data attachments for entities and levels.
  */
 public class ModAttachments {
     /**
@@ -34,9 +26,7 @@ public class ModAttachments {
             ElementalRealms.MODID);
 
     /**
-     * Stores the list of magical affinities a player has acquired.
-     * This data persists through death and is serialized to the player's save file.
-     * Default value is an empty list.
+     * Player's magical affinities. Persists through death.
      */
     public static final Supplier<AttachmentType<List<Affinity>>> AFFINITIES = ATTACHMENT_TYPE.register(
             "affinities",
@@ -62,9 +52,7 @@ public class ModAttachments {
     );
 
     /**
-     * Stores the player's position in the Overworld before entering School Dimension.
-     * Used to return the player to their original location when exiting.
-     * Default value is Vec3.ZERO (0,0,0).
+     * Stores Overworld position before entering School Dimension.
      */
     public static final Supplier<AttachmentType<Vec3>> OVERWORLD_RETURN_POS = ATTACHMENT_TYPE.register(
             "overworld_return_pos",

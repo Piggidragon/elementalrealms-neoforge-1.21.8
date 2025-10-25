@@ -14,16 +14,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Central hub for registering all data generators used in the mod.
- * Data generators automatically create JSON files for models, recipes, advancements, etc.
- * during the build process, reducing manual file creation and ensuring consistency.
- *
- * <p>Currently generates:</p>
- * <ul>
- *   <li>Item and block models (textures and display properties)</li>
- *   <li>Crafting recipes (shaped, shapeless, smelting)</li>
- *   <li>Advancements (progression system)</li>
- * </ul>
+ * Registers all data generators for automated JSON file creation.
  */
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class DataGenerators {

@@ -18,9 +18,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Generates crafting recipes for all affinity-related items.
- * Defines how players can craft affinity stones from shards and essences,
- * and how to craft essences from vanilla Minecraft materials.
+ * Generates crafting recipes for affinity items.
  */
 public class AffinityRecipeProvider extends RecipeProvider {
     /**
@@ -42,11 +40,10 @@ public class AffinityRecipeProvider extends RecipeProvider {
      */
     @Override
     protected void buildRecipes() {
-        // Generate affinity stone recipes for all affinities that have shards
+        // Generate stone recipes: Shard + Essence -> Stone
         for (Map.Entry<Affinity, net.neoforged.neoforge.registries.DeferredItem<net.minecraft.world.item.Item>> entry : AffinityItems.AFFINITY_SHARDS.entrySet()) {
             Affinity affinity = entry.getKey();
 
-            // Generate stone recipe (Shard + Essence -> Stone)
             shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONES.get(affinity).get())
                     .pattern("SSS")
                     .pattern("SES")
@@ -57,7 +54,7 @@ public class AffinityRecipeProvider extends RecipeProvider {
                     .save(output);
         }
 
-        // Special Void Stone recipe (no crafting via shards)
+        // Void Stone (special recipe with rare materials)
         shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONES.get(Affinity.VOID).get())
                 .pattern("CDC")
                 .pattern("ESE")
@@ -70,7 +67,7 @@ public class AffinityRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_stone", has(AffinityItems.AFFINITY_STONES.get(Affinity.VOID)))
                 .save(output);
 
-        // Essence recipes (must be defined individually as they use different materials)
+        // Essence recipes
         shaped(RecipeCategory.MISC, AffinityItems.ESSENCES.get(Affinity.FIRE).get())
                 .pattern("MBM")
                 .pattern("BLD")

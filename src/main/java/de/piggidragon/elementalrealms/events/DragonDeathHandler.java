@@ -21,24 +21,11 @@ import net.neoforged.neoforge.event.entity.player.AdvancementEvent;
 import java.util.List;
 
 /**
- * Event handler for spawning dimensional portals when players defeat the Ender Dragon.
- * Listens for advancement completion and creates a permanent portal at world spawn
- * leading to the School dimension.
- *
- * <p>Activation process:</p>
- * <ol>
- *   <li>Player kills Ender Dragon</li>
- *   <li>Root advancement is automatically earned</li>
- *   <li>Portal spawns at Overworld spawn point</li>
- *   <li>All online players receive notification</li>
- * </ol>
+ * Spawns dimensional portal when player defeats Ender Dragon.
  */
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class DragonDeathHandler {
 
-    /**
-     * Resource location of the advancement that triggers portal spawning
-     */
     private static final ResourceLocation DRAGON_ADVANCEMENT_ID =
             ResourceLocation.fromNamespaceAndPath("elementalrealms", "root");
 
@@ -72,18 +59,7 @@ public class DragonDeathHandler {
     }
 
     /**
-     * Spawns a permanent portal at the Overworld's spawn point.
-     * The portal connects to the School dimension and notifies all players.
-     *
-     * <p>Portal configuration:</p>
-     * <ul>
-     *   <li>Location: World spawn + 2 blocks north</li>
-     *   <li>Permanent (no despawn timer)</li>
-     *   <li>Leads to School dimension</li>
-     *   <li>Positioned slightly above ground for visibility</li>
-     * </ul>
-     *
-     * @param server The Minecraft server instance for accessing worlds and players
+     * Spawns permanent portal at world spawn leading to School dimension.
      */
     public static void spawnPortalOrigin(MinecraftServer server) {
         // Get Overworld dimension
@@ -94,10 +70,10 @@ public class DragonDeathHandler {
         PortalEntity portal = new PortalEntity(
                 ModEntities.PORTAL_ENTITY.get(),
                 overworld,
-                false, // Don't discard after use
+                false,
                 -1, // Never despawn
                 server.getLevel(ModLevel.SCHOOL_DIMENSION),
-                null // No specific owner
+                null
         );
 
         // Find safe spawn position at world spawn
