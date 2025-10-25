@@ -77,7 +77,7 @@ public class ModAffinities {
         }
 
         // Remove NONE placeholder if present before adding real affinity
-        affinities.remove(Affinity.NONE);
+        affinities.remove(Affinity.VOID);
         affinities.add(affinity);
     }
 
@@ -92,13 +92,13 @@ public class ModAffinities {
         List<Affinity> affinities = getAffinities(player);
 
         // Cannot clear if already has no affinities
-        if (affinities.contains(Affinity.NONE)) {
+        if (affinities.contains(Affinity.VOID)) {
             throw new Exception("Player has no affinities to clear.");
         }
 
         // Clear all affinities and set to NONE
         affinities.clear();
-        affinities.add(Affinity.NONE);
+        affinities.add(Affinity.VOID);
     }
 
     /**
@@ -140,7 +140,7 @@ public class ModAffinities {
 
             // Roll and assign random affinities for new player
             for (Affinity affinity : ModAffinitiesRoll.rollAffinities(player)) {
-                if (affinity != Affinity.NONE) {
+                if (affinity != Affinity.VOID) {
                     try {
                         addAffinity(player, affinity);
                     } catch (Exception ignored) {

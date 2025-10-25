@@ -25,54 +25,21 @@ public class ModModelProvider extends ModelProvider {
 
     /**
      * Registers all models for blocks and items.
-     * Currently only generates flat 2D item models for affinity items.
+     * Automatically generates flat 2D item models for all affinity items.
      *
      * @param blockModels Generator for block models
      * @param itemModels  Generator for item models
      */
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
-
-        // Generate flat item models for all fire affinity items
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_FIRE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_SHARD_FIRE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.ESSENCE_FIRE.get(), ModelTemplates.FLAT_ITEM);
-
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_WATER.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_SHARD_WATER.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.ESSENCE_WATER.get(), ModelTemplates.FLAT_ITEM);
-
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_WIND.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_SHARD_WIND.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.ESSENCE_WIND.get(), ModelTemplates.FLAT_ITEM);
-
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_EARTH.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_SHARD_EARTH.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.ESSENCE_EARTH.get(), ModelTemplates.FLAT_ITEM);
-
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_LIGHTNING.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_SHARD_LIGHTNING.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.ESSENCE_LIGHTNING.get(), ModelTemplates.FLAT_ITEM);
-
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_ICE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_SHARD_ICE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.ESSENCE_ICE.get(), ModelTemplates.FLAT_ITEM);
-
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_SOUND.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_SHARD_SOUND.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.ESSENCE_SOUND.get(), ModelTemplates.FLAT_ITEM);
-
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_GRAVITY.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_SHARD_GRAVITY.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.ESSENCE_GRAVITY.get(), ModelTemplates.FLAT_ITEM);
-
-        // Special affinity stones (Time, Space, Life, Void)
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_TIME.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_SPACE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_LIFE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(AffinityItems.AFFINITY_STONE_VOID.get(), ModelTemplates.FLAT_ITEM);
-
-        // Note: Dimension staff uses custom model, excluded from automatic generation
+        // Generate flat item models for all affinity items at once
+        Stream.of(
+                        AffinityItems.AFFINITY_STONES.values().stream(),
+                        AffinityItems.AFFINITY_SHARDS.values().stream(),
+                        AffinityItems.ESSENCES.values().stream()
+                )
+                .flatMap(stream -> stream)
+                .forEach(item -> itemModels.generateFlatItem(item.get(), ModelTemplates.FLAT_ITEM));
     }
 
     /**

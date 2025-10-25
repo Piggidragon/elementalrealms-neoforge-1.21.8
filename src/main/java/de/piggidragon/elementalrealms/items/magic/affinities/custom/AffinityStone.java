@@ -72,7 +72,7 @@ public class AffinityStone extends Item {
                 boolean success = false;
 
                 // Handle void stone: removes all player affinities
-                if (stone.affinity == Affinity.NONE) {
+                if (stone.affinity == Affinity.VOID) {
                     try {
                         ModAffinities.clearAffinities(player);
                         success = true;
@@ -131,7 +131,7 @@ public class AffinityStone extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
         // Display appropriate tooltip based on affinity type
-        switch (stack.getItem() instanceof AffinityStone stone ? stone.affinity : Affinity.NONE) {
+        switch (stack.getItem() instanceof AffinityStone stone ? stone.affinity : Affinity.VOID) {
             case FIRE -> tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.affinity_stone.fire"));
             case WATER ->
                     tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.affinity_stone.water"));
@@ -149,7 +149,7 @@ public class AffinityStone extends Item {
             case SPACE ->
                     tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.affinity_stone.space"));
             case LIFE -> tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.affinity_stone.life"));
-            case NONE -> tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.affinity_stone.void"));
+            case VOID -> tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.affinity_stone.void"));
         }
         super.appendHoverText(stack, context, tooltipDisplay, tooltipAdder, flag);
     }

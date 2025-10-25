@@ -110,7 +110,7 @@ public class ModCommands {
                             }
                             // Roll and apply new random affinities
                             for (Affinity affinity : ModAffinitiesRoll.rollAffinities(player)) {
-                                if (affinity != Affinity.NONE) {
+                                if (affinity != Affinity.VOID) {
                                     try {
                                         ModAffinities.addAffinity(player, affinity);
                                     } catch (Exception e) {

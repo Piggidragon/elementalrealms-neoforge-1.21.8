@@ -2,6 +2,7 @@ package de.piggidragon.elementalrealms.advancements;
 
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import de.piggidragon.elementalrealms.items.magic.dimension.DimensionItems;
+import de.piggidragon.elementalrealms.magic.affinities.Affinity;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
@@ -32,7 +33,7 @@ public class AdvancementGenerator implements AdvancementSubProvider {
         // Root advancement: unlocked by killing the Ender Dragon
         AdvancementHolder rootAdvancement = Advancement.Builder.advancement()
                 .display(
-                        new ItemStack(AffinityItems.AFFINITY_STONE_SPACE.get()),
+                        new ItemStack(AffinityItems.AFFINITY_STONES.get(Affinity.SPACE).get()),
                         Component.translatable("advancements.elementalrealms.root.title"),
                         Component.translatable("advancements.elementalrealms.root.description"),
                         ResourceLocation.fromNamespaceAndPath("minecraft", "block/cracked_deepslate_tiles"),
