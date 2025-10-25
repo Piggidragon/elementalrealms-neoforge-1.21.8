@@ -23,9 +23,16 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSetting
 
 import java.util.Optional;
 
+/**
+ * Jigsaw-based structure for generating platforms in the School dimension.
+ * Uses template pools to assemble structure pieces with configurable height and size.
+ */
 public class Platform extends Structure {
 
-    // Codec exactly like SkyStructures from tutorial
+    /**
+     * Codec for serializing/deserializing platform structure configuration from JSON.
+     * Includes start pool, size, height provider, and generation constraints.
+     */
     public static final MapCodec<Platform> CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
                     Platform.settingsCodec(instance),
@@ -48,6 +55,19 @@ public class Platform extends Structure {
     private final DimensionPadding dimensionPadding;
     private final LiquidSettings liquidSettings;
 
+    /**
+     * Constructs a new platform structure with specified generation parameters.
+     *
+     * @param config                   Base structure settings (biome tags, spawn overrides, etc.)
+     * @param startPool                Template pool to begin structure generation from
+     * @param startJigsawName          Optional specific jigsaw block to start from
+     * @param size                     Maximum depth of jigsaw piece branching (0-30)
+     * @param startHeight              Y-level provider for structure placement
+     * @param projectStartToHeightmap  Optional heightmap projection for terrain-relative placement
+     * @param maxDistanceFromCenter    Maximum radius for piece placement (1-128 chunks)
+     * @param dimensionPadding         Vertical padding from dimension bounds
+     * @param liquidSettings           Controls waterlogging behavior
+     */
     public Platform(Structure.StructureSettings config,
                     Holder<StructureTemplatePool> startPool,
                     Optional<ResourceLocation> startJigsawName,
@@ -68,32 +88,38 @@ public class Platform extends Structure {
         this.liquidSettings = liquidSettings;
     }
 
+    /**
+     * Determines structure spawn location and generates jigsaw assembly.
+     * Called during world generation when placement conditions are met.
+     *
+     * @param context Generation context containing chunk position, biome data, and random source
+     * @return Optional containing structure pieces, or empty if generation fails
+     */
     @Override
     public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
 
         ElementalRealms.LOGGER.info("Generating Platform Structure at chunk: " + context.chunkPos());
 
+        // Sample Y-level from height provider
         int startY = this.startHeight.sample(context.random(), new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor()));
 
         ChunkPos chunkPos = context.chunkPos();
         BlockPos blockPos = new BlockPos(0, 60, 0);
 
+        // Assemble jigsaw pieces using vanilla placement algorithm
         Optional<Structure.GenerationStub> structurePiecesGenerator =
                 JigsawPlacement.addPieces(
-                        context, // Used for JigsawPlacement to get all the proper behaviors done.
-                        this.startPool, // The starting pool to use to create the structure layout from
-                        this.startJigsawName, // Can be used to only spawn from one Jigsaw block. But we don't need to worry about this.
-                        this.size, // How deep a branch of pieces can go away from center piece. (5 means branches cannot be longer than 5 pieces from center piece)
-                        blockPos, // Where to spawn the structure.
-                        false, // "useExpansionHack" This is for legacy villages to generate properly. You should keep this false always.
-                        Optional.empty(), // Adds the terrain height's y value to the passed in blockpos's y value. (This uses WORLD_SURFACE_WG heightmap which stops at top water too)
-                        // Here at projectStartToHeightmap, start_height's y value is 60 which means the structure spawn 60 blocks above terrain height if start_height and project_start_to_heightmap is defined in structure JSON.
-                        // Set projectStartToHeightmap to be empty optional for structure to be place only at the passed in blockpos's Y value instead.
-                        // Definitely keep this an empty optional when placing structures in the nether as otherwise, heightmap placing will put the structure on the Bedrock roof.
-                        this.maxDistanceFromCenter, // Maximum limit for how far pieces can spawn from center. You cannot set this bigger than 128 or else pieces gets cutoff.
-                        PoolAliasLookup.EMPTY, // Optional thing that allows swapping a template pool with another per structure json instance. We don't need this but see vanilla JigsawStructure class for how to wire it up if you want it.
-                        this.dimensionPadding, // Optional thing to prevent generating too close to the bottom or top of the dimension.
-                        this.liquidSettings); // Optional thing to control whether the structure will be waterlogged when replacing pre-existing water in the world.
+                        context,
+                        this.startPool,
+                        this.startJigsawName,
+                        this.size,
+                        blockPos,
+                        false, // Don't use expansion hack (legacy village generation)
+                        Optional.empty(), // Don't project to heightmap
+                        this.maxDistanceFromCenter,
+                        PoolAliasLookup.EMPTY,
+                        this.dimensionPadding,
+                        this.liquidSettings);
 
         return structurePiecesGenerator;
     }
