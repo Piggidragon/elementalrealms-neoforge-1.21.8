@@ -3,6 +3,7 @@ package de.piggidragon.elementalrealms.structures.custom;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.structures.ModStructures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -67,28 +68,15 @@ public class Platform extends Structure {
         this.liquidSettings = liquidSettings;
     }
 
-    /*
-    private static boolean extraSpawningChecks(Structure.GenerationContext context) {
-        ChunkPos chunkpos = context.chunkPos();
-
-        // Only spawn in spawn chunk (0,0)
-        return chunkpos.x == 0 && chunkpos.z == 0;
-    }
-    */
-
     @Override
     public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
 
-        /*
-        if (!Platform.extraSpawningChecks(context)) {
-            return Optional.empty();
-        }
-         */
+        ElementalRealms.LOGGER.info("Generating Platform Structure at chunk: " + context.chunkPos());
 
         int startY = this.startHeight.sample(context.random(), new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor()));
 
         ChunkPos chunkPos = context.chunkPos();
-        BlockPos blockPos = new BlockPos(chunkPos.getMinBlockX(), startY, chunkPos.getMinBlockZ());
+        BlockPos blockPos = new BlockPos(0, 60, 0);
 
         Optional<Structure.GenerationStub> structurePiecesGenerator =
                 JigsawPlacement.addPieces(

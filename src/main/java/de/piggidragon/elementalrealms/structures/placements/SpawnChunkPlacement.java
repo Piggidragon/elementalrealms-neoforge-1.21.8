@@ -3,6 +3,7 @@ package de.piggidragon.elementalrealms.structures.placements;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.structures.ModStructurePlacements;
 import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
@@ -78,10 +79,12 @@ public class SpawnChunkPlacement extends RandomSpreadStructurePlacement {
      */
     @Override
     protected boolean isPlacementChunk(ChunkGeneratorStructureState structureState, int x, int z) {
+
+        ElementalRealms.LOGGER.info("SpawnChunkPlacement isPlacementChunk called for chunk ({}, {})", x, z);
         // Nur Spawn-Chunk erlauben
         if (x == 0 && z == 0) {
             // Zusätzlich normale RandomSpread-Logic
-            return super.isPlacementChunk(structureState, x, z);
+            return true;
         }
 
         return false;

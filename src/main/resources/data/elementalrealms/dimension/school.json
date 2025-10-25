@@ -2,15 +2,17 @@
   "type": "elementalrealms:school",
   "generator": {
     "type": "minecraft:flat",
-    "biome": "minecraft:the_void",
     "settings": {
+      "biome": "minecraft:the_void",
       "layers": [
         {
           "block": "minecraft:air",
           "height": 1
         }
       ],
-      "biome": "minecraft:the_void"
+      "structure_overrides": [
+        "elementalrealms:platform"
+      ]
     }
   }
 }

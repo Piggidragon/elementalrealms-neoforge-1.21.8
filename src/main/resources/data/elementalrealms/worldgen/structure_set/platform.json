@@ -1,11 +1,14 @@
 {
   "structures": [
-    { "structure": "elementalrealms:platform", "weight": 1 }
+    {
+      "structure": "elementalrealms:platform",
+      "weight": 1
+    }
   ],
   "placement": {
     "type": "elementalrealms:spawn_only",
-    "salt": 123456,
-    "spacing": 2,
-    "separation": 1
+    "salt": 1234567,
+    "spacing": 1,
+    "separation": 0
   }
 }

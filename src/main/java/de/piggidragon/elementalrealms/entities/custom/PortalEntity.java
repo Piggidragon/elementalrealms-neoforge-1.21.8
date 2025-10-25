@@ -411,27 +411,7 @@ public class PortalEntity extends Entity {
                 // Save player's current position for return trip
                 player.setData(ModAttachments.OVERWORLD_RETURN_POS, new Vec3(player.getX(), player.getY(), player.getZ()));
 
-                /*
-                // Create safe landing platform at fixed coordinates in target dimension
-                BlockPos center = new BlockPos(0, 61, 0);
-                for (int dx = -2; dx <= 2; dx++) {
-                    for (int dz = -2; dz <= 2; dz++) {
-                        targetLevel.setBlock(center.offset(dx, 0, dz), Blocks.STONE.defaultBlockState(), 3);
-                    }
-                }
-
-                // Create return portal at destination
-                PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), targetLevel, true, -1, overworld, null);
-                targetLevel.addFreshEntity(portal);
-                portal.setPos(center.getX(), center.getY() + 1, center.getZ());
-
-                // Teleport player to platform
-                double x = center.above().getX();
-                double y = center.above().getY();
-                double z = center.above().getZ();
-                */
-
-                player.teleportTo(targetLevel, 2, 62, 0, relatives, yaw, pitch, setCamera);
+                player.teleportTo(targetLevel, 0.5, 62, 0.5, relatives, yaw, pitch, setCamera);
                 player.setPortalCooldown();
 
                 // Remove this portal if configured to discard after use
