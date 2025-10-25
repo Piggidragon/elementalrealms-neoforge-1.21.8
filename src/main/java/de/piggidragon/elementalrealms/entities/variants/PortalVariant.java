@@ -4,16 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /**
- * Enum defining different visual variants of portal entities.
- * Each variant can have unique textures, particle effects, and behavior.
- * Currently only contains the School dimension portal variant.
- *
- * <p>Future variants might include:</p>
- * <ul>
- *   <li>Elemental-themed portals (fire, water, etc.)</li>
- *   <li>Nether/End portals with custom appearance</li>
- *   <li>Player-created custom portals</li>
- * </ul>
+ * Visual variants for portal entities. Each variant can have unique textures and effects.
  */
 public enum PortalVariant {
     /**

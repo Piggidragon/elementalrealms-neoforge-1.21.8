@@ -23,30 +23,33 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.function.Consumer;
 
 /**
- * Special consumable item that grants or removes magical affinities from players.
- * Each stone is associated with a specific affinity type (Fire, Water, etc.) or can clear all affinities (Void stone).
- * When used, the stone is consumed and triggers visual/audio effects.
- *
- * <p>Usage mechanics:</p>
+ * Consumable magical item that grants or removes player affinities.
+ * <p>
+ * Each stone corresponds to a specific {@link Affinity} type:
  * <ul>
- *   <li>Right-click to consume the stone and gain/remove affinities</li>
- *   <li>Void stone (NONE affinity) clears all existing affinities</li>
- *   <li>Other stones add their specific affinity to the player</li>
- *   <li>Server-side validation prevents duplicate affinities</li>
+ *   <li>Regular stones (Fire, Water, etc.) - Add one affinity to player</li>
+ *   <li>Void stone - Clears all existing affinities</li>
  * </ul>
+ * <p>
+ * Usage triggers visual effects, sounds, and network synchronization.
+ * Stone is consumed on successful use, but preserved if action fails
+ * (e.g., player already has 3 affinities).
+ *
+ * @see Affinity
+ * @see ModAffinities
  */
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class AffinityStone extends Item {
     /**
-     * The magical affinity type this stone represents (or NONE for void stone)
+     * The affinity type this stone grants or manages
      */
     private final Affinity affinity;
 
     /**
-     * Constructs an affinity stone with specified properties and affinity type.
+     * Creates a new affinity stone.
      *
-     * @param properties Item properties (max stack size, rarity, etc.)
-     * @param affinity   The affinity this stone grants when consumed
+     * @param properties Item properties (rarity, stack size, etc.)
+     * @param affinity   The affinity this stone will grant/manage
      */
     public AffinityStone(Properties properties, Affinity affinity) {
         super(properties);
@@ -54,64 +57,68 @@ public class AffinityStone extends Item {
     }
 
     /**
-     * Handles right-click usage of affinity stones. Processes affinity changes on server-side only.
-     * Consumes the stone on successful use and triggers particle/sound effects.
+     * Event handler for right-click interaction with affinity stones.
+     * <p>
+     * Server-side only. Handles:
+     * <ul>
+     *   <li>Affinity addition/removal via {@link ModAffinities}</li>
+     *   <li>Item consumption on success</li>
+     *   <li>Particle effects via {@link AffinityParticles}</li>
+     *   <li>Sound effects with varying pitch per affinity</li>
+     *   <li>Client notification via {@link AffinitySuccessPacket}</li>
+     *   <li>Error messages for invalid operations</li>
+     * </ul>
      *
-     * @param event The right-click event containing player and itemstack data
+     * @param event The right-click event containing player and item data
      */
     @SubscribeEvent
     public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
-        // Only process on server side to prevent desync issues
         if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof ServerPlayer player) {
             ItemStack itemStack = event.getItemStack();
             if (itemStack.getItem() instanceof AffinityStone stone) {
 
-                // Preserve original stack for packet transmission before modification
+                // Store original for packet (before shrink modifies it)
                 ItemStack originalItemStack = itemStack.copy();
 
                 boolean success = false;
 
-                // Handle void stone: removes all player affinities
+                // Void stone clears all affinities
                 if (stone.affinity == Affinity.VOID) {
                     try {
                         ModAffinities.clearAffinities(player);
                         success = true;
                         itemStack.shrink(1);
                     } catch (Exception e) {
-                        // Display error message if clearing fails (e.g., no affinities to clear)
                         player.displayClientMessage(Component.literal(e.getMessage()), true);
                     }
                 } else {
-                    // Handle regular affinity stones: add specific affinity to player
+                    // Regular stones add specific affinity
                     try {
                         ModAffinities.addAffinity(player, stone.affinity);
                         success = true;
                         itemStack.shrink(1);
                     } catch (Exception e) {
-                        // Display error message if addition fails (e.g., already has affinity)
                         player.displayClientMessage(Component.literal(e.getMessage()), true);
                     }
                 }
 
-                // Trigger effects only on successful affinity modification
                 if (success) {
                     ServerLevel serverLevel = player.level();
 
-                    // Create colored particle effects matching the affinity type
+                    // Spawn colored particles matching affinity
                     AffinityParticles.createCustomAffinityParticles(serverLevel, player, stone.affinity);
 
-                    // Play totem sound with pitch variation based on affinity type
+                    // Play sound with pitch based on affinity rarity
                     float pitch = 0.25F + (stone.affinity.ordinal() * 0.1F);
                     serverLevel.playSound(null, player.blockPosition(),
                             SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 0.8F, pitch);
 
-                    // Notify client for additional client-side effects (screen flash, etc.)
+                    // Notify client for additional effects/UI
                     PacketDistributor.sendToPlayer(player,
                             new AffinitySuccessPacket(originalItemStack, stone.affinity)
                     );
                 }
 
-                // Mark event as handled and successful
                 event.setCancellationResult(InteractionResult.SUCCESS);
                 event.setCanceled(true);
             }
@@ -119,18 +126,20 @@ public class AffinityStone extends Item {
     }
 
     /**
-     * Adds tooltip text to the item when hovered in inventory.
-     * Displays localized description of what affinity the stone grants.
+     * Adds descriptive tooltip text based on affinity type.
+     * <p>
+     * Each affinity displays a localized description explaining its magical properties
+     * and effects. Tooltip keys follow format: {@code itemtooltip.elementalrealms.affinity_stone.<affinity>}
      *
-     * @param stack          The itemstack being hovered
-     * @param context        Tooltip rendering context
-     * @param tooltipDisplay Display configuration
+     * @param stack          The item stack being hovered over
+     * @param context        Tooltip context (world, entity data)
+     * @param tooltipDisplay Display settings for tooltip
      * @param tooltipAdder   Consumer to add tooltip lines
-     * @param flag           Advanced tooltip flag (F3+H debug mode)
+     * @param flag           Advanced/basic tooltip flag
      */
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
-        // Display appropriate tooltip based on affinity type
+        // Add affinity-specific description
         switch (stack.getItem() instanceof AffinityStone stone ? stone.affinity : Affinity.VOID) {
             case FIRE -> tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.affinity_stone.fire"));
             case WATER ->

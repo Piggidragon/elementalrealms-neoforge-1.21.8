@@ -28,9 +28,11 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+/**
+ * Magical staff that creates temporary portals to School Dimension via beam animation.
+ */
 public class SchoolStaff extends Item {
 
-    // Tracks active beam animations per player UUID to prevent multiple simultaneous animations
     private static final Map<UUID, BeamAnimation> ACTIVE_ANIMATIONS = new HashMap<>();
 
     /**
@@ -43,55 +45,37 @@ public class SchoolStaff extends Item {
     }
 
     /**
-     * Must be called from a server tick event to update all active beam animations.
-     * Automatically removes completed animations from the active map.
-     * This method handles the frame-by-frame progression of all beam effects.
+     * Must be called from server tick event to update beam animations.
      */
     public static void tickAnimations() {
         ACTIVE_ANIMATIONS.entrySet().removeIf(entry -> !entry.getValue().tick());
     }
 
-    /**
-     * Spawns a portal entity at the target position that teleports to School Dimension.
-     * The portal has a limited lifetime and is owned by the casting player.
-     *
-     * @param level          The level where portal should be spawned
-     * @param player         The player who owns this portal
-     * @param targetPosition The position where portal should appear
-     */
     private static void spawnPortal(Level level, Player player, Vec3 targetPosition) {
         PortalEntity portal = new PortalEntity(
                 ModEntities.PORTAL_ENTITY.get(),
                 level,
                 true,
-                200, // Portal lifetime in ticks (10 seconds)
+                200, // 10 second lifetime
                 player.getServer().getLevel(ModLevel.SCHOOL_DIMENSION),
                 player.getUUID()
         );
 
-        // Set portal position and orientation to match player's facing direction
         portal.setPos(targetPosition.x, targetPosition.y, targetPosition.z);
         portal.setYRot(player.getYRot());
         level.addFreshEntity(portal);
     }
 
     /**
-     * Removes all existing portals owned by the player within a large radius.
-     * Prevents multiple portals from existing simultaneously and creates disappear effects.
-     * Each portal removal triggers a particle effect before the portal is discarded.
-     *
-     * @param level  The level to search for portals
-     * @param player The player whose portals should be removed
+     * Removes all existing portals owned by player and creates disappear effects.
      */
     private static void removeOldPortals(Level level, Player player) {
         List<PortalEntity> portals = level.getEntitiesOfClass(
                 PortalEntity.class,
-                player.getBoundingBox().inflate(1000), // Search within 1000 block radius
+                player.getBoundingBox().inflate(1000),
                 portal -> portal.getOwnerUUID() != null && portal.getOwnerUUID().equals(player.getUUID())
         );
 
-
-        // Create disappear effect for each portal before removing it
         for (PortalEntity portal : portals) {
             PortalParticles.createPortalDisappearEffect((ServerLevel) level, portal.position());
             level.playSound(null, portal,
@@ -99,7 +83,6 @@ public class SchoolStaff extends Item {
             portal.discard();
         }
     }
-
 
     /**
      * Handles right-click usage of the staff to create portal beam animation.
@@ -112,7 +95,7 @@ public class SchoolStaff extends Item {
      */
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        // Prevent usage in dimensions other than Overworld, Nether, and End
+        // Restrict dimensions
         if (level.dimension() != Level.OVERWORLD && level.dimension() != Level.NETHER && level.dimension() != Level.END) {
             player.displayClientMessage(Component.literal("Can't use this here..."), true);
             return InteractionResult.PASS;
@@ -131,7 +114,7 @@ public class SchoolStaff extends Item {
             double distance = 2.0;
             Vec3 targetPos = new Vec3(
                     player.getX() + lookVec.x * distance,
-                    player.getY() + 0.5, // Slightly above ground level
+                    player.getY() + 0.5,
                     player.getZ() + lookVec.z * distance
             );
 
@@ -181,8 +164,7 @@ public class SchoolStaff extends Item {
     }
 
     /**
-     * Animation data class that handles the beam effect from staff tip to portal spawn point.
-     * Creates a spiraling particle beam that travels over time before spawning the portal.
+     * Handles spiraling beam animation from staff to portal spawn point.
      */
     private static class BeamAnimation {
         final ServerLevel level;
@@ -191,7 +173,7 @@ public class SchoolStaff extends Item {
         final Vec3 targetPos;
         final Vec3 direction;
         final double stepSize;
-        final int totalTicks = 40; // Animation duration: 2 seconds (40 ticks)
+        final int totalTicks = 40; // 2 seconds
         int currentTick = 0;
 
         /**
@@ -219,7 +201,7 @@ public class SchoolStaff extends Item {
          */
         boolean tick() {
             if (currentTick > totalTicks) {
-                return false; // Animation finished
+                return false;
             }
 
             // Calculate current position along beam path
@@ -260,11 +242,11 @@ public class SchoolStaff extends Item {
                         SoundEvents.CONDUIT_ACTIVATE, SoundSource.PLAYERS,
                         0.4F, 0.6F);
                 spawnPortal(level, player, targetPos);
-                return false; // Animation finished
+                return false;
             }
 
             currentTick++;
-            return true; // Continue animation
+            return true;
         }
     }
 }

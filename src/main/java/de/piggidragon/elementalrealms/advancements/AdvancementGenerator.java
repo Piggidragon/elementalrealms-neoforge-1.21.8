@@ -20,6 +20,9 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+/**
+ * Generates progression advancements for the mod.
+ */
 public class AdvancementGenerator implements AdvancementSubProvider {
 
     /**
@@ -30,7 +33,7 @@ public class AdvancementGenerator implements AdvancementSubProvider {
      */
     @Override
     public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer) {
-        // Root advancement: unlocked by killing the Ender Dragon
+        // Root: Kill Ender Dragon
         AdvancementHolder rootAdvancement = Advancement.Builder.advancement()
                 .display(
                         new ItemStack(AffinityItems.AFFINITY_STONES.get(Affinity.SPACE).get()),
@@ -53,6 +56,7 @@ public class AdvancementGenerator implements AdvancementSubProvider {
                 )
                 .save(consumer, ResourceLocation.fromNamespaceAndPath("elementalrealms", "root"));
 
+        // Get Dimension Staff
         Advancement.Builder.advancement()
                 .parent(rootAdvancement)
                 .display(
