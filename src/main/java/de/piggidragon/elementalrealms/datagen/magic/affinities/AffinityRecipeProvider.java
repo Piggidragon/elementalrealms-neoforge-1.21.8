@@ -2,6 +2,7 @@ package de.piggidragon.elementalrealms.datagen.magic.affinities;
 
 import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
+import de.piggidragon.elementalrealms.magic.affinities.Affinity;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -40,80 +42,23 @@ public class AffinityRecipeProvider extends RecipeProvider {
      */
     @Override
     protected void buildRecipes() {
+        // Generate affinity stone recipes for all affinities that have shards
+        for (Map.Entry<Affinity, net.neoforged.neoforge.registries.DeferredItem<net.minecraft.world.item.Item>> entry : AffinityItems.AFFINITY_SHARDS.entrySet()) {
+            Affinity affinity = entry.getKey();
 
-        shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_FIRE.get())
-                .pattern("SSS")
-                .pattern("SES")
-                .pattern("SSS")
-                .define('S', AffinityItems.AFFINITY_SHARD_FIRE.get())
-                .define('E', AffinityItems.ESSENCE_FIRE.get())
-                .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARD_FIRE))
-                .save(output);
+            // Generate stone recipe (Shard + Essence -> Stone)
+            shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONES.get(affinity).get())
+                    .pattern("SSS")
+                    .pattern("SES")
+                    .pattern("SSS")
+                    .define('S', AffinityItems.AFFINITY_SHARDS.get(affinity).get())
+                    .define('E', AffinityItems.ESSENCES.get(affinity).get())
+                    .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARDS.get(affinity)))
+                    .save(output);
+        }
 
-        shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_WATER.get())
-                .pattern("SSS")
-                .pattern("SES")
-                .pattern("SSS")
-                .define('S', AffinityItems.AFFINITY_SHARD_WATER.get())
-                .define('E', AffinityItems.ESSENCE_WATER.get())
-                .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARD_WATER))
-                .save(output);
-
-        shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_WIND.get())
-                .pattern("SSS")
-                .pattern("SES")
-                .pattern("SSS")
-                .define('S', AffinityItems.AFFINITY_SHARD_WIND.get())
-                .define('E', AffinityItems.ESSENCE_WIND.get())
-                .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARD_WIND))
-                .save(output);
-
-        shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_EARTH.get())
-                .pattern("SSS")
-                .pattern("SES")
-                .pattern("SSS")
-                .define('S', AffinityItems.AFFINITY_SHARD_EARTH.get())
-                .define('E', AffinityItems.ESSENCE_EARTH.get())
-                .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARD_EARTH))
-                .save(output);
-
-        shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_LIGHTNING.get())
-                .pattern("SSS")
-                .pattern("SES")
-                .pattern("SSS")
-                .define('S', AffinityItems.AFFINITY_SHARD_LIGHTNING.get())
-                .define('E', AffinityItems.ESSENCE_LIGHTNING.get())
-                .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARD_LIGHTNING))
-                .save(output);
-
-        shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_ICE.get())
-                .pattern("SSS")
-                .pattern("SES")
-                .pattern("SSS")
-                .define('S', AffinityItems.AFFINITY_SHARD_ICE.get())
-                .define('E', AffinityItems.ESSENCE_ICE.get())
-                .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARD_ICE))
-                .save(output);
-
-        shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_SOUND.get())
-                .pattern("SSS")
-                .pattern("SES")
-                .pattern("SSS")
-                .define('S', AffinityItems.AFFINITY_SHARD_SOUND.get())
-                .define('E', AffinityItems.ESSENCE_SOUND.get())
-                .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARD_SOUND))
-                .save(output);
-
-        shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_GRAVITY.get())
-                .pattern("SSS")
-                .pattern("SES")
-                .pattern("SSS")
-                .define('S', AffinityItems.AFFINITY_SHARD_GRAVITY.get())
-                .define('E', AffinityItems.ESSENCE_GRAVITY.get())
-                .unlockedBy("has_shard", has(AffinityItems.AFFINITY_SHARD_GRAVITY))
-                .save(output);
-
-        shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONE_VOID.get())
+        // Special Void Stone recipe (no crafting via shards)
+        shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONES.get(Affinity.VOID).get())
                 .pattern("CDC")
                 .pattern("ESE")
                 .pattern(" W ")
@@ -122,10 +67,11 @@ public class AffinityRecipeProvider extends RecipeProvider {
                 .define('E', Items.ENDER_EYE)
                 .define('D', Items.DIAMOND)
                 .define('W', Items.ECHO_SHARD)
-                .unlockedBy("has_stone", has(AffinityItems.AFFINITY_STONE_VOID))
+                .unlockedBy("has_stone", has(AffinityItems.AFFINITY_STONES.get(Affinity.VOID)))
                 .save(output);
 
-        shaped(RecipeCategory.MISC, AffinityItems.ESSENCE_FIRE.get())
+        // Essence recipes (must be defined individually as they use different materials)
+        shaped(RecipeCategory.MISC, AffinityItems.ESSENCES.get(Affinity.FIRE).get())
                 .pattern("MBM")
                 .pattern("BLD")
                 .pattern("MBM")
@@ -139,7 +85,7 @@ public class AffinityRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .save(output);
 
-        shaped(RecipeCategory.MISC, AffinityItems.ESSENCE_WATER.get())
+        shaped(RecipeCategory.MISC, AffinityItems.ESSENCES.get(Affinity.WATER).get())
                 .pattern("CPC")
                 .pattern("PWD")
                 .pattern("CPC")
@@ -153,7 +99,7 @@ public class AffinityRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_pufferfish", has(Items.PUFFERFISH))
                 .save(output);
 
-        shaped(RecipeCategory.MISC, AffinityItems.ESSENCE_WIND.get())
+        shaped(RecipeCategory.MISC, AffinityItems.ESSENCES.get(Affinity.WIND).get())
                 .pattern("FBF")
                 .pattern("BPD")
                 .pattern("FBF")
@@ -167,7 +113,7 @@ public class AffinityRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_breeze", has(Items.BREEZE_ROD))
                 .save(output);
 
-        shaped(RecipeCategory.MISC, AffinityItems.ESSENCE_EARTH.get())
+        shaped(RecipeCategory.MISC, AffinityItems.ESSENCES.get(Affinity.EARTH).get())
                 .pattern("OAO")
                 .pattern("ASD")
                 .pattern("OAO")
@@ -181,7 +127,7 @@ public class AffinityRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .save(output);
 
-        shaped(RecipeCategory.MISC, AffinityItems.ESSENCE_LIGHTNING.get())
+        shaped(RecipeCategory.MISC, AffinityItems.ESSENCES.get(Affinity.LIGHTNING).get())
                 .pattern("GQG")
                 .pattern("QLD")
                 .pattern("GQG")
@@ -195,7 +141,7 @@ public class AffinityRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_lightningrod", has(Items.LIGHTNING_ROD))
                 .save(output);
 
-        shaped(RecipeCategory.MISC, AffinityItems.ESSENCE_ICE.get())
+        shaped(RecipeCategory.MISC, AffinityItems.ESSENCES.get(Affinity.ICE).get())
                 .pattern("BFB")
                 .pattern("FSD")
                 .pattern("BFB")
@@ -209,7 +155,7 @@ public class AffinityRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_snowball", has(Items.SNOWBALL))
                 .save(output);
 
-        shaped(RecipeCategory.MISC, AffinityItems.ESSENCE_SOUND.get())
+        shaped(RecipeCategory.MISC, AffinityItems.ESSENCES.get(Affinity.SOUND).get())
                 .pattern("NAN")
                 .pattern("AJD")
                 .pattern("NAN")
@@ -223,7 +169,7 @@ public class AffinityRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .save(output);
 
-        shaped(RecipeCategory.MISC, AffinityItems.ESSENCE_GRAVITY.get())
+        shaped(RecipeCategory.MISC, AffinityItems.ESSENCES.get(Affinity.GRAVITY).get())
                 .pattern("OAO")
                 .pattern("ABD")
                 .pattern("OAO")
@@ -236,53 +182,6 @@ public class AffinityRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .unlockedBy("has_lodestone", has(Items.LODESTONE))
                 .save(output);
-
-        /*
-        List<ItemLike> BISMUTH_SMELTABLES = List.of(ModItems.RAW_BISMUTH,
-                ModBlocks.BISMUTH_ORE, ModBlocks.BISMUTH_DEEPSLATE_ORE);
-
-        shaped(RecipeCategory.MISC, ModBlocks.BISMUTH_BLOCK.get())
-                .pattern("BBB")
-                .pattern("BBB")
-                .pattern("BBB")
-                .define('B', ModItems.BISMUTH.get())
-                .unlockedBy("has_bismuth", has(ModItems.BISMUTH)).save(output);
-
-        shapeless(RecipeCategory.MISC, ModItems.BISMUTH.get(), 9)
-                .requires(ModBlocks.BISMUTH_BLOCK)
-                .unlockedBy("has_bismuth_block", has(ModBlocks.BISMUTH_BLOCK)).save(output);
-
-        shapeless(RecipeCategory.MISC, ModItems.BISMUTH.get(), 18)
-                .requires(ModBlocks.MAGIC_BLOCK)
-                .unlockedBy("has_magic_block", has(ModBlocks.MAGIC_BLOCK))
-                .save(output, "tutorialmod:bismuth_from_magic_block");
-
-        oreSmelting(output, BISMUTH_SMELTABLES, RecipeCategory.MISC, ModItems.BISMUTH.get(), 0.25f, 200, "bismuth");
-        oreBlasting(output, BISMUTH_SMELTABLES, RecipeCategory.MISC, ModItems.BISMUTH.get(), 0.25f, 100, "bismuth");
-
-        stairBuilder(ModBlocks.BISMUTH_STAIRS.get(), Ingredient.of(ModItems.BISMUTH)).group("bismuth")
-                .unlockedBy("has_bismuth", has(ModItems.BISMUTH)).save(output);
-        slab(RecipeCategory.BUILDING_BLOCKS, ModBlocks.BISMUTH_SLAB.get(), ModItems.BISMUTH.get());
-
-        buttonBuilder(ModBlocks.BISMUTH_BUTTON.get(), Ingredient.of(ModItems.BISMUTH.get())).group("bismuth")
-                .unlockedBy("has_bismuth", has(ModItems.BISMUTH.get())).save(output);
-        pressurePlate(ModBlocks.BISMUTH_PRESSURE_PLATE.get(), ModItems.BISMUTH.get());
-
-        fenceBuilder(ModBlocks.BISMUTH_FENCE.get(), Ingredient.of(ModItems.BISMUTH.get())).group("bismuth")
-                .unlockedBy("has_bismuth", has(ModItems.BISMUTH.get())).save(output);
-        fenceGateBuilder(ModBlocks.BISMUTH_FENCE_GATE.get(), Ingredient.of(ModItems.BISMUTH.get())).group("bismuth")
-                .unlockedBy("has_bismuth", has(ModItems.BISMUTH.get())).save(output);
-        wall(RecipeCategory.BUILDING_BLOCKS, ModBlocks.BISMUTH_WALL.get(), ModItems.BISMUTH.get());
-
-        doorBuilder(ModBlocks.BISMUTH_DOOR.get(), Ingredient.of(ModItems.BISMUTH.get())).group("bismuth")
-                .unlockedBy("has_bismuth", has(ModItems.BISMUTH.get())).save(output);
-        trapdoorBuilder(ModBlocks.BISMUTH_TRAPDOOR.get(), Ingredient.of(ModItems.BISMUTH.get())).group("bismuth")
-                .unlockedBy("has_bismuth", has(ModItems.BISMUTH.get())).save(output);
-
-        // Throws error
-        // trimSmithing(ModItems.KAUPEN_SMITHING_TEMPLATE.get(), ResourceKey.create(Registries.TRIM_PATTERN, ResourceLocation.fromNamespaceAndPath(TutorialMod.MOD_ID, "kaupen")),
-        //         ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(TutorialMod.MOD_ID, "kaupen")));
-        */
     }
 
     /**

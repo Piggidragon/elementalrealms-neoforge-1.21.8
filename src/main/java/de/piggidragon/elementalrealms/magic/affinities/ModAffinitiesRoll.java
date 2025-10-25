@@ -19,12 +19,12 @@ public class ModAffinitiesRoll {
         List<Affinity> available = Affinity.getAllElemental().stream()
                 .filter(a -> !ModAffinities.hasAffinity(player, a))
                 .toList();
-        if (available.isEmpty()) return Affinity.NONE;
+        if (available.isEmpty()) return Affinity.VOID;
 
         if (chance(random, probabilityPercent)) {
             return available.get(random.nextInt(available.size()));
         } else {
-            return Affinity.NONE;
+            return Affinity.VOID;
         }
     }
 
@@ -35,7 +35,7 @@ public class ModAffinitiesRoll {
         for (int x : new int[]{100, 25, 20, 20}) {
             Affinity newAffinity = randomElementalAffinity(player, x);
 
-            if (newAffinity != Affinity.NONE) {
+            if (newAffinity != Affinity.VOID) {
                 affinitiesToAdd.add(newAffinity);
 
                 if (chance(random, 25)) {

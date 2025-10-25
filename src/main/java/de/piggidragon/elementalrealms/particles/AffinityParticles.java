@@ -299,7 +299,7 @@ public class AffinityParticles {
                         player.getX(), player.getY() + 0.8, player.getZ(),
                         12, 1.0, 0.5, 1.0, 0.02);
             }
-            case NONE -> {
+            case VOID -> {
                 // Void: Dark, ominous effect for affinity removal
                 level.sendParticles(ParticleTypes.SMOKE, player.getX(), player.getY() + 1.0, player.getZ(),
                         20, 0.8, 1.0, 0.8, 0.05);

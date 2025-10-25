@@ -3,6 +3,7 @@ package de.piggidragon.elementalrealms.creativetabs;
 import de.piggidragon.elementalrealms.blocks.ModBlocks;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import de.piggidragon.elementalrealms.items.magic.dimension.DimensionItems;
+import de.piggidragon.elementalrealms.magic.affinities.Affinity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -29,7 +30,7 @@ public class ModCreativeTabs {
      */
     public static final Supplier<CreativeModeTab> AFFINITY_TAB = CREATIVE_MODE_TABS.register("affinity_tab",
             () -> CreativeModeTab.builder()
-                    .icon(() -> new ItemStack(AffinityItems.AFFINITY_STONE_FIRE.get()))
+                    .icon(() -> new ItemStack(AffinityItems.AFFINITY_STONES.get(Affinity.SPACE).get()))
                     .title(Component.translatable("itemGroup.elementalrealms.affinity_tab"))
                     .displayItems((params, output) -> {
                         // Add all registered affinity items to this tab
