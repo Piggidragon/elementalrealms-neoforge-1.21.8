@@ -411,7 +411,7 @@ public class PortalEntity extends Entity {
                 // Save player's current position for return trip
                 player.setData(ModAttachments.OVERWORLD_RETURN_POS, new Vec3(player.getX(), player.getY(), player.getZ()));
 
-                player.teleportTo(targetLevel, 0.5, 62, 0.5, relatives, yaw, pitch, setCamera);
+                player.teleportTo(targetLevel, 0.5, 60, 0.5, relatives, yaw, pitch, setCamera);
                 player.setPortalCooldown();
 
                 // Remove this portal if configured to discard after use
