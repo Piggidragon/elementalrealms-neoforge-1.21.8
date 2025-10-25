@@ -15,13 +15,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.function.Supplier;
 
 /**
- * Registry for all custom entity types in the mod.
- * Entity types define the properties and behavior of entities (mobs, projectiles, special entities).
- *
- * <p>Current entities:</p>
- * <ul>
- *   <li>PortalEntity - Dimensional portal for teleportation</li>
- * </ul>
+ * Registry for custom entity types.
  */
 public class ModEntities {
     /**
@@ -31,12 +25,8 @@ public class ModEntities {
             DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, ElementalRealms.MODID);
 
     /**
-     * Portal entity type for dimensional teleportation.
-     * Configured with:
-     * - Size: 1.0 x 2.0 blocks (width x height)
-     * - Fire immunity: portals cannot burn
-     * - Client tracking range: 8 chunks
-     * - Can spawn far from players: allows spawning in unloaded chunks
+     * Portal entity for dimensional teleportation.
+     * Size: 1x2 blocks, fire immune, 8 chunk tracking range.
      */
     public static final Supplier<EntityType<PortalEntity>> PORTAL_ENTITY = ENTITY_TYPES.register(
             "portal_entity",

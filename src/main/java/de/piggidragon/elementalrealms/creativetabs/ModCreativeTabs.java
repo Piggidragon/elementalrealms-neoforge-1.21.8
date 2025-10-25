@@ -15,8 +15,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.function.Supplier;
 
 /**
- * Registers custom creative mode tabs for organizing mod items and blocks.
- * Creates separate tabs for affinities, general items, and blocks.
+ * Registers custom creative mode tabs for organizing mod content.
  */
 public class ModCreativeTabs {
     /**

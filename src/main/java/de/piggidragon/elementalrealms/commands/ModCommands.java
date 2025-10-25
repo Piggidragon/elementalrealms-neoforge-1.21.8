@@ -15,16 +15,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 /**
- * Registers custom commands for managing player affinities.
- * Provides administrative tools for testing and debugging affinity mechanics.
- *
- * <p>Available commands:</p>
- * <ul>
- *   <li>/affinities list - Display player's current affinities</li>
- *   <li>/affinities set &lt;affinity&gt; - Manually assign an affinity</li>
- *   <li>/affinities clear - Remove all affinities</li>
- *   <li>/affinities reroll - Clear and randomly reassign affinities</li>
- * </ul>
+ * Registers /affinities command for managing player affinities.
+ * Subcommands: list, set, clear, reroll
  */
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class ModCommands {
@@ -106,7 +98,6 @@ public class ModCommands {
                             try {
                                 ModAffinities.clearAffinities(player);
                             } catch (Exception ignored) {
-                                // Ignore if no affinities to clear
                             }
                             // Roll and apply new random affinities
                             for (Affinity affinity : ModAffinitiesRoll.rollAffinities(player)) {

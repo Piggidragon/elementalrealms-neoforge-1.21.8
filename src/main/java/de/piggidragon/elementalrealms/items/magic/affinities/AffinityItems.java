@@ -15,23 +15,8 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /**
- * Registry for all affinity-related items including stones, shards, and essences.
- * Organizes items by affinity type with consistent naming and rarity patterns.
- *
- * <p>Item hierarchy by affinity:</p>
- * <ul>
- *   <li>Affinity Stone - Consumable that grants the affinity (EPIC or higher rarity)</li>
- *   <li>Affinity Shard - Crafting ingredient for stones (RARE or EPIC rarity)</li>
- *   <li>Essence - Base crafting material made from vanilla items (UNCOMMON rarity)</li>
- * </ul>
- *
- * <p>Affinity tiers:</p>
- * <ul>
- *   <li>Elemental (Fire, Water, Wind, Earth) - EPIC rarity</li>
- *   <li>Deviant (Lightning, Ice, Sound, Gravity) - LEGENDARY rarity</li>
- *   <li>Eternal (Time, Space, Life) - MYTHIC rarity</li>
- *   <li>Void (clears affinities) - RARE rarity</li>
- * </ul>
+ * Registry for affinity items: stones, shards, and essences.
+ * Organized by affinity type with appropriate rarities.
  */
 public class AffinityItems {
     /**
@@ -92,9 +77,9 @@ public class AffinityItems {
     /**
      * Helper method to register an affinity stone
      *
-     * @param map The map to add the registered stone to
+     * @param map      The map to add the registered stone to
      * @param affinity The affinity type for this stone
-     * @param rarity The rarity of the stone
+     * @param rarity   The rarity of the stone
      */
     private static void registerAffinityStone(Map<Affinity, DeferredItem<Item>> map, Affinity affinity, Rarity rarity) {
         String name = "affinity_stone_" + affinity.getName();
@@ -109,9 +94,9 @@ public class AffinityItems {
     /**
      * Helper method to register an affinity shard
      *
-     * @param map The map to add the registered shard to
+     * @param map      The map to add the registered shard to
      * @param affinity The affinity type for this shard
-     * @param rarity The rarity of the shard
+     * @param rarity   The rarity of the shard
      */
     private static void registerAffinityShard(Map<Affinity, DeferredItem<Item>> map, Affinity affinity, Rarity rarity) {
         String name = "affinity_shard_" + affinity.getName();
@@ -126,7 +111,7 @@ public class AffinityItems {
     /**
      * Helper method to register an essence
      *
-     * @param map The map to add the registered essence to
+     * @param map      The map to add the registered essence to
      * @param affinity The affinity type for this essence
      */
     private static void registerEssence(Map<Affinity, DeferredItem<Item>> map, Affinity affinity) {

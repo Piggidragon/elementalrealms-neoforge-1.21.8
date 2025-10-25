@@ -33,19 +33,8 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * Entity representing a dimensional portal that allows teleportation between worlds.
- * Portals can be configured to teleport players to specific dimensions and can have
- * timed despawn mechanics.
- *
- * <p>Features:</p>
- * <ul>
- *   <li>Bidirectional teleportation between Overworld and custom dimensions</li>
- *   <li>Configurable despawn timer for temporary portals</li>
- *   <li>Particle effects for visual feedback</li>
- *   <li>Portal cooldown to prevent spam teleportation</li>
- *   <li>Automatic platform generation in target dimension</li>
- *   <li>Position memory for returning to original location</li>
- * </ul>
+ * Dimensional portal entity that teleports players between worlds.
+ * Supports bidirectional travel, timed despawn, and automatic platform generation.
  */
 public class PortalEntity extends Entity {
 
@@ -222,8 +211,7 @@ public class PortalEntity extends Entity {
     }
 
     /**
-     * Sets up and manages animation states on the client side.
-     * Handles timing for spawn animation (plays once) and idle animation (loops).
+     * Manages animation states on client side.
      */
     public void setupAnimationStates() {
         // Start spawn animation on first call
