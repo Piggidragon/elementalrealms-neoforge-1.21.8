@@ -89,7 +89,7 @@ public enum Affinity {
         return type;
     }
 
-    public String getName(){
+    public String getName() {
         return this.toString().toLowerCase();
     }
 

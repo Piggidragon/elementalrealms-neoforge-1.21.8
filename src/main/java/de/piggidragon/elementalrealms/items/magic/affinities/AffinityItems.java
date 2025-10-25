@@ -77,9 +77,9 @@ public class AffinityItems {
     /**
      * Helper method to register an affinity stone
      *
-     * @param map The map to add the registered stone to
+     * @param map      The map to add the registered stone to
      * @param affinity The affinity type for this stone
-     * @param rarity The rarity of the stone
+     * @param rarity   The rarity of the stone
      */
     private static void registerAffinityStone(Map<Affinity, DeferredItem<Item>> map, Affinity affinity, Rarity rarity) {
         String name = "affinity_stone_" + affinity.getName();
@@ -94,9 +94,9 @@ public class AffinityItems {
     /**
      * Helper method to register an affinity shard
      *
-     * @param map The map to add the registered shard to
+     * @param map      The map to add the registered shard to
      * @param affinity The affinity type for this shard
-     * @param rarity The rarity of the shard
+     * @param rarity   The rarity of the shard
      */
     private static void registerAffinityShard(Map<Affinity, DeferredItem<Item>> map, Affinity affinity, Rarity rarity) {
         String name = "affinity_shard_" + affinity.getName();
@@ -111,7 +111,7 @@ public class AffinityItems {
     /**
      * Helper method to register an essence
      *
-     * @param map The map to add the registered essence to
+     * @param map      The map to add the registered essence to
      * @param affinity The affinity type for this essence
      */
     private static void registerEssence(Map<Affinity, DeferredItem<Item>> map, Affinity affinity) {
