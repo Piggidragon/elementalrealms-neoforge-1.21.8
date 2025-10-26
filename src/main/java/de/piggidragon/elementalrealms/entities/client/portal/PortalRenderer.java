@@ -20,12 +20,20 @@ import java.util.Map;
  */
 public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderState> {
 
+    /**
+     * Maps portal variants to their corresponding texture locations.
+     */
     private static final Map<PortalVariant, ResourceLocation> LOCATION_BY_VARIANT =
             Util.make(Maps.newEnumMap(PortalVariant.class), map -> {
-                map.put(PortalVariant.SCHOOL,
-                        ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "textures/entity/portal/portal_entity_school.png"));
+                map.put(PortalVariant.SCHOOL, ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "textures/entity/portal/portal_entity_school.png"));
+                map.put(PortalVariant.ELEMENTAL, ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "textures/entity/portal/portal_entity_elemental.png"));
+                map.put(PortalVariant.DEVIANT, ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "textures/entity/portal/portal_entity_deviant.png"));
+                map.put(PortalVariant.ETERNAL, ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "textures/entity/portal/portal_entity_eternal.png"));
             });
 
+    /**
+     * The 3D model used for rendering portals.
+     */
     private final PortalModel<PortalEntity> model;
 
     public PortalRenderer(EntityRendererProvider.Context context) {
@@ -33,19 +41,46 @@ public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderSta
         this.model = new PortalModel<>(context.bakeLayer(PortalModel.LAYER_LOCATION));
     }
 
+    /**
+     * Creates a new render state instance for this renderer.
+     *
+     * @return A new PortalRenderState instance
+     */
     @Override
     public PortalRenderState createRenderState() {
         return new PortalRenderState();
     }
 
+    /**
+     * Extracts rendering information from the entity and stores it in the render state.
+     * Synchronizes animation states and determines which texture to use based on variant.
+     *
+     * @param entity The portal entity to extract data from
+     * @param reusedState The render state to populate
+     * @param partialTick Frame interpolation value
+     */
     @Override
     public void extractRenderState(PortalEntity entity, PortalRenderState reusedState, float partialTick) {
         super.extractRenderState(entity, reusedState, partialTick);
         reusedState.spawnAnimationState.copyFrom(entity.spawnAnimationState);
         reusedState.idleAnimationState.copyFrom(entity.idleAnimationState);
         reusedState.yRot = entity.getYRot();
+
+        reusedState.texture = LOCATION_BY_VARIANT.get(entity.getVariant());
+        if (reusedState.texture == null) {
+            reusedState.texture = LOCATION_BY_VARIANT.get(PortalVariant.SCHOOL);
+        }
     }
 
+    /**
+     * Renders the portal entity using its model and texture.
+     * Applies translucency effect and rotation based on entity's yaw.
+     *
+     * @param renderState The render state containing rendering data
+     * @param poseStack The transformation matrix stack
+     * @param buffer The buffer for rendering geometry
+     * @param packedLight The combined light level
+     */
     @Override
     public void render(PortalRenderState renderState, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
@@ -53,7 +88,7 @@ public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderSta
         poseStack.translate(0.0D, 0.0D, 0.0D);
         poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-renderState.yRot + 180.0F));
 
-        ResourceLocation texture = LOCATION_BY_VARIANT.get(PortalVariant.SCHOOL);
+        ResourceLocation texture = renderState.texture;
 
         model.setupAnim(renderState);
         model.renderToBuffer(

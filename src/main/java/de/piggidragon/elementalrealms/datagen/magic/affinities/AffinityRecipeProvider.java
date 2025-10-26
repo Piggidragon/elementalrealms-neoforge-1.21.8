@@ -54,7 +54,7 @@ public class AffinityRecipeProvider extends RecipeProvider {
                     .save(output);
         }
 
-        // Void Stone (special recipe with rare materials)
+        // Void Stone
         shaped(RecipeCategory.MISC, AffinityItems.AFFINITY_STONES.get(Affinity.VOID).get())
                 .pattern("CDC")
                 .pattern("ESE")

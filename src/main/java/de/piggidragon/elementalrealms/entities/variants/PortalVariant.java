@@ -10,7 +10,10 @@ public enum PortalVariant {
     /**
      * Portal variant for the School dimension
      */
-    SCHOOL(0);
+    SCHOOL(0),
+    ELEMENTAL(1),
+    DEVIANT(2),
+    ETERNAL(3);
 
     /**
      * Array of variants sorted by ID for quick lookup
