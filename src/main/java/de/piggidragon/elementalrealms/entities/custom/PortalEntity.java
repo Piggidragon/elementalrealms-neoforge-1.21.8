@@ -1,10 +1,13 @@
 package de.piggidragon.elementalrealms.entities.custom;
 
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
+import de.piggidragon.elementalrealms.entities.variants.PortalVariant;
 import de.piggidragon.elementalrealms.particles.PortalParticles;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -34,6 +37,9 @@ import java.util.UUID;
  * Supports bidirectional travel, timed despawn, and automatic platform generation.
  */
 public class PortalEntity extends Entity {
+
+    private static final EntityDataAccessor<Integer> DATA_VARIANT =
+            SynchedEntityData.defineId(PortalEntity.class, EntityDataSerializers.INT);
 
     /**
      * Animation state for idle/floating animation
@@ -92,6 +98,12 @@ public class PortalEntity extends Entity {
         super(type, level);
         this.portalLevel = level.dimension();
 
+        // Default variant
+        if (!level.isClientSide()) {
+            // server default
+            this.setVariant(PortalVariant.SCHOOL);
+        }
+
         // Set default target level to Overworld on server side
         if (!level.isClientSide() && level.getServer() != null) {
             this.targetLevel = level.getServer().getLevel(Level.OVERWORLD);
@@ -130,6 +142,31 @@ public class PortalEntity extends Entity {
      */
     public UUID getOwnerUUID() {
         return this.ownerUUID;
+    }
+
+    /**
+     * Gets the visual variant of this portal.
+     *
+     * @return The current portal variant
+     */
+    public PortalVariant getVariant() {
+        try {
+            int id = this.entityData.get(DATA_VARIANT);
+            return PortalVariant.byId(id);
+        } catch (Exception e) {
+            return PortalVariant.SCHOOL;
+        }
+    }
+
+    /**
+     * Sets the visual variant of this portal.
+     * The variant determines which texture is used for rendering.
+     *
+     * @param variant The portal variant to set (defaults to SCHOOL if null)
+     */
+    public void setVariant(PortalVariant variant) {
+        if (variant == null) variant = PortalVariant.SCHOOL;
+        this.entityData.set(DATA_VARIANT, variant.getId());
     }
 
     /**
@@ -268,6 +305,10 @@ public class PortalEntity extends Entity {
                 this.ownerUUID = null;
             }
         }
+
+        // Load variant if present
+        int variantId = valueInput.getIntOr("Variant", PortalVariant.SCHOOL.getId());
+        this.setVariant(PortalVariant.byId(variantId));
     }
 
     /**
@@ -290,6 +331,9 @@ public class PortalEntity extends Entity {
         if (this.ownerUUID != null) {
             valueOutput.putString("OwnerUUID", this.ownerUUID.toString());
         }
+
+        // Save variant id
+        valueOutput.putInt("Variant", this.getVariant().getId());
     }
 
     /**
@@ -300,7 +344,9 @@ public class PortalEntity extends Entity {
      */
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        // No synced data needed beyond standard entity data
+        if (DATA_VARIANT != null){
+            builder.define(DATA_VARIANT, PortalVariant.SCHOOL.getId());
+        }
     }
 
     /**
