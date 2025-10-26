@@ -22,8 +22,10 @@ public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderSta
 
     private static final Map<PortalVariant, ResourceLocation> LOCATION_BY_VARIANT =
             Util.make(Maps.newEnumMap(PortalVariant.class), map -> {
-                map.put(PortalVariant.SCHOOL,
-                        ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "textures/entity/portal/portal_entity_school.png"));
+                map.put(PortalVariant.SCHOOL, ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "textures/entity/portal/portal_entity_school.png"));
+                map.put(PortalVariant.ELEMENTAL, ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "textures/entity/portal/portal_entity_elemental.png"));
+                map.put(PortalVariant.DEVIANT, ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "textures/entity/portal/portal_entity_deviant.png"));
+                map.put(PortalVariant.ETERNAL, ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "textures/entity/portal/portal_entity_eternal.png"));
             });
 
     private final PortalModel<PortalEntity> model;
