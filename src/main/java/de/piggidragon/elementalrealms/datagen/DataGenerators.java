@@ -20,29 +20,28 @@ import java.util.concurrent.CompletableFuture;
 public class DataGenerators {
 
     /**
-     * Event handler that registers all client-side data generators.
+     * Event handler that registers all data generators (both client and server).
      * Called automatically during the data generation phase of the build process.
      *
-     * @param event The data gathering event containing generator and lookup providers
+     * @param event The client data gathering event containing generator and lookup providers
      */
     @SubscribeEvent
-    public static void gatherClientData(GatherDataEvent.Client event) {
+    public static void onGatherData(GatherDataEvent.Client event) {
         DataGenerator generator = event.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-        // Register model provider for generating item and block model JSON files
+        // Client-side providers (models, textures)
         generator.addProvider(true, new ModModelProvider(packOutput));
 
-        // Register recipe provider for generating crafting recipe JSON files
+        // Server-side providers (recipes, advancements)
         generator.addProvider(true, new AffinityRecipeProvider.Runner(packOutput, lookupProvider));
 
-        // Register advancement provider for generating progression/achievement JSON files
         generator.addProvider(true, new ModAdvancementProvider(
                 packOutput,
                 lookupProvider,
                 List.of(new AdvancementGenerator())
         ));
-
     }
+
 }

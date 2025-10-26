@@ -1,9 +1,7 @@
 package de.piggidragon.elementalrealms.entities.custom;
 
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
-import de.piggidragon.elementalrealms.entities.ModEntities;
 import de.piggidragon.elementalrealms.particles.PortalParticles;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -21,7 +19,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Relative;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
@@ -86,6 +83,7 @@ public class PortalEntity extends Entity {
     /**
      * Basic constructor for entity registration.
      * Called by Minecraft's entity system when loading from world save.
+     * Sets the default target level to Overworld if on server side.
      *
      * @param type  The entity type of this portal
      * @param level The level/dimension this entity exists in
@@ -93,6 +91,11 @@ public class PortalEntity extends Entity {
     public PortalEntity(EntityType<? extends PortalEntity> type, Level level) {
         super(type, level);
         this.portalLevel = level.dimension();
+
+        // Set default target level to Overworld on server side
+        if (!level.isClientSide() && level.getServer() != null) {
+            this.targetLevel = level.getServer().getLevel(Level.OVERWORLD);
+        }
 
         // Start spawn animation immediately on client side
         if (level.isClientSide()) {
@@ -251,6 +254,9 @@ public class PortalEntity extends Entity {
                     ResourceLocation.parse(levelKey)
             );
             this.targetLevel = this.getServer().getLevel(key);
+        } else if (levelKey.isEmpty() && !this.level().isClientSide() && this.getServer() != null) {
+            // If no target level was saved, default to Overworld
+            this.targetLevel = this.getServer().getLevel(Level.OVERWORLD);
         }
 
         // Load owner UUID if present
@@ -393,25 +399,7 @@ public class PortalEntity extends Entity {
                 // Save player's current position for return trip
                 player.setData(ModAttachments.OVERWORLD_RETURN_POS, new Vec3(player.getX(), player.getY(), player.getZ()));
 
-                // Create safe landing platform at fixed coordinates in target dimension
-                BlockPos center = new BlockPos(0, 61, 0);
-                for (int dx = -2; dx <= 2; dx++) {
-                    for (int dz = -2; dz <= 2; dz++) {
-                        targetLevel.setBlock(center.offset(dx, 0, dz), Blocks.STONE.defaultBlockState(), 3);
-                    }
-                }
-
-                // Create return portal at destination
-                PortalEntity portal = new PortalEntity(ModEntities.PORTAL_ENTITY.get(), targetLevel, true, -1, overworld, null);
-                targetLevel.addFreshEntity(portal);
-                portal.setPos(center.getX(), center.getY() + 1, center.getZ());
-
-                // Teleport player to platform
-                double x = center.above().getX();
-                double y = center.above().getY();
-                double z = center.above().getZ();
-
-                player.teleportTo(targetLevel, x, y, z + 1, relatives, yaw, pitch, setCamera);
+                player.teleportTo(targetLevel, 0.5, 60, 0.5, relatives, yaw, pitch, setCamera);
                 player.setPortalCooldown();
 
                 // Remove this portal if configured to discard after use

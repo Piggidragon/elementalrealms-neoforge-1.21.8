@@ -1,0 +1,11 @@
+{
+  "type": "elementalrealms:platform",
+  "start_pool": "elementalrealms:anchor_pool",
+  "start_jigsaw_name": "elementalrealms:center",
+  "size": 1,
+  "biomes": "#elementalrealms:school_dimension_biomes",
+  "step": "surface_structures",
+  "start_height": { "absolute": 60 },
+  "max_distance_from_center": 32,
+  "spawn_overrides": {}
+}
