@@ -11,6 +11,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.fml.startup.Server;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -358,7 +360,7 @@ public class PortalEntity extends Entity {
         super.tick();
 
         // Client-side: Update animations
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
             this.setupAnimationStates();
         }
 
@@ -422,7 +424,7 @@ public class PortalEntity extends Entity {
      * @param player The player to teleport
      */
     private void teleportPlayer(Level level, ServerPlayer player) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             // Prevent teleportation if player is on cooldown
             if (player.isOnPortalCooldown()) {
                 player.displayClientMessage(Component.literal("Portal is on cooldown!"), true);
@@ -434,7 +436,7 @@ public class PortalEntity extends Entity {
                 return;
             }
 
-            ServerLevel overworld = player.getServer().getLevel(Level.OVERWORLD);
+            ServerLevel overworld = player.level().getServer().getLevel(Level.OVERWORLD);
             Set<Relative> relatives = Collections.emptySet(); // No relative positioning
             float yaw = player.getYRot();
             float pitch = player.getXRot();
@@ -472,5 +474,9 @@ public class PortalEntity extends Entity {
                 }
             }
         }
+    }
+
+    private MinecraftServer getServer() {
+        return ((ServerLevel) level()).getServer();
     }
 }
