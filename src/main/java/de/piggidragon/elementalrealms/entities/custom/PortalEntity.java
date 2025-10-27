@@ -477,6 +477,6 @@ public class PortalEntity extends Entity {
     }
 
     private MinecraftServer getServer() {
-        return ((ServerLevel) level()).getServer();
+        return level().getServer();
     }
 }
