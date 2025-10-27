@@ -20,6 +20,7 @@ import net.minecraft.world.level.levelgen.blending.Blender;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class BoundedChunkGenerator extends ChunkGenerator {
@@ -100,8 +101,9 @@ public class BoundedChunkGenerator extends ChunkGenerator {
 
         // Check if chunk is within bounds
         if (!isWithinBounds(pos)) {
-            // Generate void/empty chunk instead
-            return CompletableFuture.completedFuture(generateVoidChunk(chunkAccess));
+            // Generate void chunk for out-of-bounds areas
+            generateVoidChunk(chunkAccess);
+            return CompletableFuture.completedFuture(chunkAccess);
         }
 
         // Use base generator for chunks within bounds
@@ -165,37 +167,23 @@ public class BoundedChunkGenerator extends ChunkGenerator {
     }
 
     private ChunkAccess generateVoidChunk(ChunkAccess chunkAccess) {
-        // Clear everything first and fill with proper air
         BlockState air = Blocks.AIR.defaultBlockState();
-        BlockState barrier = Blocks.BARRIER.defaultBlockState();
 
-        int minY = getMinY();
-        int maxY = minY + getGenDepth();
+        int minY = chunkAccess.getMinY();
+        int maxY = chunkAccess.getMaxY();
 
-        // Fill entire chunk with air to prevent water generation
+        // Fill entire chunk with air
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 for (int y = minY; y < maxY; y++) {
                     chunkAccess.setBlockState(new BlockPos(x, y, z), air);
                 }
-                // Add barrier floor at bottom
-                chunkAccess.setBlockState(new BlockPos(x, minY, z), barrier);
-
-                // Add visible barriers at chunk edges to clearly show the boundary
-                if (isEdgeChunk(chunkAccess.getPos())) {
-                    if (x == 0 || x == 15 || z == 0 || z == 15) {
-                        // Create visible barrier walls at the edges
-                        for (int y = minY + 1; y < minY + 20; y++) {
-                            chunkAccess.setBlockState(new BlockPos(x, y, z), barrier);
-                        }
-                    }
-                }
             }
         }
-        return chunkAccess;
-    }
 
-    private boolean isEdgeChunk(ChunkPos pos) {
-        return Math.abs(pos.x) == maxChunks || Math.abs(pos.z) == maxChunks;
+        // Mark heightmaps as initialized
+        Heightmap.primeHeightmaps(chunkAccess, Set.of(Heightmap.Types.values()));
+
+        return chunkAccess;
     }
 }
