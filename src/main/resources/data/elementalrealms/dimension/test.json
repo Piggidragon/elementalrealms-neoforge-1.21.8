@@ -1,11 +1,16 @@
 {
   "type": "elementalrealms:test",
   "generator": {
-    "type": "minecraft:noise",
-    "settings": "minecraft:overworld",
-    "biome_source": {
-      "type": "minecraft:fixed",
-      "biome": "minecraft:plains"
+    "type": "elementalrealms:bounded_generator",
+    "world_size": 1000,
+    "base_generator": {
+      "type": "minecraft:noise",
+      "settings": "minecraft:overworld",
+      "biome_source": {
+        "type": "minecraft:fixed",
+        "biome": "minecraft:plains"
+      }
     }
   }
 }
+
