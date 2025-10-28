@@ -13,7 +13,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.function.UnaryOperator;
 
 /**
  * Registry for affinity items: stones, shards, and essences.

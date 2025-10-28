@@ -26,7 +26,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.fml.startup.Server;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -346,7 +345,7 @@ public class PortalEntity extends Entity {
      */
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        if (DATA_VARIANT != null){
+        if (DATA_VARIANT != null) {
             builder.define(DATA_VARIANT, PortalVariant.SCHOOL.getId());
         }
     }

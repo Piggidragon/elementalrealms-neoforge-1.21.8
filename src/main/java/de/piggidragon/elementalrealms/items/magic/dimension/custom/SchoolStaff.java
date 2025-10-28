@@ -5,8 +5,6 @@ import de.piggidragon.elementalrealms.entities.custom.PortalEntity;
 import de.piggidragon.elementalrealms.level.ModLevel;
 import de.piggidragon.elementalrealms.particles.DimensionStaffParticles;
 import de.piggidragon.elementalrealms.particles.PortalParticles;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -22,7 +20,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.bus.api.SubscribeEvent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -157,7 +154,7 @@ public class SchoolStaff extends Item {
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
         // Show detailed tooltip when Shift is held, otherwise show hint
 
-        if(flag.hasShiftDown()) {
+        if (flag.hasShiftDown()) {
             tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.dimension_staff.line1"));
             tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.dimension_staff.line2"));
         } else {

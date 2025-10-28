@@ -58,15 +58,15 @@ public class Platform extends Structure {
     /**
      * Constructs a new platform structure with specified generation parameters.
      *
-     * @param config                   Base structure settings (biome tags, spawn overrides, etc.)
-     * @param startPool                Template pool to begin structure generation from
-     * @param startJigsawName          Optional specific jigsaw block to start from
-     * @param size                     Maximum depth of jigsaw piece branching (0-30)
-     * @param startHeight              Y-level provider for structure placement
-     * @param projectStartToHeightmap  Optional heightmap projection for terrain-relative placement
-     * @param maxDistanceFromCenter    Maximum radius for piece placement (1-128 chunks)
-     * @param dimensionPadding         Vertical padding from dimension bounds
-     * @param liquidSettings           Controls waterlogging behavior
+     * @param config                  Base structure settings (biome tags, spawn overrides, etc.)
+     * @param startPool               Template pool to begin structure generation from
+     * @param startJigsawName         Optional specific jigsaw block to start from
+     * @param size                    Maximum depth of jigsaw piece branching (0-30)
+     * @param startHeight             Y-level provider for structure placement
+     * @param projectStartToHeightmap Optional heightmap projection for terrain-relative placement
+     * @param maxDistanceFromCenter   Maximum radius for piece placement (1-128 chunks)
+     * @param dimensionPadding        Vertical padding from dimension bounds
+     * @param liquidSettings          Controls waterlogging behavior
      */
     public Platform(Structure.StructureSettings config,
                     Holder<StructureTemplatePool> startPool,

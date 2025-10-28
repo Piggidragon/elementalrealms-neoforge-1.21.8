@@ -7,7 +7,6 @@ import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.entities.custom.PortalEntity;
 import de.piggidragon.elementalrealms.entities.variants.PortalVariant;
 import net.minecraft.Util;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -66,7 +65,7 @@ public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderSta
      * Populate the supplied render state with data from the entity.
      * Copies animation states and picks the correct texture according to the entity variant.
      *
-     * @param entity the portal entity to read data from
+     * @param entity      the portal entity to read data from
      * @param reusedState the render state instance to populate (reused between frames)
      * @param partialTick interpolation value for smooth animations (not directly used here)
      */
@@ -89,9 +88,9 @@ public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderSta
      * Submit the prepared render state to the rendering pipeline.
      * Handles pose transforms, model animation setup and node submission.
      *
-     * @param renderState the prepared render state containing animation and texture info
-     * @param poseStack current transformation stack for positioning and rotation
-     * @param nodeCollector collector used to submit the model for rendering
+     * @param renderState       the prepared render state containing animation and texture info
+     * @param poseStack         current transformation stack for positioning and rotation
+     * @param nodeCollector     collector used to submit the model for rendering
      * @param cameraRenderState information about the camera view and clipping
      */
     @Override
