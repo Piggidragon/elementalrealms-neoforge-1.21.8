@@ -1,4 +1,4 @@
-package de.piggidragon.elementalrealms.commands.util;
+package de.piggidragon.elementalrealms.util;
 
 import de.piggidragon.elementalrealms.entities.custom.PortalEntity;
 import net.minecraft.server.level.ServerLevel;
@@ -8,7 +8,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class PortalCommands {
+public class PortalUtil {
     public static PortalEntity findNearestPortal(ServerLevel level, Vec3 position, double searchRadius) {
         AABB searchArea = new AABB(
                 position.x - searchRadius, position.y - searchRadius, position.z - searchRadius,
