@@ -41,7 +41,7 @@ public class Platform extends Structure {
                     Codec.intRange(0, 30).fieldOf("size").forGetter(structure -> structure.size),
                     HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight),
                     Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(structure -> structure.projectStartToHeightmap),
-                    Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter),
+                    JigsawStructure.MaxDistance.CODEC.fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter),
                     DimensionPadding.CODEC.optionalFieldOf("dimension_padding", JigsawStructure.DEFAULT_DIMENSION_PADDING).forGetter(structure -> structure.dimensionPadding),
                     LiquidSettings.CODEC.optionalFieldOf("liquid_settings", JigsawStructure.DEFAULT_LIQUID_SETTINGS).forGetter(structure -> structure.liquidSettings)
             ).apply(instance, Platform::new));
@@ -51,22 +51,22 @@ public class Platform extends Structure {
     private final int size;
     private final HeightProvider startHeight;
     private final Optional<Heightmap.Types> projectStartToHeightmap;
-    private final int maxDistanceFromCenter;
+    private final JigsawStructure.MaxDistance maxDistanceFromCenter;
     private final DimensionPadding dimensionPadding;
     private final LiquidSettings liquidSettings;
 
     /**
      * Constructs a new platform structure with specified generation parameters.
      *
-     * @param config                   Base structure settings (biome tags, spawn overrides, etc.)
-     * @param startPool                Template pool to begin structure generation from
-     * @param startJigsawName          Optional specific jigsaw block to start from
-     * @param size                     Maximum depth of jigsaw piece branching (0-30)
-     * @param startHeight              Y-level provider for structure placement
-     * @param projectStartToHeightmap  Optional heightmap projection for terrain-relative placement
-     * @param maxDistanceFromCenter    Maximum radius for piece placement (1-128 chunks)
-     * @param dimensionPadding         Vertical padding from dimension bounds
-     * @param liquidSettings           Controls waterlogging behavior
+     * @param config                  Base structure settings (biome tags, spawn overrides, etc.)
+     * @param startPool               Template pool to begin structure generation from
+     * @param startJigsawName         Optional specific jigsaw block to start from
+     * @param size                    Maximum depth of jigsaw piece branching (0-30)
+     * @param startHeight             Y-level provider for structure placement
+     * @param projectStartToHeightmap Optional heightmap projection for terrain-relative placement
+     * @param maxDistanceFromCenter   Maximum radius for piece placement (1-128 chunks)
+     * @param dimensionPadding        Vertical padding from dimension bounds
+     * @param liquidSettings          Controls waterlogging behavior
      */
     public Platform(Structure.StructureSettings config,
                     Holder<StructureTemplatePool> startPool,
@@ -74,7 +74,7 @@ public class Platform extends Structure {
                     int size,
                     HeightProvider startHeight,
                     Optional<Heightmap.Types> projectStartToHeightmap,
-                    int maxDistanceFromCenter,
+                    JigsawStructure.MaxDistance maxDistanceFromCenter,
                     DimensionPadding dimensionPadding,
                     LiquidSettings liquidSettings) {
         super(config);

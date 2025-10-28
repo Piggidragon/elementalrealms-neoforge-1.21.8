@@ -1,9 +1,11 @@
 package de.piggidragon.elementalrealms.particles;
 
 import de.piggidragon.elementalrealms.magic.affinities.Affinity;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ARGB;
 
 /**
  * Creates unique particle effects for each affinity type.
@@ -101,7 +103,8 @@ public class AffinityParticles {
                             player.getX(), player.getY() + height, player.getZ(),
                             3, 0.3, 0.1, 0.3, 0.1);
                 }
-                level.sendParticles(ParticleTypes.FLASH, player.getX(), player.getY() + 1.5, player.getZ(),
+                ColorParticleOption whiteFlash = ColorParticleOption.create(ParticleTypes.FLASH, ARGB.colorFromFloat(1.0F, 100, 100, 0));
+                level.sendParticles(whiteFlash, player.getX(), player.getY() + 1.5, player.getZ(),
                         5, 0.0, 0.0, 0.0, 0.0);
                 level.sendParticles(ParticleTypes.CRIT, player.getX(), player.getY() + 1.0, player.getZ(),
                         20, 1.0, 1.0, 1.0, 0.2);
@@ -204,7 +207,8 @@ public class AffinityParticles {
                         player.getX(), player.getY() + 1.0, player.getZ(),
                         1, 0.0, 0.0, 0.0, 0.0);
 
-                level.sendParticles(ParticleTypes.DRAGON_BREATH,
+                ColorParticleOption purpleDragonBreath = ColorParticleOption.create(ParticleTypes.FLASH, ARGB.colorFromFloat(1.0F, 50, 0, 50));
+                level.sendParticles(purpleDragonBreath,
                         player.getX(), player.getY() + 0.5, player.getZ(),
                         8, 0.8, 0.5, 0.8, 0.02);
             }

@@ -85,8 +85,7 @@ public class AffinityItems {
         String name = "affinity_stone_" + affinity.getName();
         DeferredItem<Item> stone = ITEMS.registerItem(
                 name,
-                (p) -> new AffinityStone(p, affinity),
-                new Item.Properties().rarity(rarity)
+                (p) -> new AffinityStone(p.rarity(rarity), affinity)
         );
         map.put(affinity, stone);
     }
@@ -102,8 +101,7 @@ public class AffinityItems {
         String name = "affinity_shard_" + affinity.getName();
         DeferredItem<Item> shard = ITEMS.registerItem(
                 name,
-                Item::new,
-                new Item.Properties().rarity(rarity)
+                (p) -> new Item(p.rarity(rarity))
         );
         map.put(affinity, shard);
     }
@@ -118,8 +116,7 @@ public class AffinityItems {
         String name = "essence_" + affinity.getName();
         DeferredItem<Item> essence = ITEMS.registerItem(
                 name,
-                Item::new,
-                new Item.Properties().rarity(Rarity.UNCOMMON)
+                (p) -> new Item(p.rarity(Rarity.UNCOMMON))
         );
         map.put(affinity, essence);
     }

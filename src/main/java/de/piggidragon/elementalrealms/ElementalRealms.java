@@ -48,7 +48,7 @@ public class ElementalRealms {
         ModWorldGen.register(modEventBus);
 
         // Client-only: configuration screen
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
             modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
         }
 
