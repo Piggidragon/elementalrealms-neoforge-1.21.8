@@ -3,6 +3,7 @@ package de.piggidragon.elementalrealms.commands;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import de.piggidragon.elementalrealms.ElementalRealms;
+import de.piggidragon.elementalrealms.commands.util.PortalCommands;
 import de.piggidragon.elementalrealms.magic.affinities.Affinity;
 import de.piggidragon.elementalrealms.magic.affinities.ModAffinities;
 import de.piggidragon.elementalrealms.magic.affinities.ModAffinitiesRoll;
@@ -40,7 +41,20 @@ public class ModCommands {
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
         var dispatcher = event.getDispatcher();
-        ElementalRealms.LOGGER.info("Registering Elemental Realms commands");
+
+        dispatcher.register(Commands.literal("portal")
+                .requires(cs -> cs.hasPermission(2))
+
+                .then(Commands.literal("find")
+                        .executes(ctx -> {
+                            ServerPlayer player = ctx.getSource().getPlayerOrException();
+                            var portal = PortalCommands.findNearestPortal(player.level(), player.position(), 300);
+                            ctx.getSource().sendSuccess(() -> Component.literal("Nearest Portal: " + portal), false);
+                            return 1;
+                        })
+                )
+        );
+
         dispatcher.register(Commands.literal("affinities")
                 .requires(cs -> cs.hasPermission(2)) // Requires OP level 2
 
