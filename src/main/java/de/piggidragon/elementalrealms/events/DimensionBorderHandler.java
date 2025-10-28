@@ -2,33 +2,27 @@ package de.piggidragon.elementalrealms.events;
 
 import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.level.ModLevel;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.border.WorldBorder;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class DimensionBorderHandler {
 
     @SubscribeEvent
     public static void onServerStarting(ServerStartingEvent event) {
-        ServerLevel serverLevel = event.getServer().getLevel(ModLevel.TEST_DIMENSION);
-        if (serverLevel != null) {
-            setDimensionWorldBorder(serverLevel, 1000.0);
-            setBorderCenter(serverLevel, 0.0, 0.0);
-            setBorderWarning(serverLevel, 10);
-            setBorderDamage(serverLevel, 1.0);
-            ElementalRealms.LOGGER.info("WorldBorder configured at server start for TEST_DIMENSION");
+        for (ResourceKey<Level> level : ModLevel.LEVELS) {
+            ServerLevel serverLevel = event.getServer().getLevel(level);
+            if (serverLevel != null) {
+                setDimensionWorldBorder(serverLevel, 1000.0);
+                setBorderCenter(serverLevel, 0.0, 0.0);
+                setBorderWarning(serverLevel, 10);
+                setBorderDamage(serverLevel, 1.0);
+            }
         }
     }
 

@@ -1,10 +1,13 @@
 package de.piggidragon.elementalrealms.level;
 
+import com.google.common.collect.Lists;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.dimension.DimensionType;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Defines resource keys for custom dimensions added by the mod.
@@ -17,18 +20,19 @@ import net.minecraft.world.level.dimension.DimensionType;
  * </ul>
  */
 public class ModLevel {
-    /**
-     * Resource key for the School dimension.
-     * This dimension serves as a magical academy where players learn spells and magic systems.
-     *
-     * <p>Dimension configuration must exist at:</p>
-     * {@code data/elementalrealms/dimension/school.json}
-     */
+
     public static final ResourceKey<Level> SCHOOL_DIMENSION = ResourceKey.create(
             Registries.DIMENSION,
-            ResourceLocation.fromNamespaceAndPath("elementalrealms", "school"));
+            ResourceLocation.fromNamespaceAndPath("elementalrealms", "school")
+    );
 
     public static final ResourceKey<Level> TEST_DIMENSION = ResourceKey.create(
             Registries.DIMENSION,
-            ResourceLocation.fromNamespaceAndPath("elementalrealms", "test"));
+            ResourceLocation.fromNamespaceAndPath("elementalrealms", "test")
+    );
+
+    public static final List<ResourceKey<Level>> LEVELS = List.of(
+            SCHOOL_DIMENSION,
+            TEST_DIMENSION
+    );
 }
