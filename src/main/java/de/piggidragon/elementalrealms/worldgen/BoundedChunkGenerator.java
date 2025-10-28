@@ -1,20 +1,23 @@
 package de.piggidragon.elementalrealms.worldgen;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.biome.BiomeManager;
+import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.blending.Blender;
 
@@ -23,80 +26,35 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-public class BoundedChunkGenerator extends ChunkGenerator {
-    // Define the MapCodec for serialization/deserialization
+public class BoundedChunkGenerator extends NoiseBasedChunkGenerator {
+
+    // MapCodec for serialization - this is what goes in your JSON as "type"
     public static final MapCodec<BoundedChunkGenerator> MAP_CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
-                    // The base chunk generator that we wrap
-                    ChunkGenerator.CODEC.fieldOf("base_generator").forGetter(BoundedChunkGenerator::getBaseGenerator),
-                    // World size in blocks (configurable)
-                    Codec.INT.fieldOf("world_size").orElse(1000).forGetter(BoundedChunkGenerator::getWorldSize)
+                    BiomeSource.CODEC.fieldOf("biome_source").forGetter(ChunkGenerator::getBiomeSource),
+                    NoiseGeneratorSettings.CODEC.fieldOf("settings").forGetter(gen -> gen.generatorSettings())
             ).apply(instance, BoundedChunkGenerator::new)
     );
 
-    // Dimensions bounds - calculated from world size
-    private final int maxChunks;
-    private final int minChunks;
-    private final ChunkGenerator baseGenerator;
-    private final int worldSize;
+    // World Chunk Radius
+    public static final int MAX_CHUNKS = 8;
+    private static final int MIN_CHUNKS = -MAX_CHUNKS;
 
-    public BoundedChunkGenerator(ChunkGenerator baseGenerator, int worldSize) {
-        super(baseGenerator.getBiomeSource());
-        this.baseGenerator = baseGenerator;
-        this.worldSize = worldSize;
-        // Calculate chunk bounds from world size (divide by 32 for chunk radius)
-        this.maxChunks = worldSize / 32;
-        this.minChunks = -maxChunks;
+
+    public BoundedChunkGenerator(BiomeSource biomeSource, Holder<NoiseGeneratorSettings> settings) {
+        super(biomeSource, settings);
     }
 
     @Override
     protected MapCodec<? extends ChunkGenerator> codec() {
+        // Return OUR codec, not the parent's
         return MAP_CODEC;
-    }
-
-    // Getters for the codec fields
-    public ChunkGenerator getBaseGenerator() {
-        return baseGenerator;
-    }
-
-    public int getWorldSize() {
-        return worldSize;
-    }
-
-    @Override
-    public void applyCarvers(WorldGenRegion worldGenRegion, long seed, RandomState randomState,
-                             BiomeManager biomeManager, StructureManager structureManager, ChunkAccess chunkAccess) {
-        // Only apply carvers if within bounds
-        ChunkPos pos = chunkAccess.getPos();
-        if (isWithinBounds(pos)) {
-            baseGenerator.applyCarvers(worldGenRegion, seed, randomState, biomeManager, structureManager, chunkAccess);
-        }
-    }
-
-    @Override
-    public void buildSurface(WorldGenRegion worldGenRegion, StructureManager structureManager,
-                             RandomState randomState, ChunkAccess chunkAccess) {
-        // Only build surface if within bounds
-        ChunkPos pos = chunkAccess.getPos();
-        if (isWithinBounds(pos)) {
-            baseGenerator.buildSurface(worldGenRegion, structureManager, randomState, chunkAccess);
-        }
-    }
-
-    @Override
-    public void spawnOriginalMobs(WorldGenRegion worldGenRegion) {
-        // Use base generator's mob spawning
-        baseGenerator.spawnOriginalMobs(worldGenRegion);
-    }
-
-    @Override
-    public int getGenDepth() {
-        return baseGenerator.getGenDepth();
     }
 
     @Override
     public CompletableFuture<ChunkAccess> fillFromNoise(Blender blender, RandomState randomState,
-                                                        StructureManager structureManager, ChunkAccess chunkAccess) {
+                                                        StructureManager structureManager,
+                                                        ChunkAccess chunkAccess) {
         ChunkPos pos = chunkAccess.getPos();
 
         // Check if chunk is within bounds
@@ -106,67 +64,77 @@ public class BoundedChunkGenerator extends ChunkGenerator {
             return CompletableFuture.completedFuture(chunkAccess);
         }
 
-        // Use base generator for chunks within bounds
-        return baseGenerator.fillFromNoise(blender, randomState, structureManager, chunkAccess);
+        // Use super for chunks within bounds (normal generation)
+        return super.fillFromNoise(blender, randomState, structureManager, chunkAccess);
     }
 
     @Override
-    public int getSeaLevel() {
-        return baseGenerator.getSeaLevel();
+    public void buildSurface(WorldGenRegion worldGenRegion, StructureManager structureManager,
+                             RandomState randomState, ChunkAccess chunkAccess) {
+        ChunkPos pos = chunkAccess.getPos();
+        if (isWithinBounds(pos)) {
+            super.buildSurface(worldGenRegion, structureManager, randomState, chunkAccess);
+        }
     }
 
     @Override
-    public int getMinY() {
-        return baseGenerator.getMinY();
+    public void applyCarvers(WorldGenRegion worldGenRegion, long seed, RandomState randomState,
+                             BiomeManager biomeManager, StructureManager structureManager,
+                             ChunkAccess chunkAccess) {
+        ChunkPos pos = chunkAccess.getPos();
+        if (isWithinBounds(pos)) {
+            super.applyCarvers(worldGenRegion, seed, randomState, biomeManager,
+                    structureManager, chunkAccess);
+        }
     }
 
     @Override
     public int getBaseHeight(int x, int z, Heightmap.Types heightmapType,
                              LevelHeightAccessor levelHeightAccessor, RandomState randomState) {
-        // Check if position is within bounds using chunk coordinates
         int chunkX = x >> 4;
         int chunkZ = z >> 4;
-        ChunkPos pos = new ChunkPos(chunkX, chunkZ);
 
-        if (!isWithinBounds(pos)) {
+        if (!isWithinBounds(new ChunkPos(chunkX, chunkZ))) {
             return getMinY(); // Return minimum height for void areas
         }
 
-        return baseGenerator.getBaseHeight(x, z, heightmapType, levelHeightAccessor, randomState);
+        return super.getBaseHeight(x, z, heightmapType, levelHeightAccessor, randomState);
     }
 
     @Override
-    public NoiseColumn getBaseColumn(int x, int z, LevelHeightAccessor levelHeightAccessor, RandomState randomState) {
-        // Check if position is within bounds
+    public NoiseColumn getBaseColumn(int x, int z, LevelHeightAccessor levelHeightAccessor,
+                                     RandomState randomState) {
         int chunkX = x >> 4;
         int chunkZ = z >> 4;
-        ChunkPos pos = new ChunkPos(chunkX, chunkZ);
 
-        if (!isWithinBounds(pos)) {
-            // Return proper air column for void areas
+        if (!isWithinBounds(new ChunkPos(chunkX, chunkZ))) {
+            // Return air column for void areas
             BlockState[] states = new BlockState[getGenDepth()];
             Arrays.fill(states, Blocks.AIR.defaultBlockState());
             return new NoiseColumn(getMinY(), states);
         }
 
-        return baseGenerator.getBaseColumn(x, z, levelHeightAccessor, randomState);
+        return super.getBaseColumn(x, z, levelHeightAccessor, randomState);
     }
 
     @Override
     public void addDebugScreenInfo(List<String> list, RandomState randomState, BlockPos blockPos) {
-        list.add("Bounded Generator - Size: " + worldSize + "x" + worldSize);
-        list.add("Bounds: " + minChunks + " to " + maxChunks + " chunks");
-        baseGenerator.addDebugScreenInfo(list, randomState, blockPos);
+        list.add("Bounds: " + MIN_CHUNKS + " to " + MAX_CHUNKS + " chunks");
+        super.addDebugScreenInfo(list, randomState, blockPos);
     }
 
     /**
      * Helper method to check if a chunk position is within the world bounds
      */
     private boolean isWithinBounds(ChunkPos pos) {
-        return pos.x >= minChunks && pos.x <= maxChunks && pos.z >= minChunks && pos.z <= maxChunks;
+        return pos.x >= MIN_CHUNKS && pos.x < MAX_CHUNKS &&
+                pos.z >= MIN_CHUNKS && pos.z < MAX_CHUNKS;
     }
 
-    private ChunkAccess generateVoidChunk(ChunkAccess chunkAccess) {
+    /**
+     * Generates a void chunk filled with air
+     */
+    private void generateVoidChunk(ChunkAccess chunkAccess) {
         BlockState air = Blocks.AIR.defaultBlockState();
 
         int minY = chunkAccess.getMinY();
@@ -181,9 +149,7 @@ public class BoundedChunkGenerator extends ChunkGenerator {
             }
         }
 
-        // Mark heightmaps as initialized
+        // Initialize heightmaps for void chunks
         Heightmap.primeHeightmaps(chunkAccess, Set.of(Heightmap.Types.values()));
-
-        return chunkAccess;
     }
 }

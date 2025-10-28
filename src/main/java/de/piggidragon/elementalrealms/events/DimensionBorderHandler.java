@@ -2,6 +2,7 @@ package de.piggidragon.elementalrealms.events;
 
 import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.level.ModLevel;
+import de.piggidragon.elementalrealms.worldgen.BoundedChunkGenerator;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -30,7 +31,7 @@ public class DimensionBorderHandler {
         for (ResourceKey<Level> level : ModLevel.LEVELS) {
             ServerLevel serverLevel = event.getServer().getLevel(level);
             if (serverLevel != null) {
-                setDimensionWorldBorder(serverLevel, 1000.0);
+                setDimensionWorldBorder(serverLevel, BoundedChunkGenerator.MAX_CHUNKS*16*2);
                 setBorderCenter(serverLevel, 0.0, 0.0);
                 setBorderWarning(serverLevel, 10);
                 setBorderDamage(serverLevel, 1.0);
