@@ -21,10 +21,7 @@ public class DimensionItems {
      */
     public static final DeferredItem<Item> DIMENSION_STAFF = ITEMS.registerItem(
             "dimension_staff",
-            SchoolStaff::new,
-            new Item.Properties()
-                    .durability(16)
-                    .rarity(Rarity.UNCOMMON)
+            (p) -> new SchoolStaff(p.durability(16).rarity(Rarity.UNCOMMON))
     );
 
     public static void register(IEventBus bus) {

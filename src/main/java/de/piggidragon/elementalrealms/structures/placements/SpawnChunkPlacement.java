@@ -49,14 +49,14 @@ public class SpawnChunkPlacement extends RandomSpreadStructurePlacement {
     /**
      * Constructs spawn chunk placement with standard RandomSpread parameters.
      *
-     * @param locateOffset              Offset for structure location commands
-     * @param frequencyReductionMethod  How to reduce structure frequency
-     * @param frequency                 Probability of spawning (0.0-1.0)
-     * @param salt                      Random seed modifier
-     * @param exclusionZone             Optional area to prevent overlapping structures
-     * @param spacing                   Grid spacing in chunks
-     * @param separation                Minimum distance between structures
-     * @param spreadType                Distribution pattern (LINEAR/TRIANGULAR)
+     * @param locateOffset             Offset for structure location commands
+     * @param frequencyReductionMethod How to reduce structure frequency
+     * @param frequency                Probability of spawning (0.0-1.0)
+     * @param salt                     Random seed modifier
+     * @param exclusionZone            Optional area to prevent overlapping structures
+     * @param spacing                  Grid spacing in chunks
+     * @param separation               Minimum distance between structures
+     * @param spreadType               Distribution pattern (LINEAR/TRIANGULAR)
      * @throws RuntimeException if spacing <= separation
      */
     public SpawnChunkPlacement(Vec3i locateOffset,
@@ -85,14 +85,37 @@ public class SpawnChunkPlacement extends RandomSpreadStructurePlacement {
     }
 
     // Getters required by codec
-    public Vec3i locateOffset() { return this.locateOffset; }
-    public StructurePlacement.FrequencyReductionMethod frequencyReductionMethod() { return this.frequencyReductionMethod; }
-    public float frequency() { return this.frequency; }
-    public int salt() { return this.salt; }
-    public Optional<StructurePlacement.ExclusionZone> exclusionZone() { return this.exclusionZone; }
-    public int spacing() { return this.spacing; }
-    public int separation() { return this.separation; }
-    public RandomSpreadType spreadType() { return this.spreadType; }
+    public Vec3i locateOffset() {
+        return this.locateOffset;
+    }
+
+    public StructurePlacement.FrequencyReductionMethod frequencyReductionMethod() {
+        return this.frequencyReductionMethod;
+    }
+
+    public float frequency() {
+        return this.frequency;
+    }
+
+    public int salt() {
+        return this.salt;
+    }
+
+    public Optional<StructurePlacement.ExclusionZone> exclusionZone() {
+        return this.exclusionZone;
+    }
+
+    public int spacing() {
+        return this.spacing;
+    }
+
+    public int separation() {
+        return this.separation;
+    }
+
+    public RandomSpreadType spreadType() {
+        return this.spreadType;
+    }
 
     /**
      * Overrides parent method to restrict generation to spawn chunk only.

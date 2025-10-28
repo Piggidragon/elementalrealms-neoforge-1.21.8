@@ -66,7 +66,7 @@ public class ModPacketHandler {
         // CRITICAL: All Minecraft code must run on the main game thread!
         context.enqueueWork(() -> {
             // Verify we're on the client side (packet should only be sent to clients)
-            if (FMLEnvironment.dist == Dist.CLIENT) {
+            if (FMLEnvironment.getDist() == Dist.CLIENT) {
                 Minecraft minecraft = Minecraft.getInstance();
 
                 if (minecraft.player != null) {
