@@ -12,6 +12,7 @@ import net.minecraft.world.level.border.WorldBorder;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,62 +20,27 @@ import java.util.Set;
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class DimensionBorderHandler {
 
-    private static final Set<ResourceKey<Level>> configuredDimensions = new HashSet<>();
-
     @SubscribeEvent
-    public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        if (event.getTo().equals(ModLevel.TEST_DIMENSION)) {
-            ServerPlayer player = (ServerPlayer) event.getEntity();
-            ServerLevel level = player.getServer().getLevel(event.getTo());
-
-            if (level != null && !configuredDimensions.contains(level.dimension())) {
-                setDimensionWorldBorder(level, 1000.0, 0L);
-                setBorderCenter(level, 0.0, 0.0);
-                setBorderWarning(level, 50);
-                setBorderDamage(level, 1.0);
-
-                configuredDimensions.add(level.dimension());
-                ElementalRealms.LOGGER.info("WorldBorder configured for dimension: {}",
-                        level.dimension().location());
-
-            }
+    public static void onServerStarting(ServerStartingEvent event) {
+        ServerLevel serverLevel = event.getServer().getLevel(ModLevel.TEST_DIMENSION);
+        if (serverLevel != null) {
+            setDimensionWorldBorder(serverLevel, 1000.0);
+            setBorderCenter(serverLevel, 0.0, 0.0);
+            setBorderWarning(serverLevel, 10);
+            setBorderDamage(serverLevel, 1.0);
+            ElementalRealms.LOGGER.info("WorldBorder configured at server start for TEST_DIMENSION");
         }
     }
 
     /**
-     * Set worldborder size for a specific dimension (not overworld!)
+     * Set worldborder size for a specific dimension.
      * Based on vanilla WorldBorderCommand.setSize() but works for any dimension
      */
-    private static int setDimensionWorldBorder(ServerLevel level, double newSize, long time) throws RuntimeException {
+    private static void setDimensionWorldBorder(ServerLevel level, double newSize) throws RuntimeException {
         WorldBorder worldborder = level.getWorldBorder();
-        double currentSize = worldborder.getSize();
-
-        if (currentSize == newSize) {
-            ElementalRealms.LOGGER.warn("WorldBorder size already {}", newSize);
-            return 0;
-        } else if (newSize < 1.0) {
-            throw new RuntimeException("WorldBorder size too small: " + newSize);
-        } else if (newSize > 5.9999968E7) {
-            throw new RuntimeException("WorldBorder size too big: " + newSize);
-        } else {
-            if (time > 0L) {
-                // Gradual size change over time
-                worldborder.lerpSizeBetween(currentSize, newSize, time);
-                if (newSize > currentSize) {
-                    ElementalRealms.LOGGER.info("WorldBorder growing from {} to {} over {} seconds",
-                            currentSize, newSize, time / 1000L);
-                } else {
-                    ElementalRealms.LOGGER.info("WorldBorder shrinking from {} to {} over {} seconds",
-                            currentSize, newSize, time / 1000L);
-                }
-            } else {
-                // Immediate size change
-                worldborder.setSize(newSize);
-                ElementalRealms.LOGGER.info("WorldBorder set immediately to {}", newSize);
-            }
-
-            return (int)(newSize - currentSize);
-        }
+        // Immediate size change
+        worldborder.setSize(newSize);
+        ElementalRealms.LOGGER.info("WorldBorder set immediately to {}", newSize);
     }
 
     /**
@@ -102,10 +68,5 @@ public class DimensionBorderHandler {
         WorldBorder worldborder = level.getWorldBorder();
         worldborder.setDamagePerBlock(damage);
         ElementalRealms.LOGGER.info("WorldBorder damage per block set to {}", damage);
-    }
-
-    @SubscribeEvent
-    public static void onServerStopping(net.neoforged.neoforge.event.server.ServerStoppingEvent event) {
-        configuredDimensions.clear();
     }
 }
