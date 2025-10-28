@@ -3,7 +3,7 @@ package de.piggidragon.elementalrealms.commands;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import de.piggidragon.elementalrealms.ElementalRealms;
-import de.piggidragon.elementalrealms.commands.util.PortalCommands;
+import de.piggidragon.elementalrealms.util.PortalUtil;
 import de.piggidragon.elementalrealms.magic.affinities.Affinity;
 import de.piggidragon.elementalrealms.magic.affinities.ModAffinities;
 import de.piggidragon.elementalrealms.magic.affinities.ModAffinitiesRoll;
@@ -48,7 +48,7 @@ public class ModCommands {
                 .then(Commands.literal("find")
                         .executes(ctx -> {
                             ServerPlayer player = ctx.getSource().getPlayerOrException();
-                            var portal = PortalCommands.findNearestPortal(player.level(), player.position(), 300);
+                            var portal = PortalUtil.findNearestPortal(player.level(), player.position(), 300);
                             ctx.getSource().sendSuccess(() -> Component.literal("Nearest Portal: " + portal.getPositionVec()), false);
                             return 1;
                         })
