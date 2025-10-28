@@ -19,74 +19,138 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
+import java.util.*;
+
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class PortalSpawnHandler {
+
+    private static final float BASE_PORTAL_ATTEMPT_CHANCE = 0.000028f; // ~30 Minuten
+
+    private static final int POSITION_CHECKS_PER_CHUNK = 10;
 
     @SubscribeEvent
     public static void onLevelTick(LevelTickEvent.Post event) {
         if (!(event.getLevel() instanceof ServerLevel serverLevel)) return;
         if (!isValidDimension(serverLevel)) return;
-        if (serverLevel.getRandom().nextInt(1000) != 0) {
-            return;
 
+        // KORREKT: Nur wenn die Chance ERFÜLLT ist, weitermachen
+        if (serverLevel.getRandom().nextFloat() >= BASE_PORTAL_ATTEMPT_CHANCE) return;
+
+        attemptSinglePortalSpawn(serverLevel);
+    }
+
+    private static void attemptSinglePortalSpawn(ServerLevel serverLevel) {
+        // Sammle alle geladenen Chunks
+        List<ChunkInfo> candidateChunks = getAllLoadedChunks(serverLevel);
+
+        if (candidateChunks.isEmpty()) return;
+
+        // Mische die Reihenfolge für Fairness
+        Collections.shuffle(candidateChunks);
+
+        // Versuche maximal 20 Chunks (begrenzt die Versuche)
+        int maxChunksToTry = Math.min(20, candidateChunks.size());
+
+        for (int i = 0; i < maxChunksToTry; i++) {
+            ChunkInfo chunkInfo = candidateChunks.get(i);
+            LevelChunk chunk = chunkInfo.chunk();
+
+            // Check ob bereits Portal in der Nähe
+            Vec3 chunkCenter = new Vec3(
+                    chunk.getPos().x * 16 + 8,
+                    64,
+                    chunk.getPos().z * 16 + 8
+            );
+
+            if (isPortalNearby(serverLevel, chunkCenter, 128.0)) {
+                continue; // Skip diesen Chunk
+            }
+
+            Vec3 spawnPos = trySpawnPortalInChunk(serverLevel, chunk, POSITION_CHECKS_PER_CHUNK);
+            if (spawnPos != null) {
+                spawnPortal(serverLevel, chunk.getPos(), spawnPos);
+            }
         }
 
-        // Iterate through all players to get their loaded chunks
+        ElementalRealms.LOGGER.debug("Failed to spawn portal after trying {} chunks", maxChunksToTry);
+    }
+
+    // Sammle alle geladenen Chunks (ohne Duplikate)
+    private static List<ChunkInfo> getAllLoadedChunks(ServerLevel serverLevel) {
+        Set<ChunkPos> processedChunks = new HashSet<>();
+        List<ChunkInfo> candidateChunks = new ArrayList<>();
+
         for (ServerPlayer player : serverLevel.players()) {
             ChunkPos playerChunkPos = new ChunkPos(player.blockPosition());
-
-            // Check chunks around each player (view distance)
             int viewDistance = serverLevel.getServer().getPlayerList().getViewDistance();
 
             for (int dx = -viewDistance; dx <= viewDistance; dx++) {
                 for (int dz = -viewDistance; dz <= viewDistance; dz++) {
                     ChunkPos chunkPos = new ChunkPos(playerChunkPos.x + dx, playerChunkPos.z + dz);
 
-                    // Check if chunk is loaded
+                    // Vermeide Duplikate
+                    if (processedChunks.contains(chunkPos)) continue;
+                    processedChunks.add(chunkPos);
+
                     LevelChunk chunk = serverLevel.getChunkSource().getChunkNow(chunkPos.x, chunkPos.z);
-                    if (chunk != null) {
-                        Vec3 spawnPos = trySpawnPortalInChunk(serverLevel, chunk, 1);
-                        if (spawnPos != null) {
-
-                            PortalEntity portal = new PortalEntity(
-                                    ModEntities.PORTAL_ENTITY.get(),
-                                    serverLevel,
-                                    false,
-                                    -1,
-                                    player.level().getServer().getLevel(ModLevel.TEST_DIMENSION),
-                                    null
-                            );
-
-                            if (serverLevel.dimension() == Level.OVERWORLD) {
-                                portal.setVariant(PortalVariant.ELEMENTAL);
-                            } else if (serverLevel.dimension() == Level.NETHER) {
-                                portal.setVariant(PortalVariant.DEVIANT);
-                            } else if (serverLevel.dimension() == Level.END) {
-                                portal.setVariant(PortalVariant.ETERNAL);
-                            }
-
-                            portal.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
-                            serverLevel.addFreshEntity(portal);
-                            ElementalRealms.LOGGER.info("Spawned portal at " + spawnPos + " in chunk " + chunkPos);
-                        }
+                    if (chunk != null && !chunk.isEmpty()) {
+                        candidateChunks.add(new ChunkInfo(chunk, player));
                     }
                 }
             }
         }
+
+        return candidateChunks;
     }
 
-    private static Vec3 trySpawnPortalInChunk(ServerLevel serverLevel, LevelChunk chunk, int attempt) {
+    // Helper record for chunk info
+    private record ChunkInfo(LevelChunk chunk, ServerPlayer nearbyPlayer) {}
 
-        for (int i = 0; i <= attempt; i++) {
+    private static boolean isPortalNearby(ServerLevel level, Vec3 position, double radius) {
+        // Implementierung deiner Portal-Nähe-Prüfung
+        // return PortalUtils.findNearestPortal(level, position, radius) != null;
+        return false; // Placeholder
+    }
+
+    private static void spawnPortal(ServerLevel serverLevel, ChunkPos chunkPos, Vec3 spawnPos) {
+        PortalEntity portal = new PortalEntity(
+                ModEntities.PORTAL_ENTITY.get(),
+                serverLevel,
+                false,
+                -1,
+                serverLevel.getServer().getLevel(ModLevel.TEST_DIMENSION),
+                null
+        );
+
+        // Set variant based on dimension
+        if (serverLevel.dimension() == Level.OVERWORLD) {
+            portal.setVariant(PortalVariant.ELEMENTAL);
+        } else if (serverLevel.dimension() == Level.NETHER) {
+            portal.setVariant(PortalVariant.DEVIANT);
+        } else if (serverLevel.dimension() == Level.END) {
+            portal.setVariant(PortalVariant.ETERNAL);
+        }
+
+        portal.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
+        serverLevel.addFreshEntity(portal);
+        ElementalRealms.LOGGER.info("Spawned portal at {} in chunk {}", spawnPos, chunkPos);
+    }
+
+    private static Vec3 trySpawnPortalInChunk(ServerLevel serverLevel, LevelChunk chunk, int attempts) {
+        for (int i = 0; i < attempts; i++) {
             int x = chunk.getPos().getMinBlockX() + serverLevel.getRandom().nextInt(16);
             int z = chunk.getPos().getMinBlockZ() + serverLevel.getRandom().nextInt(16);
-            int y = chunk.getMinY() + serverLevel.getRandom().nextInt(chunk.getHeight());
+
+            // Bessere Y-Koordinaten-Wahl
+            int minY = serverLevel.dimensionType().minY();
+            int maxY = serverLevel.dimensionType().minY() + serverLevel.dimensionType().height();
+            int y = serverLevel.getRandom().nextInt(minY + 5, maxY - 5);
 
             BlockPos basePos = new BlockPos(x, y, z);
             BlockState baseState = serverLevel.getBlockState(basePos);
 
             if (isSuitableForPortalBase(serverLevel, basePos, baseState)) {
-                return new Vec3(x + 0.5, y + 0.5, z + 0.5);
+                return new Vec3(x + 0.5, y + 1.5, z + 0.5); // +1.5 für spawn über dem Block
             }
         }
         return null;
