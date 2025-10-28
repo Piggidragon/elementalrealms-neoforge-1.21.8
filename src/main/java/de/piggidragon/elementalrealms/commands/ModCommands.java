@@ -49,7 +49,7 @@ public class ModCommands {
                         .executes(ctx -> {
                             ServerPlayer player = ctx.getSource().getPlayerOrException();
                             var portal = PortalCommands.findNearestPortal(player.level(), player.position(), 300);
-                            ctx.getSource().sendSuccess(() -> Component.literal("Nearest Portal: " + portal), false);
+                            ctx.getSource().sendSuccess(() -> Component.literal("Nearest Portal: " + portal.getPositionVec()), false);
                             return 1;
                         })
                 )
