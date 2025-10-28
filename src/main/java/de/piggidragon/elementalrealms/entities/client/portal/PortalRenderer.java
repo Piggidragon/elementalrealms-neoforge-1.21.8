@@ -2,6 +2,7 @@ package de.piggidragon.elementalrealms.entities.client.portal;
 
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.entities.custom.PortalEntity;
 import de.piggidragon.elementalrealms.entities.variants.PortalVariant;
@@ -14,6 +15,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 
 import java.util.Map;
 
@@ -74,7 +76,7 @@ public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderSta
         reusedState.spawnAnimationState.copyFrom(entity.spawnAnimationState);
         reusedState.idleAnimationState.copyFrom(entity.idleAnimationState);
         reusedState.yRot = entity.getYRot();
-        reusedState.packedLight = entity.level().getLightEngine().getRawBrightness(entity.blockPosition(), 0);
+        reusedState.packedLight = this.getPackedLightCoords(entity, partialTick);
 
         // Select texture by variant; fall back to SCHOOL if mapping missing.
         reusedState.texture = LOCATION_BY_VARIANT.get(entity.getVariant());
@@ -98,7 +100,7 @@ public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderSta
 
         // position and face the entity towards the camera
         poseStack.translate(0.0D, 0.0D, 0.0D);
-        poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-renderState.yRot + 180.0F));
+        poseStack.mulPose(Axis.YP.rotationDegrees(-renderState.yRot + 180.0F));
 
         ResourceLocation texture = renderState.texture;
 
@@ -112,10 +114,10 @@ public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderSta
                 RenderType.entityTranslucent(texture),
                 renderState.packedLight,
                 OverlayTexture.NO_OVERLAY,
-                0xFFFFFFFF, // white tint (no color modification)
-                null, // optional TextureAtlasSprite
-                255, // full alpha
-                null  // crumbling overlay (for destruction effects)
+                ARGB.color(255, 255, 255, 255),
+                null,
+                0,
+                null
         );
 
         poseStack.popPose();
