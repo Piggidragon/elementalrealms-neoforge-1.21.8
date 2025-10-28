@@ -1,0 +1,11 @@
+{
+  "type": "elementalrealms:test",
+  "generator": {
+    "type": "elementalrealms:bounded_generator",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "minecraft:plains"
+    },
+    "settings": "minecraft:overworld"
+  }
+}

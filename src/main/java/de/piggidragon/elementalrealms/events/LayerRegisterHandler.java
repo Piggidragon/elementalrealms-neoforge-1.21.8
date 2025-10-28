@@ -10,7 +10,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
  * Handles mod-specific initialization events.
  */
 @EventBusSubscriber(modid = ElementalRealms.MODID)
-public class ModEventBusEvents {
+public class LayerRegisterHandler {
 
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
