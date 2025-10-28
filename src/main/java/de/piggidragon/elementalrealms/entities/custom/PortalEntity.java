@@ -159,6 +159,10 @@ public class PortalEntity extends Entity {
         }
     }
 
+    public Vec3 getPositionVec() {
+        return new Vec3(this.getX(), this.getY(), this.getZ());
+    }
+
     /**
      * Sets the visual variant of this portal.
      * The variant determines which texture is used for rendering.
