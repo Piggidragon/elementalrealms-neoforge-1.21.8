@@ -5,7 +5,7 @@ import de.piggidragon.elementalrealms.entities.ModEntities;
 import de.piggidragon.elementalrealms.entities.custom.PortalEntity;
 import de.piggidragon.elementalrealms.entities.variants.PortalVariant;
 import de.piggidragon.elementalrealms.level.ModLevel;
-import de.piggidragon.elementalrealms.util.PortalUtil;
+import de.piggidragon.elementalrealms.portals.PortalUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -108,7 +108,7 @@ public class PortalSpawnHandler {
     private record ChunkInfo(LevelChunk chunk, ServerPlayer nearbyPlayer) {}
 
     private static boolean isPortalNearby(ServerLevel level, Vec3 position, double radius) {
-        if (PortalUtil.findNearestPortal(level, position, radius) != null) {
+        if (PortalUtils.findNearestPortal(level, position, radius) != null) {
             return true;
         }
         return false;
