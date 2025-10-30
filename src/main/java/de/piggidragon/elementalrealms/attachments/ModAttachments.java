@@ -18,9 +18,7 @@ import java.util.function.Supplier;
  * Defines persistent data attachments for entities and levels.
  */
 public class ModAttachments {
-    /**
-     * Registry for attachment types
-     */
+
     private static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPE = DeferredRegister.create(
             NeoForgeRegistries.ATTACHMENT_TYPES,
             ElementalRealms.MODID);
