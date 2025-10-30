@@ -21,7 +21,7 @@ import net.neoforged.neoforge.event.entity.player.AdvancementEvent;
 import java.util.List;
 
 /**
- * Spawns dimensional portal when player defeats Ender Dragon.
+ * Spawns dimensional portals when player defeats Ender Dragon.
  */
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class DragonDeathHandler {
@@ -32,7 +32,7 @@ public class DragonDeathHandler {
     /**
      * Event handler triggered when any player earns an advancement.
      * Checks if the earned advancement is the dragon defeat advancement,
-     * and spawns a portal if so.
+     * and spawns portals if so.
      *
      * @param event The advancement earn event containing player and advancement data
      */
@@ -54,8 +54,11 @@ public class DragonDeathHandler {
         ServerLevel level = (ServerLevel) player.level();
         MinecraftServer server = level.getServer();
 
-        // Spawn the portal at world spawn
+        // 1. Spawn the origin portal at world spawn (existing functionality)
         DragonDeathHandler.spawnPortalOrigin(server);
+
+        // 3. Enhanced player notification
+        notifyPlayersOfAwakening(server);
     }
 
     /**
@@ -83,18 +86,31 @@ public class DragonDeathHandler {
         // Position portal slightly above ground and offset by 2 blocks
         portal.setPos(safePos.getX(), safePos.getY() + 0.5, safePos.getZ() + 2);
 
-        // Notify all online players about the portal's appearance
+        // Spawn the portal in the world
+        overworld.addFreshEntity(portal);
+
+        ElementalRealms.LOGGER.info("Spawned origin portal at world spawn: {}", safePos);
+    }
+
+    /**
+     * Enhanced notification system for portal awakening.
+     */
+    private static void notifyPlayersOfAwakening(MinecraftServer server) {
         List<ServerPlayer> players = server.getPlayerList().getPlayers();
+
         for (ServerPlayer player : players) {
             if (player != null) {
+                // Original message for origin portal
                 player.displayClientMessage(
                         Component.literal("You can feel the dimension barrier cracking..."),
                         true // Display as action bar message
                 );
+
+                // New message for global network
+                player.sendSystemMessage(
+                        Component.literal("Ancient portals have awakened across all realms! Use a Portal Compass to locate them.")
+                );
             }
         }
-
-        // Spawn the portal in the world
-        overworld.addFreshEntity(portal);
     }
 }
