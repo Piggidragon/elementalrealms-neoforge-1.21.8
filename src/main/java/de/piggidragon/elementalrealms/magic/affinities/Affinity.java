@@ -55,9 +55,6 @@ public enum Affinity {
     public static final Codec<Affinity> CODEC =
             Codec.STRING.xmap(Affinity::valueOf, Affinity::name);
 
-    /**
-     * The tier/category this affinity belongs to
-     */
     private final AffinityType type;
 
     /**
@@ -80,11 +77,6 @@ public enum Affinity {
                 .toList();
     }
 
-    /**
-     * Gets the tier/category of this affinity.
-     *
-     * @return The affinity type (NONE, ELEMENTAL, DEVIANT, or ETERNAL)
-     */
     public AffinityType getType() {
         return type;
     }
@@ -104,8 +96,6 @@ public enum Affinity {
      *   <li>WIND → SOUND</li>
      *   <li>EARTH → GRAVITY</li>
      * </ul>
-     *
-     * @return The deviant affinity, or NONE if this is not an elemental affinity
      */
     public Affinity getDeviant() {
         if (getType() == AffinityType.ELEMENTAL) {
@@ -132,8 +122,6 @@ public enum Affinity {
      *   <li>SOUND → WIND</li>
      *   <li>GRAVITY → EARTH</li>
      * </ul>
-     *
-     * @return The required elemental affinity, or NONE if this is not a deviant affinity
      */
     public Affinity getElemental() {
         if (getType() == AffinityType.DEVIANT) {

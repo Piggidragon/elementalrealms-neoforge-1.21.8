@@ -20,18 +20,13 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class DimensionBorderHandler {
 
-    /**
-     * Configures world borders for all mod dimensions when the server starts.
-     *
-     * @param event The server starting event
-     */
     @SubscribeEvent
     public static void onServerStarting(ServerStartingEvent event) {
         // Configure world borders for each mod dimension
         for (ResourceKey<Level> level : ModLevel.LEVELS) {
             ServerLevel serverLevel = event.getServer().getLevel(level);
             if (serverLevel != null) {
-                setDimensionWorldBorder(serverLevel, BoundedChunkGenerator.MAX_CHUNKS*16*2);
+                setDimensionWorldBorder(serverLevel, BoundedChunkGenerator.MAX_CHUNKS * 16 * 2);
                 setBorderCenter(serverLevel, 0.0, 0.0);
                 setBorderWarning(serverLevel, 10);
                 setBorderDamage(serverLevel, 1.0);
@@ -43,51 +38,47 @@ public class DimensionBorderHandler {
      * Sets the world border size for a specific dimension.
      * Based on vanilla WorldBorderCommand.setSize() but works for any dimension.
      *
-     * @param level The server level to configure
+     * @param level   The server level to configure
      * @param newSize The new border size in blocks (diameter)
      * @throws RuntimeException if the border cannot be set
      */
     private static void setDimensionWorldBorder(ServerLevel level, double newSize) throws RuntimeException {
         WorldBorder worldborder = level.getWorldBorder();
         worldborder.setSize(newSize);
-        ElementalRealms.LOGGER.info("WorldBorder set immediately to {}", newSize);
     }
 
     /**
      * Sets the world border center position for a specific dimension.
      *
      * @param level The server level to configure
-     * @param x The X coordinate of the center
-     * @param z The Z coordinate of the center
+     * @param x     The X coordinate of the center
+     * @param z     The Z coordinate of the center
      */
     private static void setBorderCenter(ServerLevel level, double x, double z) {
         WorldBorder worldborder = level.getWorldBorder();
         worldborder.setCenter(x, z);
-        ElementalRealms.LOGGER.info("WorldBorder center set to ({}, {})", x, z);
     }
 
     /**
      * Sets the world border warning distance for a specific dimension.
      * Players receive a warning when they are within this distance from the border.
      *
-     * @param level The server level to configure
+     * @param level    The server level to configure
      * @param distance The warning distance in blocks
      */
     private static void setBorderWarning(ServerLevel level, int distance) {
         WorldBorder worldborder = level.getWorldBorder();
         worldborder.setWarningBlocks(distance);
-        ElementalRealms.LOGGER.info("WorldBorder warning distance set to {}", distance);
     }
 
     /**
      * Sets the damage per block beyond the world border for a specific dimension.
      *
-     * @param level The server level to configure
+     * @param level  The server level to configure
      * @param damage The damage amount per block past the border
      */
     private static void setBorderDamage(ServerLevel level, double damage) {
         WorldBorder worldborder = level.getWorldBorder();
         worldborder.setDamagePerBlock(damage);
-        ElementalRealms.LOGGER.info("WorldBorder damage per block set to {}", damage);
     }
 }

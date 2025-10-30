@@ -24,6 +24,11 @@ public class DimensionItems {
             (p) -> new SchoolStaff(p.durability(16).rarity(Rarity.UNCOMMON))
     );
 
+    /**
+     * Registers all dimension items with the mod event bus.
+     *
+     * @param bus The mod's event bus for registration
+     */
     public static void register(IEventBus bus) {
         ITEMS.register(bus);
     }

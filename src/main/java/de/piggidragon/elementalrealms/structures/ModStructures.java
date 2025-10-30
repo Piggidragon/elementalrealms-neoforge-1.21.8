@@ -34,6 +34,11 @@ public class ModStructures {
         return () -> structureCodec;
     }
 
+    /**
+     * Registers all structure types with the mod event bus.
+     *
+     * @param eventBus The mod's event bus for registration
+     */
     public static void register(IEventBus eventBus) {
         STRUCTURE_TYPES.register(eventBus);
     }

@@ -18,21 +18,19 @@ import java.util.function.Supplier;
  * Registry for custom entity types.
  */
 public class ModEntities {
-    /**
-     * Deferred register for entity types
-     */
+
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, ElementalRealms.MODID);
 
     /**
-     * Portal entity for dimensional teleportation.
+     * Portal entity.
      * Size: 1x2 blocks, fire immune, 8 chunk tracking range.
      */
     public static final Supplier<EntityType<PortalEntity>> PORTAL_ENTITY = ENTITY_TYPES.register(
             "portal_entity",
             () -> EntityType.Builder.of(
                             (EntityType<PortalEntity> type, Level level) -> new PortalEntity(type, level),
-                            MobCategory.MISC // Not a living creature
+                            MobCategory.MISC // Static Entity
                     )
                     .sized(1.0f, 2.0f) // Hitbox dimensions
                     .fireImmune() // Cannot be destroyed by fire/lava

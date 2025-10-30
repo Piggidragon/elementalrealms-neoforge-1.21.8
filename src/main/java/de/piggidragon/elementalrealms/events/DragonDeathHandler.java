@@ -21,7 +21,7 @@ import net.neoforged.neoforge.event.entity.player.AdvancementEvent;
 import java.util.List;
 
 /**
- * Spawns dimensional portals when player defeats Ender Dragon.
+ * Spawns dimensional portal when player defeats Ender Dragon.
  */
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class DragonDeathHandler {
@@ -32,9 +32,7 @@ public class DragonDeathHandler {
     /**
      * Event handler triggered when any player earns an advancement.
      * Checks if the earned advancement is the dragon defeat advancement,
-     * and spawns portals if so.
-     *
-     * @param event The advancement earn event containing player and advancement data
+     * and spawns a portal if so.
      */
     @SubscribeEvent
     public static void onAdvancementEarn(AdvancementEvent.AdvancementEarnEvent event) {
@@ -54,22 +52,18 @@ public class DragonDeathHandler {
         ServerLevel level = (ServerLevel) player.level();
         MinecraftServer server = level.getServer();
 
-        // 1. Spawn the origin portal at world spawn (existing functionality)
+        // Spawn the portal at world spawn
         DragonDeathHandler.spawnPortalOrigin(server);
-
-        // 3. Enhanced player notification
-        notifyPlayersOfAwakening(server);
     }
 
     /**
      * Spawns permanent portal at world spawn leading to School dimension.
      */
     public static void spawnPortalOrigin(MinecraftServer server) {
-        // Get Overworld dimension
+
         ServerLevel overworld = server.getLevel(Level.OVERWORLD);
         if (overworld == null) return;
 
-        // Create portal entity with no despawn timer (-1) and leading to School dimension
         PortalEntity portal = new PortalEntity(
                 ModEntities.PORTAL_ENTITY.get(),
                 overworld,
@@ -83,34 +77,19 @@ public class DragonDeathHandler {
         BlockPos worldSpawn = overworld.getRespawnData().globalPos().pos();
         BlockPos safePos = overworld.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, worldSpawn);
 
-        // Position portal slightly above ground and offset by 2 blocks
         portal.setPos(safePos.getX(), safePos.getY() + 0.5, safePos.getZ() + 2);
 
-        // Spawn the portal in the world
-        overworld.addFreshEntity(portal);
-
-        ElementalRealms.LOGGER.info("Spawned origin portal at world spawn: {}", safePos);
-    }
-
-    /**
-     * Enhanced notification system for portal awakening.
-     */
-    private static void notifyPlayersOfAwakening(MinecraftServer server) {
+        // Notify all online players about the portal's appearance
         List<ServerPlayer> players = server.getPlayerList().getPlayers();
-
         for (ServerPlayer player : players) {
             if (player != null) {
-                // Original message for origin portal
                 player.displayClientMessage(
                         Component.literal("You can feel the dimension barrier cracking..."),
                         true // Display as action bar message
                 );
-
-                // New message for global network
-                player.sendSystemMessage(
-                        Component.literal("Ancient portals have awakened across all realms! Use a Portal Compass to locate them.")
-                );
             }
         }
+
+        overworld.addFreshEntity(portal);
     }
 }

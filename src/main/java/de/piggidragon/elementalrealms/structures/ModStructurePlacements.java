@@ -24,6 +24,11 @@ public class ModStructurePlacements {
     public static final DeferredHolder<StructurePlacementType<?>, StructurePlacementType<SpawnChunkPlacement>> SPAWN_ONLY_STRUCTURE_PLACEMENT =
             STRUCTURE_PLACEMENTS.register("spawn_only", () -> () -> SpawnChunkPlacement.CODEC);
 
+    /*
+     * Registers all structure placements with the mod event bus.
+     *
+     * @param eventBus The mod's event bus for registration
+     */
     public static void register(IEventBus eventBus) {
         STRUCTURE_PLACEMENTS.register(eventBus);
     }

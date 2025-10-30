@@ -18,14 +18,6 @@ import java.util.List;
  *   <li>No duplicate affinities allowed</li>
  *   <li>Only one ETERNAL affinity per player</li>
  *   <li>DEVIANT affinities require corresponding ELEMENTAL base</li>
- *   <li>New players receive 1-2 random ELEMENTAL affinities on first login</li>
- * </ul>
- *
- * <p>Data persistence:</p>
- * <ul>
- *   <li>Affinities are stored via data attachments</li>
- *   <li>Data persists through death (copyOnDeath enabled)</li>
- *   <li>Data is saved to player NBT file</li>
  * </ul>
  */
 @EventBusSubscriber(modid = ElementalRealms.MODID)
@@ -53,7 +45,7 @@ public class ModAffinities {
             throw new Exception("Player already has affinity: " + affinity);
         }
 
-        // Validate ETERNAL affinity restriction (only one allowed)
+        // Validate ETERNAL affinity restriction
         if (affinity.getType() == AffinityType.ETERNAL) {
             for (Affinity a : affinities) {
                 if (a.getType() == AffinityType.ETERNAL) {
@@ -62,7 +54,7 @@ public class ModAffinities {
             }
         }
 
-        // Validate DEVIANT affinity requirement (needs elemental base)
+        // Validate DEVIANT affinity requirement
         if (affinity.getType() == AffinityType.DEVIANT) {
             boolean hasBase = false;
             for (Affinity a : affinities) {
@@ -127,13 +119,11 @@ public class ModAffinities {
      * Event handler for player login.
      * Automatically assigns random affinities to new players who don't have any yet.
      * Existing players keep their saved affinities.
-     *
-     * @param event The player login event
      */
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            // Skip if player already has affinities (returning player)
+            // Skip if player already has affinities
             if (!ModAffinities.getAffinities(player).isEmpty()) {
                 return;
             }

@@ -32,12 +32,6 @@ public class ModCommands {
         return builder.buildFuture();
     };
 
-    /**
-     * Registers all mod commands when the server starts.
-     * Requires operator permission level 2 to execute.
-     *
-     * @param event The command registration event
-     */
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
         var dispatcher = event.getDispatcher();
