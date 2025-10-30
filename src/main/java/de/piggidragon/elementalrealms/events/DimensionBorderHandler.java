@@ -20,11 +20,6 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class DimensionBorderHandler {
 
-    /**
-     * Configures world borders for all mod dimensions when the server starts.
-     *
-     * @param event The server starting event
-     */
     @SubscribeEvent
     public static void onServerStarting(ServerStartingEvent event) {
         // Configure world borders for each mod dimension
@@ -50,7 +45,6 @@ public class DimensionBorderHandler {
     private static void setDimensionWorldBorder(ServerLevel level, double newSize) throws RuntimeException {
         WorldBorder worldborder = level.getWorldBorder();
         worldborder.setSize(newSize);
-        ElementalRealms.LOGGER.info("WorldBorder set immediately to {}", newSize);
     }
 
     /**
@@ -63,7 +57,6 @@ public class DimensionBorderHandler {
     private static void setBorderCenter(ServerLevel level, double x, double z) {
         WorldBorder worldborder = level.getWorldBorder();
         worldborder.setCenter(x, z);
-        ElementalRealms.LOGGER.info("WorldBorder center set to ({}, {})", x, z);
     }
 
     /**
@@ -76,7 +69,6 @@ public class DimensionBorderHandler {
     private static void setBorderWarning(ServerLevel level, int distance) {
         WorldBorder worldborder = level.getWorldBorder();
         worldborder.setWarningBlocks(distance);
-        ElementalRealms.LOGGER.info("WorldBorder warning distance set to {}", distance);
     }
 
     /**
@@ -88,6 +80,5 @@ public class DimensionBorderHandler {
     private static void setBorderDamage(ServerLevel level, double damage) {
         WorldBorder worldborder = level.getWorldBorder();
         worldborder.setDamagePerBlock(damage);
-        ElementalRealms.LOGGER.info("WorldBorder damage per block set to {}", damage);
     }
 }
