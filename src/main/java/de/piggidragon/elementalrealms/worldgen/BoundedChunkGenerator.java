@@ -26,9 +26,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * A custom chunk generator that limits world generation to a bounded area.
+ * Chunks outside the bounds are generated as void (air-filled).
+ * Extends NoiseBasedChunkGenerator for standard terrain generation within bounds.
+ */
 public class BoundedChunkGenerator extends NoiseBasedChunkGenerator {
 
-    // MapCodec for serialization - this is what goes in your JSON as "type"
+    /**
+     * Codec for serialization/deserialization of this chunk generator.
+     */
     public static final MapCodec<BoundedChunkGenerator> MAP_CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
                     BiomeSource.CODEC.fieldOf("biome_source").forGetter(ChunkGenerator::getBiomeSource),
@@ -36,21 +43,30 @@ public class BoundedChunkGenerator extends NoiseBasedChunkGenerator {
             ).apply(instance, BoundedChunkGenerator::new)
     );
 
-    // World Chunk Radius
+    /**
+     * Maximum chunk radius from origin (0,0).
+     */
     public static final int MAX_CHUNKS = 8;
     private static final int MIN_CHUNKS = -MAX_CHUNKS;
 
-
+    /**
+     * Constructs a new bounded chunk generator.
+     *
+     * @param biomeSource the biome source for terrain generation
+     * @param settings noise generator settings
+     */
     public BoundedChunkGenerator(BiomeSource biomeSource, Holder<NoiseGeneratorSettings> settings) {
         super(biomeSource, settings);
     }
 
     @Override
     protected MapCodec<? extends ChunkGenerator> codec() {
-        // Return OUR codec, not the parent's
         return MAP_CODEC;
     }
 
+    /**
+     * Fill the chunk with noise, generating a void chunk if outside bounds.
+     */
     @Override
     public CompletableFuture<ChunkAccess> fillFromNoise(Blender blender, RandomState randomState,
                                                         StructureManager structureManager,
@@ -68,6 +84,9 @@ public class BoundedChunkGenerator extends NoiseBasedChunkGenerator {
         return super.fillFromNoise(blender, randomState, structureManager, chunkAccess);
     }
 
+    /**
+     * Build the surface of the chunk, applying normal generation if within bounds.
+     */
     @Override
     public void buildSurface(WorldGenRegion worldGenRegion, StructureManager structureManager,
                              RandomState randomState, ChunkAccess chunkAccess) {
@@ -77,6 +96,9 @@ public class BoundedChunkGenerator extends NoiseBasedChunkGenerator {
         }
     }
 
+    /**
+     * Apply carvers to the chunk for terrain features like caves, if within bounds.
+     */
     @Override
     public void applyCarvers(WorldGenRegion worldGenRegion, long seed, RandomState randomState,
                              BiomeManager biomeManager, StructureManager structureManager,
@@ -88,6 +110,9 @@ public class BoundedChunkGenerator extends NoiseBasedChunkGenerator {
         }
     }
 
+    /**
+     * Get the base height for a given position, returning min height for void areas.
+     */
     @Override
     public int getBaseHeight(int x, int z, Heightmap.Types heightmapType,
                              LevelHeightAccessor levelHeightAccessor, RandomState randomState) {
@@ -101,6 +126,9 @@ public class BoundedChunkGenerator extends NoiseBasedChunkGenerator {
         return super.getBaseHeight(x, z, heightmapType, levelHeightAccessor, randomState);
     }
 
+    /**
+     * Get the base column of blocks for a given position, returning air column for void areas.
+     */
     @Override
     public NoiseColumn getBaseColumn(int x, int z, LevelHeightAccessor levelHeightAccessor,
                                      RandomState randomState) {
@@ -117,6 +145,9 @@ public class BoundedChunkGenerator extends NoiseBasedChunkGenerator {
         return super.getBaseColumn(x, z, levelHeightAccessor, randomState);
     }
 
+    /**
+     * Add debug information to the screen, including bounds of the generator.
+     */
     @Override
     public void addDebugScreenInfo(List<String> list, RandomState randomState, BlockPos blockPos) {
         list.add("Bounds: " + MIN_CHUNKS + " to " + MAX_CHUNKS + " chunks");
@@ -124,7 +155,10 @@ public class BoundedChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     /**
-     * Helper method to check if a chunk position is within the world bounds
+     * Checks if a chunk position is within the world bounds.
+     *
+     * @param pos the chunk position to check
+     * @return true if within bounds, false otherwise
      */
     private boolean isWithinBounds(ChunkPos pos) {
         return pos.x >= MIN_CHUNKS && pos.x < MAX_CHUNKS &&
@@ -132,7 +166,9 @@ public class BoundedChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     /**
-     * Generates a void chunk filled with air
+     * Generates a void chunk filled entirely with air blocks.
+     *
+     * @param chunkAccess the chunk to fill with air
      */
     private void generateVoidChunk(ChunkAccess chunkAccess) {
         BlockState air = Blocks.AIR.defaultBlockState();
