@@ -14,10 +14,6 @@ public class ModWorldGen {
     public static final DeferredRegister<MapCodec<? extends ChunkGenerator>> CHUNK_GENERATORS =
             DeferredRegister.create(Registries.CHUNK_GENERATOR, ElementalRealms.MODID);
 
-    // Register the MapCodec as a supplier - simplified registration
-    public static final Supplier<MapCodec<BoundedChunkGenerator>> BOUNDED_GENERATOR =
-            CHUNK_GENERATORS.register("bounded_generator", () -> BoundedChunkGenerator.MAP_CODEC);
-
     // Register the DeferredRegister to the mod event bus
     public static void register(IEventBus modEventBus) {
         CHUNK_GENERATORS.register(modEventBus);
