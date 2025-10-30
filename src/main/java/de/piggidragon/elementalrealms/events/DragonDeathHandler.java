@@ -29,6 +29,8 @@ public class DragonDeathHandler {
     private static final ResourceLocation DRAGON_ADVANCEMENT_ID =
             ResourceLocation.fromNamespaceAndPath("elementalrealms", "root");
 
+    private static boolean advancementCompleted = false;
+
     /**
      * Event handler triggered when any player earns an advancement.
      * Checks if the earned advancement is the dragon defeat advancement,
@@ -49,11 +51,17 @@ public class DragonDeathHandler {
             return;
         }
 
+        advancementCompleted = true;
+
         ServerLevel level = (ServerLevel) player.level();
         MinecraftServer server = level.getServer();
 
         // Spawn the portal at world spawn
         DragonDeathHandler.spawnPortalOrigin(server);
+    }
+
+    public static boolean isAdvancementCompleted() {
+        return advancementCompleted;
     }
 
     /**
