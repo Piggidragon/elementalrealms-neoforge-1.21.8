@@ -92,11 +92,9 @@ public class PortalUtils {
 
         if (dimension == Level.OVERWORLD) {
             return true;
-        }
-        else if (dimension == Level.NETHER) {
+        } else if (dimension == Level.NETHER) {
             return pos.getY() < 128; // Avoid ceiling spawning
-        }
-        else if (dimension == Level.END) {
+        } else if (dimension == Level.END) {
             return pos.getY() > 50; // Avoid void spawning
         }
         return false;
