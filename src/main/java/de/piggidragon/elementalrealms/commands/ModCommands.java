@@ -6,7 +6,7 @@ import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.magic.affinities.Affinity;
 import de.piggidragon.elementalrealms.magic.affinities.ModAffinities;
 import de.piggidragon.elementalrealms.magic.affinities.ModAffinitiesRoll;
-import de.piggidragon.elementalrealms.portals.PortalUtils;
+import de.piggidragon.elementalrealms.util.PortalUtils;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -42,9 +42,15 @@ public class ModCommands {
                 .then(Commands.literal("find")
                         .executes(ctx -> {
                             ServerPlayer player = ctx.getSource().getPlayerOrException();
-                            var portal = PortalUtils.findNearestPortal(player.level(), player.position(), 300);
-                            ctx.getSource().sendSuccess(() -> Component.literal("Nearest Portal: " + portal.getPositionVec()), false);
-                            return 1;
+                            try {
+                                var portal = PortalUtils.findNearestPortal(player.level(), player.position(), 300);
+                                ctx.getSource().sendSuccess(() -> Component.literal("Nearest Portal: " + portal.getPositionVec()), false);
+                                return 1;
+                            }
+                            catch (Exception e) {
+                                ctx.getSource().sendFailure(Component.literal(e.getMessage()));
+                                return 0;
+                            }
                         })
                 )
         );
