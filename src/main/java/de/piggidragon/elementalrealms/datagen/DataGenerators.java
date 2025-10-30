@@ -2,7 +2,7 @@ package de.piggidragon.elementalrealms.datagen;
 
 import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.advancements.AdvancementGenerator;
-import de.piggidragon.elementalrealms.datagen.dimension.fire.ModWorldGenProvider;
+import de.piggidragon.elementalrealms.datagen.dimension.portlals.PortalConfiguredFeatures;
 import de.piggidragon.elementalrealms.datagen.magic.affinities.AffinityRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -43,6 +43,8 @@ public class DataGenerators {
                 lookupProvider,
                 List.of(new AdvancementGenerator())
         ));
+
+        generator.addProvider(true, new PortalConfiguredFeatures(packOutput, lookupProvider));
 
         //generator.addProvider(true, new ModWorldGenProvider(packOutput, lookupProvider));
 
