@@ -128,9 +128,6 @@ public class SpawnChunkPlacement extends RandomSpreadStructurePlacement {
      */
     @Override
     protected boolean isPlacementChunk(ChunkGeneratorStructureState structureState, int x, int z) {
-
-        ElementalRealms.LOGGER.info("SpawnChunkPlacement isPlacementChunk called for chunk ({}, {})", x, z);
-
         // Only allow spawn chunk
         return x == 0 && z == 0;
     }
