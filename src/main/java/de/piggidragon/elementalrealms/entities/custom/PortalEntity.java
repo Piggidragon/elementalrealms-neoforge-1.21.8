@@ -2,6 +2,7 @@ package de.piggidragon.elementalrealms.entities.custom;
 
 import de.piggidragon.elementalrealms.attachments.ModAttachments;
 import de.piggidragon.elementalrealms.entities.variants.PortalVariant;
+import de.piggidragon.elementalrealms.level.ModLevel;
 import de.piggidragon.elementalrealms.particles.PortalParticles;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
@@ -46,6 +47,7 @@ public class PortalEntity extends Entity {
     public final AnimationState spawnAnimationState = new AnimationState();
     private final ResourceKey<Level> portalLevel;
     private int idleAnimationTimer = 0;
+
     private ServerLevel targetLevel;
     private UUID ownerUUID;
 
@@ -54,6 +56,8 @@ public class PortalEntity extends Entity {
      */
     private boolean discard = false;
     private int despawnTimeout = 0;
+    private boolean initialized = false;
+    private boolean naturalSpawn = true;
 
     /**
      * Basic constructor for entity registration.
@@ -99,6 +103,7 @@ public class PortalEntity extends Entity {
         this.despawnTimeout = despawnTimeout;
         this.targetLevel = targetLevel;
         this.ownerUUID = ownerUUID;
+        this.naturalSpawn = false;
     }
 
     public UUID getOwnerUUID() {
@@ -111,9 +116,9 @@ public class PortalEntity extends Entity {
 
     public PortalVariant getVariant() {
         try {
-            int id = this.entityData.get(DATA_VARIANT);
-            return PortalVariant.byId(id);
+            return PortalVariant.byId(this.entityData.get(DATA_VARIANT));
         } catch (Exception e) {
+            // Fallback if data not synced yet
             return PortalVariant.SCHOOL;
         }
     }
@@ -121,6 +126,12 @@ public class PortalEntity extends Entity {
     public void setVariant(PortalVariant variant) {
         if (variant == null) variant = PortalVariant.SCHOOL;
         this.entityData.set(DATA_VARIANT, variant.getId());
+    }
+
+    public void setRandomVariant() {
+        PortalVariant[] variants = PortalVariant.values();
+        int randomIndex = this.level().random.nextInt(variants.length);
+        this.setVariant(variants[randomIndex]);
     }
 
     @Override
@@ -227,9 +238,7 @@ public class PortalEntity extends Entity {
      */
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        if (DATA_VARIANT != null) {
-            builder.define(DATA_VARIANT, PortalVariant.SCHOOL.getId());
-        }
+        builder.define(DATA_VARIANT, PortalVariant.SCHOOL.getId());
     }
 
     @Override
@@ -239,6 +248,12 @@ public class PortalEntity extends Entity {
         // Client-side: Update animations
         if (this.level().isClientSide()) {
             this.setupAnimationStates();
+        }
+
+        // Auto-initialize on first tick for naturally spawned entities
+        if (!this.level().isClientSide() && !initialized && this.tickCount == 1 && this.naturalSpawn) {
+            initializeNaturalSpawn();
+            this.initialized = true;
         }
 
         // Server-side logic
@@ -338,5 +353,23 @@ public class PortalEntity extends Entity {
                 }
             }
         }
+    }
+
+    /**
+     * Sets variant on spawn for naturally spawned portals.
+     */
+    private void initializeNaturalSpawn() {
+        // Safety check for server availability
+        if (this.getServer() == null) {
+            return; // Skip initialization if server not available
+        }
+        // Set variant based on dimension
+        ResourceKey<Level> level = this.level().dimension();
+
+        if (level == Level.NETHER || level == Level.NETHER || level == Level.END) {
+            this.setRandomVariant();
+        }
+
+        this.targetLevel = this.getServer().getLevel(ModLevel.TEST_DIMENSION);
     }
 }
