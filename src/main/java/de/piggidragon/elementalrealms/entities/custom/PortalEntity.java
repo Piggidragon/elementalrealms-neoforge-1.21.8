@@ -57,7 +57,6 @@ public class PortalEntity extends Entity {
     private boolean discard = false;
     private int despawnTimeout = 0;
     private boolean initialized = false;
-    private boolean naturalSpawn = true;
 
     /**
      * Basic constructor for entity registration.
@@ -103,7 +102,6 @@ public class PortalEntity extends Entity {
         this.despawnTimeout = despawnTimeout;
         this.targetLevel = targetLevel;
         this.ownerUUID = ownerUUID;
-        this.naturalSpawn = false;
     }
 
     public UUID getOwnerUUID() {
@@ -134,7 +132,7 @@ public class PortalEntity extends Entity {
         this.setVariant(variants[randomIndex]);
     }
 
-    public Vec3 getPositionVec(){
+    public Vec3 getPositionVec() {
         return new Vec3(this.getX(), this.getY(), this.getZ());
     }
 
@@ -254,11 +252,13 @@ public class PortalEntity extends Entity {
             this.setupAnimationStates();
         }
 
+        /*
         // Auto-initialize on first tick for naturally spawned entities
         if (!this.level().isClientSide() && !initialized && this.tickCount == 1 && this.naturalSpawn) {
             initializeNaturalSpawn();
             this.initialized = true;
         }
+         */
 
         // Server-side logic
         if (!this.level().isClientSide()) {
