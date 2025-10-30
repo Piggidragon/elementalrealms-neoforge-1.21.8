@@ -33,8 +33,6 @@ public class DragonDeathHandler {
      * Event handler triggered when any player earns an advancement.
      * Checks if the earned advancement is the dragon defeat advancement,
      * and spawns a portal if so.
-     *
-     * @param event The advancement earn event containing player and advancement data
      */
     @SubscribeEvent
     public static void onAdvancementEarn(AdvancementEvent.AdvancementEarnEvent event) {
@@ -62,11 +60,10 @@ public class DragonDeathHandler {
      * Spawns permanent portal at world spawn leading to School dimension.
      */
     public static void spawnPortalOrigin(MinecraftServer server) {
-        // Get Overworld dimension
+
         ServerLevel overworld = server.getLevel(Level.OVERWORLD);
         if (overworld == null) return;
 
-        // Create portal entity with no despawn timer (-1) and leading to School dimension
         PortalEntity portal = new PortalEntity(
                 ModEntities.PORTAL_ENTITY.get(),
                 overworld,
@@ -80,7 +77,6 @@ public class DragonDeathHandler {
         BlockPos worldSpawn = overworld.getRespawnData().globalPos().pos();
         BlockPos safePos = overworld.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, worldSpawn);
 
-        // Position portal slightly above ground and offset by 2 blocks
         portal.setPos(safePos.getX(), safePos.getY() + 0.5, safePos.getZ() + 2);
 
         // Notify all online players about the portal's appearance
@@ -94,7 +90,6 @@ public class DragonDeathHandler {
             }
         }
 
-        // Spawn the portal in the world
         overworld.addFreshEntity(portal);
     }
 }
