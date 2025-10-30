@@ -34,11 +34,6 @@ public class SchoolStaff extends Item {
 
     private static final Map<UUID, BeamAnimation> ACTIVE_ANIMATIONS = new HashMap<>();
 
-    /**
-     * Constructor for SchoolStaff item with specified properties
-     *
-     * @param properties Item properties including durability, max stack size, etc.
-     */
     public SchoolStaff(Properties properties) {
         super(properties);
     }
@@ -50,6 +45,9 @@ public class SchoolStaff extends Item {
         ACTIVE_ANIMATIONS.entrySet().removeIf(entry -> !entry.getValue().tick());
     }
 
+    /**
+     * Spawns a portal entity at the specified target position owned by the player.
+     */
     private static void spawnPortal(Level level, Player player, Vec3 targetPosition) {
         PortalEntity portal = new PortalEntity(
                 ModEntities.PORTAL_ENTITY.get(),
@@ -83,15 +81,6 @@ public class SchoolStaff extends Item {
         }
     }
 
-    /**
-     * Handles right-click usage of the staff to create portal beam animation.
-     * Validates dimension restrictions and initiates the beam casting sequence.
-     *
-     * @param level  The level where interaction occurs
-     * @param player The player using the staff
-     * @param hand   The hand holding the staff
-     * @return InteractionResult indicating success or failure
-     */
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         // Restrict dimensions
@@ -140,20 +129,9 @@ public class SchoolStaff extends Item {
         return InteractionResult.PASS;
     }
 
-    /**
-     * Adds tooltip information to the staff item when hovered over in inventory.
-     * Shows detailed info when Shift is held, otherwise displays hint to hold Shift.
-     *
-     * @param stack          The item stack being hovered
-     * @param context        Tooltip context for rendering
-     * @param tooltipDisplay Display configuration for tooltip
-     * @param tooltipAdder   Consumer to add tooltip lines
-     * @param flag           Tooltip flag for advanced/debug info
-     */
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
         // Show detailed tooltip when Shift is held, otherwise show hint
-
         if (flag.hasShiftDown()) {
             tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.dimension_staff.line1"));
             tooltipAdder.accept(Component.translatable("itemtooltip.elementalrealms.dimension_staff.line2"));
