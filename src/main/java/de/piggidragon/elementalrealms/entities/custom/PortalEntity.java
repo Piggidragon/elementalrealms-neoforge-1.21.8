@@ -134,6 +134,10 @@ public class PortalEntity extends Entity {
         this.setVariant(variants[randomIndex]);
     }
 
+    public Vec3 getPositionVec(){
+        return new Vec3(this.getX(), this.getY(), this.getZ());
+    }
+
     @Override
     public boolean isInvulnerable() {
         return false;
