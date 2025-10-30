@@ -3,7 +3,6 @@ package de.piggidragon.elementalrealms.structures.placements;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import de.piggidragon.elementalrealms.ElementalRealms;
 import de.piggidragon.elementalrealms.structures.ModStructurePlacements;
 import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;

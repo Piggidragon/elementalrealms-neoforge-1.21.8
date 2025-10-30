@@ -53,7 +53,7 @@ public class BoundedChunkGenerator extends NoiseBasedChunkGenerator {
      * Constructs a new bounded chunk generator.
      *
      * @param biomeSource the biome source for terrain generation
-     * @param settings noise generator settings
+     * @param settings    noise generator settings
      */
     public BoundedChunkGenerator(BiomeSource biomeSource, Holder<NoiseGeneratorSettings> settings) {
         super(biomeSource, settings);

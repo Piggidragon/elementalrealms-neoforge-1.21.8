@@ -17,5 +17,6 @@ public class PortalRenderState extends EntityRenderState {
 
     public float yRot;
 
-    public PortalRenderState() {}
+    public PortalRenderState() {
+    }
 }

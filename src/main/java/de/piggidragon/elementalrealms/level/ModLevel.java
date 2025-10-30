@@ -1,13 +1,11 @@
 package de.piggidragon.elementalrealms.level;
 
-import com.google.common.collect.Lists;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Defines resource keys for custom dimensions added by the mod.

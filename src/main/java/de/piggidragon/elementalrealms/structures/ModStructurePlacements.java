@@ -25,9 +25,9 @@ public class ModStructurePlacements {
             STRUCTURE_PLACEMENTS.register("spawn_only", () -> () -> SpawnChunkPlacement.CODEC);
 
     /*
-    * Registers all structure placements with the mod event bus.
-    *
-    * @param eventBus The mod's event bus for registration
+     * Registers all structure placements with the mod event bus.
+     *
+     * @param eventBus The mod's event bus for registration
      */
     public static void register(IEventBus eventBus) {
         STRUCTURE_PLACEMENTS.register(eventBus);
