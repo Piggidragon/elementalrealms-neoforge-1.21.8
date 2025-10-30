@@ -2,8 +2,10 @@ package de.piggidragon.elementalrealms.portals;
 
 import de.piggidragon.elementalrealms.entities.custom.PortalEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -83,5 +85,20 @@ public class PortalUtils {
         }
 
         return nearestPortal;
+    }
+
+    public static boolean isValidDimensionForSpawn(ServerLevel level, BlockPos pos) {
+        ResourceKey<Level> dimension = level.dimension();
+
+        if (dimension == Level.OVERWORLD) {
+            return true;
+        }
+        else if (dimension == Level.NETHER) {
+            return pos.getY() < 128; // Avoid ceiling spawning
+        }
+        else if (dimension == Level.END) {
+            return pos.getY() > 50; // Avoid void spawning
+        }
+        return false;
     }
 }
