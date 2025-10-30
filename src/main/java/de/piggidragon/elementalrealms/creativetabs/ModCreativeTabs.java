@@ -18,9 +18,7 @@ import java.util.function.Supplier;
  * Registers custom creative mode tabs for organizing mod content.
  */
 public class ModCreativeTabs {
-    /**
-     * Registry for creative mode tabs
-     */
+
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "elementalrealms");
 
