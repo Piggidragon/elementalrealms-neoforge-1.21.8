@@ -31,13 +31,6 @@ public class AffinityRecipeProvider extends RecipeProvider {
         super(provider, recipeOutput);
     }
 
-    /**
-     * Builds all affinity-related crafting recipes.
-     * Creates recipes for:
-     * - Affinity stones (from shards + essence)
-     * - Essences (from vanilla materials)
-     * - Void stone (special recipe with rare materials)
-     */
     @Override
     protected void buildRecipes() {
         // Generate stone recipes: Shard + Essence -> Stone

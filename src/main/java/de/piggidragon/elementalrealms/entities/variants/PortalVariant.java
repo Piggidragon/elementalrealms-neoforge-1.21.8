@@ -7,9 +7,6 @@ import java.util.Comparator;
  * Visual variants for portal entities. Each variant can have unique textures and effects.
  */
 public enum PortalVariant {
-    /**
-     * Portal variant for the School dimension
-     */
     SCHOOL(0),
     ELEMENTAL(1),
     DEVIANT(2),

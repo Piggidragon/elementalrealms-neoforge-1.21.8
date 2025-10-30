@@ -78,9 +78,9 @@ public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderSta
         reusedState.packedLight = this.getPackedLightCoords(entity, partialTick);
 
         // Select texture by variant; fall back to SCHOOL if mapping missing.
-        reusedState.texture = LOCATION_BY_VARIANT.get(entity.getVariant());
-        if (reusedState.texture == null) {
-            reusedState.texture = LOCATION_BY_VARIANT.get(PortalVariant.SCHOOL);
+        reusedState.textureLocation = LOCATION_BY_VARIANT.get(entity.getVariant());
+        if (reusedState.textureLocation == null) {
+            reusedState.textureLocation = LOCATION_BY_VARIANT.get(PortalVariant.SCHOOL);
         }
     }
 
@@ -101,7 +101,7 @@ public class PortalRenderer extends EntityRenderer<PortalEntity, PortalRenderSta
         poseStack.translate(0.0D, 0.0D, 0.0D);
         poseStack.mulPose(Axis.YP.rotationDegrees(-renderState.yRot + 180.0F));
 
-        ResourceLocation texture = renderState.texture;
+        ResourceLocation texture = renderState.textureLocation;
 
         // Setup model pose and animations based on the render state
         model.setupAnim(renderState);

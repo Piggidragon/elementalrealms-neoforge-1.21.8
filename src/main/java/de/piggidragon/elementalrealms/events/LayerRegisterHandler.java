@@ -7,7 +7,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 /**
- * Handles mod-specific initialization events.
+ * Handles portal layer register.
  */
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class LayerRegisterHandler {

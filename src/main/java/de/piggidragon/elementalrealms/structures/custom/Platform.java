@@ -91,9 +91,6 @@ public class Platform extends Structure {
     /**
      * Determines structure spawn location and generates jigsaw assembly.
      * Called during world generation when placement conditions are met.
-     *
-     * @param context Generation context containing chunk position, biome data, and random source
-     * @return Optional containing structure pieces, or empty if generation fails
      */
     @Override
     public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
@@ -114,8 +111,8 @@ public class Platform extends Structure {
                         this.startJigsawName,
                         this.size,
                         blockPos,
-                        false, // Don't use expansion hack (legacy village generation)
-                        Optional.empty(), // Don't project to heightmap
+                        false,
+                        Optional.empty(),
                         this.maxDistanceFromCenter,
                         PoolAliasLookup.EMPTY,
                         this.dimensionPadding,

@@ -9,16 +9,26 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
+/**
+ * Handles registration of custom world generation features.
+ * Registers chunk generators for bounded dimensions.
+ */
 public class ModWorldGen {
-    // DeferredRegister for MapCodecs of ChunkGenerators
+
     public static final DeferredRegister<MapCodec<? extends ChunkGenerator>> CHUNK_GENERATORS =
             DeferredRegister.create(Registries.CHUNK_GENERATOR, ElementalRealms.MODID);
 
-    // Register the MapCodec as a supplier - simplified registration
+    /**
+     * Codec for the bounded chunk generator used in limited-size dimensions.
+     */
     public static final Supplier<MapCodec<BoundedChunkGenerator>> BOUNDED_GENERATOR =
             CHUNK_GENERATORS.register("bounded_generator", () -> BoundedChunkGenerator.MAP_CODEC);
 
-    // Register the DeferredRegister to the mod event bus
+    /**
+     * Registers all world generation features to the mod event bus.
+     *
+     * @param modEventBus the mod event bus
+     */
     public static void register(IEventBus modEventBus) {
         CHUNK_GENERATORS.register(modEventBus);
     }

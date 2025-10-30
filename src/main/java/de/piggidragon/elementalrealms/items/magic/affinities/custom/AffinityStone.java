@@ -33,16 +33,13 @@ import java.util.function.Consumer;
  * <p>
  * Usage triggers visual effects, sounds, and network synchronization.
  * Stone is consumed on successful use, but preserved if action fails
- * (e.g., player already has 3 affinities).
  *
  * @see Affinity
  * @see ModAffinities
  */
 @EventBusSubscriber(modid = ElementalRealms.MODID)
 public class AffinityStone extends Item {
-    /**
-     * The affinity type this stone grants or manages
-     */
+
     private final Affinity affinity;
 
     /**
@@ -68,8 +65,6 @@ public class AffinityStone extends Item {
      *   <li>Client notification via {@link AffinitySuccessPacket}</li>
      *   <li>Error messages for invalid operations</li>
      * </ul>
-     *
-     * @param event The right-click event containing player and item data
      */
     @SubscribeEvent
     public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
@@ -77,7 +72,7 @@ public class AffinityStone extends Item {
             ItemStack itemStack = event.getItemStack();
             if (itemStack.getItem() instanceof AffinityStone stone) {
 
-                // Store original for packet (before shrink modifies it)
+                // Store original for packet
                 ItemStack originalItemStack = itemStack.copy();
 
                 boolean success = false;
@@ -125,18 +120,6 @@ public class AffinityStone extends Item {
         }
     }
 
-    /**
-     * Adds descriptive tooltip text based on affinity type.
-     * <p>
-     * Each affinity displays a localized description explaining its magical properties
-     * and effects. Tooltip keys follow format: {@code itemtooltip.elementalrealms.affinity_stone.<affinity>}
-     *
-     * @param stack          The item stack being hovered over
-     * @param context        Tooltip context (world, entity data)
-     * @param tooltipDisplay Display settings for tooltip
-     * @param tooltipAdder   Consumer to add tooltip lines
-     * @param flag           Advanced/basic tooltip flag
-     */
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
         // Add affinity-specific description

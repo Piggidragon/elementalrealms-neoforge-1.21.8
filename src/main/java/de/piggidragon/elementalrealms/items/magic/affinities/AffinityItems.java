@@ -19,9 +19,7 @@ import java.util.Map;
  * Organized by affinity type with appropriate rarities.
  */
 public class AffinityItems {
-    /**
-     * Deferred register for all affinity items
-     */
+
     public static final DeferredRegister.Items ITEMS =
             DeferredRegister.createItems(ElementalRealms.MODID);
 
@@ -29,7 +27,6 @@ public class AffinityItems {
      * Map of all affinity stones, grouped by affinity type
      */
     public static final Map<Affinity, DeferredItem<Item>> AFFINITY_STONES = Util.make(new EnumMap<>(Affinity.class), map -> {
-        // Register stones for affinities that have crafting materials (Elemental, Deviant, and Void)
         registerAffinityStone(map, Affinity.FIRE, Rarity.EPIC);
         registerAffinityStone(map, Affinity.WATER, Rarity.EPIC);
         registerAffinityStone(map, Affinity.WIND, Rarity.EPIC);
@@ -48,7 +45,6 @@ public class AffinityItems {
      * Map of all affinity shards, grouped by affinity type
      */
     public static final Map<Affinity, DeferredItem<Item>> AFFINITY_SHARDS = Util.make(new EnumMap<>(Affinity.class), map -> {
-        // Register shards only for affinities with crafting (no Eternal tier)
         registerAffinityShard(map, Affinity.FIRE, Rarity.RARE);
         registerAffinityShard(map, Affinity.WATER, Rarity.RARE);
         registerAffinityShard(map, Affinity.WIND, Rarity.RARE);
@@ -63,7 +59,6 @@ public class AffinityItems {
      * Map of all essences, grouped by affinity type
      */
     public static final Map<Affinity, DeferredItem<Item>> ESSENCES = Util.make(new EnumMap<>(Affinity.class), map -> {
-        // Register essences only for affinities with crafting (no Eternal tier)
         registerEssence(map, Affinity.FIRE);
         registerEssence(map, Affinity.WATER);
         registerEssence(map, Affinity.WIND);

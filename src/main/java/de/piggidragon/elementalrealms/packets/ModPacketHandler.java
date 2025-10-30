@@ -32,8 +32,6 @@ public class ModPacketHandler {
     /**
      * Registers all custom packet types with the network system.
      * Called automatically during mod initialization.
-     *
-     * @param event The payload registration event providing the registrar
      */
     @SubscribeEvent
     public static void onRegisterPayloadHandlers(RegisterPayloadHandlersEvent event) {
