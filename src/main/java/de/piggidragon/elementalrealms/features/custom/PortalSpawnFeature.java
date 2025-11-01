@@ -12,7 +12,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.phys.Vec3;
 
 /**
  * Feature used to spawn portals in the world.
@@ -41,15 +40,6 @@ public class PortalSpawnFeature extends Feature<PortalConfiguration> {
         // Validate portal base suitability
         if (!PortalUtils.isSuitableForPortalBase(level.getLevel(), pos.below(),
                 level.getBlockState(pos.below()))) {
-            return false;
-        }
-
-        // Ensure not too close to other portals (minDistanceToOtherPortals may be large)
-        Vec3 spawnPos = Vec3.atCenterOf(pos);
-        PortalEntity nearestPortal = PortalUtils.findNearestPortal(
-                level.getLevel(), spawnPos, config.minDistanceToOtherPortals());
-
-        if (nearestPortal != null) {
             return false;
         }
 

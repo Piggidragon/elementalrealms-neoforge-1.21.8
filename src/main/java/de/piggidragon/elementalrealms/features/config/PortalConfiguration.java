@@ -28,11 +28,7 @@ public record PortalConfiguration(float spawnChance, PortalVariant portalVariant
 
                     ResourceLocation.CODEC
                             .fieldOf("target_dimension")
-                            .forGetter(config -> config.targetDimension.location()),
-
-                    Codec.doubleRange(16.0, 1000.0)
-                            .fieldOf("min_distance_to_other_portals")
-                            .forGetter(config -> config.minDistanceToOtherPortals)
+                            .forGetter(config -> config.targetDimension.location())
 
             ).apply(instance, PortalConfiguration::new)
     );
@@ -42,12 +38,7 @@ public record PortalConfiguration(float spawnChance, PortalVariant portalVariant
      */
     public PortalConfiguration(float spawnChance,
                                PortalVariant portalVariant,
-                               ResourceLocation targetDimension,
-                               double minDistanceToOtherPortals) {
-        this(spawnChance, portalVariant, ResourceKey.create(Registries.DIMENSION, targetDimension), minDistanceToOtherPortals);
-    }
-
-    /** Compact canonical constructor retained (no extra docs). */
-    public PortalConfiguration {
+                               ResourceLocation targetDimension) {
+        this(spawnChance, portalVariant, ResourceKey.create(Registries.DIMENSION, targetDimension));
     }
 }

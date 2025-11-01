@@ -56,8 +56,7 @@ public class ModFeaturesProvider extends DatapackBuiltinEntriesProvider {
                                     new PortalConfiguration(
                                             1.0f,
                                             PortalVariant.ELEMENTAL,
-                                            ModLevel.TEST_DIMENSION,
-                                            16.0
+                                            ModLevel.TEST_DIMENSION
                                     )
                             )
                     );
