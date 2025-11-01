@@ -1,17 +1,19 @@
 package de.piggidragon.elementalrealms.datagen;
 
 import de.piggidragon.elementalrealms.ElementalRealms;
+import de.piggidragon.elementalrealms.entities.variants.PortalVariant;
 import de.piggidragon.elementalrealms.features.ModFeatures;
+import de.piggidragon.elementalrealms.features.config.PortalConfiguration;
+import de.piggidragon.elementalrealms.level.ModLevel;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 
@@ -19,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-public class PortalConfiguredFeatures extends DatapackBuiltinEntriesProvider {
+public class ModFeaturesProvider extends DatapackBuiltinEntriesProvider {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> PORTAL_CONFIGURED =
             ResourceKey.create(Registries.CONFIGURED_FEATURE,
@@ -29,18 +31,23 @@ public class PortalConfiguredFeatures extends DatapackBuiltinEntriesProvider {
             ResourceKey.create(Registries.PLACED_FEATURE,
                     ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "portal_placed"));
 
-    public PortalConfiguredFeatures(PackOutput output, CompletableFuture<RegistrySetBuilder.PatchedRegistries> registries) {
+    public ModFeaturesProvider(PackOutput output, CompletableFuture<RegistrySetBuilder.PatchedRegistries> registries) {
         super(output, registries, Set.of(ElementalRealms.MODID));
     }
 
-
-    private static RegistrySetBuilder createBuilder() {
+    public static RegistrySetBuilder createBuilder() {
         return new RegistrySetBuilder()
                 .add(Registries.CONFIGURED_FEATURE, bootstrap -> {
+
                     bootstrap.register(PORTAL_CONFIGURED,
                             new ConfiguredFeature<>(
                                     ModFeatures.PORTAL_FEATURE.get(),
-                                    NoneFeatureConfiguration.INSTANCE
+                                    new PortalConfiguration(
+                                            0.3f,
+                                            PortalVariant.getRandomVariant(RandomSource.create()),
+                                            ModLevel.TEST_DIMENSION,
+                                            100.0
+                                    )
                             )
                     );
                 })
@@ -52,10 +59,10 @@ public class PortalConfiguredFeatures extends DatapackBuiltinEntriesProvider {
                             new PlacedFeature(
                                     configured.getOrThrow(PORTAL_CONFIGURED),
                                     List.of(
-                                            RarityFilter.onAverageOnceEvery(10), // 1 in 10 chunks
-                                            InSquarePlacement.spread(), // Random in chunk
+                                            RarityFilter.onAverageOnceEvery(10),
+                                            InSquarePlacement.spread(),
                                             HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES),
-                                            BiomeFilter.biome() // Only in valid biomes
+                                            BiomeFilter.biome()
                                     )
                             )
                     );
