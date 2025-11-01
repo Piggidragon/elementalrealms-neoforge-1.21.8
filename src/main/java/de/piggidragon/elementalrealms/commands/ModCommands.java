@@ -39,7 +39,7 @@ public class ModCommands {
         dispatcher.register(Commands.literal("portal")
                 .requires(cs -> cs.hasPermission(2))
 
-                .then(Commands.literal("find")
+                .then(Commands.literal("locate")
                         .executes(ctx -> {
                             ServerPlayer player = ctx.getSource().getPlayerOrException();
                             try {
