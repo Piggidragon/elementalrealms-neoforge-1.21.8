@@ -5,6 +5,7 @@ import de.piggidragon.elementalrealms.attachments.ModAttachments;
 import de.piggidragon.elementalrealms.blocks.ModBlocks;
 import de.piggidragon.elementalrealms.creativetabs.ModCreativeTabs;
 import de.piggidragon.elementalrealms.entities.ModEntities;
+import de.piggidragon.elementalrealms.features.ModFeatures;
 import de.piggidragon.elementalrealms.items.magic.affinities.AffinityItems;
 import de.piggidragon.elementalrealms.items.magic.dimension.DimensionItems;
 import de.piggidragon.elementalrealms.structures.ModStructurePlacements;
@@ -46,6 +47,7 @@ public class ElementalRealms {
         ModStructurePlacements.register(modEventBus);
         ModStructures.register(modEventBus);
         ModWorldGen.register(modEventBus);
+        ModFeatures.register(modEventBus);
 
         // Client-only: configuration screen
         if (FMLEnvironment.getDist() == Dist.CLIENT) {
