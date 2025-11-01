@@ -10,6 +10,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
+/**
+ * Registry holder for mod features.
+ */
 public class ModFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES =
             DeferredRegister.create(Registries.FEATURE, ElementalRealms.MODID);
@@ -20,9 +23,7 @@ public class ModFeatures {
 
 
     /**
-     * Registers all mod features with the mod event bus.
-     *
-     * @param bus The mod's event bus for registration
+     * Registers all features to the provided event bus.
      */
     public static void register(IEventBus bus) {
         FEATURES.register(bus);

@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Provides configured and placed features for portal worldgen.
+ */
 public class ModFeaturesProvider extends DatapackBuiltinEntriesProvider {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> PORTAL_CONFIGURED =
@@ -35,10 +38,12 @@ public class ModFeaturesProvider extends DatapackBuiltinEntriesProvider {
         super(output, registries, Set.of(ElementalRealms.MODID));
     }
 
+    /**
+     * Creates registry entries for portal features.
+     */
     public static RegistrySetBuilder createBuilder() {
         return new RegistrySetBuilder()
                 .add(Registries.CONFIGURED_FEATURE, bootstrap -> {
-
                     bootstrap.register(PORTAL_CONFIGURED,
                             new ConfiguredFeature<>(
                                     ModFeatures.PORTAL_FEATURE.get(),

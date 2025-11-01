@@ -10,31 +10,26 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
 /**
- * Configuration for Portal spawning feature
- * Defines portal spawn parameters similar to OreConfiguration
+ * Configuration for portal spawn feature.
  */
 public record PortalConfiguration(float spawnChance, PortalVariant portalVariant, ResourceKey<Level> targetDimension,
                                   double minDistanceToOtherPortals) implements FeatureConfiguration {
 
-    // Codec for serialization/deserialization
+    /** Codec for serializing this configuration to/from JSON */
     public static final Codec<PortalConfiguration> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    // Spawn chance (0.0 = never, 1.0 = always)
                     Codec.floatRange(0.0F, 1.0F)
                             .fieldOf("spawn_chance")
                             .forGetter(config -> config.spawnChance),
 
-                    // Portal variant to spawn (required)
                     PortalVariant.CODEC
                             .fieldOf("portal_variant")
                             .forGetter(config -> config.portalVariant),
 
-                    // Target dimension for portal (required)
                     ResourceLocation.CODEC
                             .fieldOf("target_dimension")
                             .forGetter(config -> config.targetDimension.location()),
 
-                    // Minimum distance to other portals
                     Codec.doubleRange(16.0, 1000.0)
                             .fieldOf("min_distance_to_other_portals")
                             .forGetter(config -> config.minDistanceToOtherPortals)
@@ -43,7 +38,7 @@ public record PortalConfiguration(float spawnChance, PortalVariant portalVariant
     );
 
     /**
-     * Constructor that matches the Codec
+     * Constructor matching the Codec - targetDimension supplied as ResourceLocation.
      */
     public PortalConfiguration(float spawnChance,
                                PortalVariant portalVariant,
@@ -52,9 +47,7 @@ public record PortalConfiguration(float spawnChance, PortalVariant portalVariant
         this(spawnChance, portalVariant, ResourceKey.create(Registries.DIMENSION, targetDimension), minDistanceToOtherPortals);
     }
 
-    /**
-     * Constructor with ResourceKey (convenience)
-     */
+    /** Compact canonical constructor retained (no extra docs). */
     public PortalConfiguration {
     }
 }
