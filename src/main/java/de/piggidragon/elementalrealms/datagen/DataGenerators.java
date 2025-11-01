@@ -38,6 +38,8 @@ public class DataGenerators {
                 lookupProvider,
                 List.of(new AdvancementGenerator())
         ));
+
+        event.createDatapackRegistryObjects(ModFeaturesProvider.createBuilder());
     }
 
 }
