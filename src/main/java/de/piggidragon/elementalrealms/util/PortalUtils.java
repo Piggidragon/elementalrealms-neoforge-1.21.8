@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,7 +23,7 @@ public class PortalUtils {
     /**
      * Check if a block position is suitable for portal base placement.
      */
-    public static boolean isSuitableForPortalBase(ServerLevel level, BlockPos pos, BlockState state) {
+    public static boolean isSuitableForPortalBase(WorldGenLevel level, BlockPos pos, BlockState state) {
         // Skip air blocks
         if (state.isAir()) return false;
 

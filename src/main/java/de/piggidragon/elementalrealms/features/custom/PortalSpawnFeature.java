@@ -38,7 +38,7 @@ public class PortalSpawnFeature extends Feature<PortalConfiguration> {
         }
 
         // Validate portal base suitability
-        if (!PortalUtils.isSuitableForPortalBase(level.getLevel(), pos.below(),
+        if (!PortalUtils.isSuitableForPortalBase(level, pos.below(),
                 level.getBlockState(pos.below()))) {
             return false;
         }
