@@ -6,15 +6,22 @@ import de.piggidragon.elementalrealms.features.ModFeatures;
 import de.piggidragon.elementalrealms.features.config.PortalConfiguration;
 import de.piggidragon.elementalrealms.level.ModLevel;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
+import net.neoforged.neoforge.common.world.BiomeModifiers;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.List;
 import java.util.Set;
@@ -50,7 +57,7 @@ public class ModFeaturesProvider extends DatapackBuiltinEntriesProvider {
                                             1.0f,
                                             PortalVariant.ELEMENTAL,
                                             ModLevel.TEST_DIMENSION,
-                                            1.0
+                                            16.0
                                     )
                             )
                     );
@@ -70,6 +77,20 @@ public class ModFeaturesProvider extends DatapackBuiltinEntriesProvider {
                                     )
                             )
                     );
-                });
+                })
+        .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, bootstrap -> {
+            HolderGetter<PlacedFeature> placed = bootstrap.lookup(Registries.PLACED_FEATURE);
+            HolderGetter<Biome> biomes = bootstrap.lookup(Registries.BIOME);
+
+            bootstrap.register(
+                    ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS,
+                            ResourceLocation.fromNamespaceAndPath(ElementalRealms.MODID, "add_portal")),
+                    new BiomeModifiers.AddFeaturesBiomeModifier(
+                            biomes.getOrThrow(Tags.Biomes.IS_OVERWORLD),
+                            HolderSet.direct(placed.getOrThrow(PORTAL_PLACED)),
+                            GenerationStep.Decoration.SURFACE_STRUCTURES
+                    )
+            );
+        });
     }
 }
