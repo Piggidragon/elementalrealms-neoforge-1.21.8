@@ -12,8 +12,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 /**
  * Configuration for portal spawn feature.
  */
-public record PortalConfiguration(float spawnChance, PortalVariant portalVariant, ResourceKey<Level> targetDimension,
-                                  double minDistanceToOtherPortals) implements FeatureConfiguration {
+public record PortalConfiguration(float spawnChance, PortalVariant portalVariant, ResourceKey<Level> targetDimension) implements FeatureConfiguration {
 
     /** Codec for serializing this configuration to/from JSON */
     public static final Codec<PortalConfiguration> CODEC = RecordCodecBuilder.create(instance ->
@@ -40,5 +39,9 @@ public record PortalConfiguration(float spawnChance, PortalVariant portalVariant
                                PortalVariant portalVariant,
                                ResourceLocation targetDimension) {
         this(spawnChance, portalVariant, ResourceKey.create(Registries.DIMENSION, targetDimension));
+    }
+
+    /** Compact canonical constructor retained (no extra docs). */
+    public PortalConfiguration {
     }
 }
