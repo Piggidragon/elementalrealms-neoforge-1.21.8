@@ -1,0 +1,9 @@
+{
+  "type": "elementalrealms:portal_feature",
+  "config": {
+    "min_distance_to_other_portals": 100.0,
+    "portal_variant": "school",
+    "spawn_chance": 0.3,
+    "target_dimension": "elementalrealms:test"
+  }
+}

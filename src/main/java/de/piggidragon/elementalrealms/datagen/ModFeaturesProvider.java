@@ -11,7 +11,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
@@ -48,10 +47,10 @@ public class ModFeaturesProvider extends DatapackBuiltinEntriesProvider {
                             new ConfiguredFeature<>(
                                     ModFeatures.PORTAL_FEATURE.get(),
                                     new PortalConfiguration(
-                                            0.3f,
-                                            PortalVariant.getRandomVariant(RandomSource.create()),
+                                            1.0f,
+                                            PortalVariant.ELEMENTAL,
                                             ModLevel.TEST_DIMENSION,
-                                            100.0
+                                            1.0
                                     )
                             )
                     );
@@ -64,7 +63,7 @@ public class ModFeaturesProvider extends DatapackBuiltinEntriesProvider {
                             new PlacedFeature(
                                     configured.getOrThrow(PORTAL_CONFIGURED),
                                     List.of(
-                                            RarityFilter.onAverageOnceEvery(10),
+                                            RarityFilter.onAverageOnceEvery(1),
                                             InSquarePlacement.spread(),
                                             HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES),
                                             BiomeFilter.biome()
